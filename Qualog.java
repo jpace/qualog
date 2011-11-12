@@ -332,7 +332,6 @@ public class Qualog {
     public static void setFileColor(ANSIColor color) {
         StackTraceElement[] stack = getStack(3);
         String fileName = stack[2].getFileName();
-        tr.Ace.red("fileName: " + fileName);
         writer.setFileColor(fileName, color);
     }
 
