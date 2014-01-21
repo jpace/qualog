@@ -1,20 +1,11 @@
 package org.incava.qualog;
 
-import java.util.*;
-
-
 public class QlTimedPeriod {
-
     private final String fileName;
-
     private final String className;
-
-    private final String methodName;
-    
+    private final String methodName;    
     private final int lineNumber;
-
     private final String message;
-
     private final long start;
 
     public QlTimedPeriod(String fileName, String className, String methodName, int lineNumber, String message) {
@@ -49,6 +40,4 @@ public class QlTimedPeriod {
     public long getStartTime() {
         return this.start;
     }
-
 }
-

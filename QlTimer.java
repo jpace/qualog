@@ -1,7 +1,8 @@
 package org.incava.qualog;
 
-import java.util.*;
-
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 public class QlTimer {
     private final List<QlTimedPeriod> periods;
@@ -34,10 +35,7 @@ public class QlTimer {
 
     public boolean end(String msg) {
         long endTime = System.currentTimeMillis();
-
         StackTraceElement ste = getFrame();
-
-        // System.out.println("ste: " + ste);
 
         String className     = ste.getClassName();
         String methodName    = ste.getMethodName();
@@ -56,15 +54,11 @@ public class QlTimer {
             matchness += fileName.equals(qtp.getFileName())     ? 1 : 0;
             matchness += methodName.equals(qtp.getMethodName()) ? 1 : 0;
 
-            // System.out.println("matchness: " + matchness);
             if (matchness >= bestMatchness) {
                 bestMatchness = matchness;
                 bestMatchIdx  = idx;
             }
         }
-
-        // System.out.println("best matchness: " + bestMatchness);
-        // System.out.println("best match idx: " + bestMatchIdx);
 
         if (bestMatchIdx >= 0) {
             QlTimedPeriod qtp     = periods.remove(bestMatchIdx);
@@ -103,10 +97,8 @@ public class QlTimer {
 
     protected StackTraceElement getFrame() {
         StackTraceElement[] stack = (new Exception("")).getStackTrace();
-        int                 stIdx = Qualog.findStackStart(stack);
-        StackTraceElement   ste   = stack[stIdx];
-
-        return ste;
+        int stIdx = Qualog.findStackStart(stack);
+        return stack[stIdx];
     }
 
     public String format(long duration) {
@@ -133,5 +125,4 @@ public class QlTimer {
         }
         return buf.toString();
     }
-
 }

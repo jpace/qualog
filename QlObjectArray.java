@@ -1,9 +1,5 @@
 package org.incava.qualog;
 
-import java.io.*;
-import java.util.*;
-
-
 /**
  * Wraps C-style arrays for output.
  */
@@ -29,4 +25,3 @@ public class QlObjectArray {
         }
     }
 }
-

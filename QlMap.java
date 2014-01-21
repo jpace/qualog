@@ -1,8 +1,7 @@
 package org.incava.qualog;
 
-import java.io.*;
-import java.util.*;
-
+import java.util.Map;
+import java.util.Set;
 
 /**
  * Wraps Java maps for output.
@@ -11,12 +10,12 @@ public class QlMap {
     public static boolean stack(QlLevel level, 
                                 ANSIColor[] msgColors,
                                 String name,
-                                Map map,
+                                Map<?,?> map,
                                 ANSIColor fileColor,
                                 ANSIColor classColor,
                                 ANSIColor methodColor,
                                 int numFrames) {
-        Set keySet = map.keySet();
+        Set<?> keySet = map.keySet();
         Object[] keys = keySet.toArray();
         
         if (keys.length == 0) {
@@ -32,4 +31,3 @@ public class QlMap {
         }
     }
 }
-

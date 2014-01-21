@@ -1,14 +1,13 @@
 package org.incava.qualog;
 
-import java.io.*;
-import java.util.*;
-
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
 
 /**
  * Wraps Iterators for output.
  */
 public class QlIterator {
-
     public static <T> boolean stack(QlLevel level, 
                                     ANSIColor[] msgColors,
                                     String name,
@@ -25,4 +24,3 @@ public class QlIterator {
         return QlCollection.stack(level, msgColors, name, ary, fileColor, classColor, methodColor, numFrames);
     }
 }
-

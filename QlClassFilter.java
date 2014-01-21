@@ -1,8 +1,5 @@
 package org.incava.qualog;
 
-import java.util.*;
-
-
 /**
  * A filter for logging statements from a class. Unlike <code>QlFilter</code>,
  * the class under consideration is checked that it is assignable from the
@@ -15,7 +12,6 @@ public class QlClassFilter extends QlFilter {
 
     public QlClassFilter(Class<?> cls, QlLevel level) {
         super(level);
-
         this.cls = cls;
     }
 
@@ -32,5 +28,4 @@ public class QlClassFilter extends QlFilter {
             return false;
         }
     }
-
 }

@@ -1,8 +1,5 @@
 package org.incava.qualog;
 
-import java.util.*;
-
-
 /**
  * Provides constants that produce colorized output on ANSI terminals.
  */
@@ -43,5 +40,4 @@ public class ANSIColor {
     public String toString() {
         return str;
     }
-
 }

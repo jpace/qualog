@@ -1,9 +1,7 @@
 package org.incava.qualog;
 
-import java.util.*;
-import java.util.regex.*;
+import java.util.regex.Pattern;
 import org.incava.ijdk.lang.Range;
-
 
 /**
  * Represents a filter for selective enabling or disabling of logging
@@ -11,17 +9,12 @@ import org.incava.ijdk.lang.Range;
  */
 public class QlFilter {
     public static final Pattern NO_PATTERN = null;
-
     public static final Range NO_RANGE = null;
     
     private QlLevel level;
-
     private Pattern fileNamePat;
-
-    private Range lineNumberRng;
-    
+    private Range lineNumberRng;    
     private Pattern classNamePat;
-
     private Pattern methodNamePat;
 
     public QlFilter(QlLevel level) {
@@ -61,5 +54,4 @@ public class QlFilter {
                 (classNamePat  == null || classNamePat.matcher(className).matches()) && 
                 (methodNamePat == null || methodNamePat.matcher(methodName).matches()));
     }
-
 }

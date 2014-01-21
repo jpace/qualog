@@ -1,8 +1,6 @@
 package org.incava.qualog;
 
-import java.io.*;
-import java.util.*;
-
+import java.util.Collection;
 
 /**
  * Wraps Collections for output.
@@ -11,7 +9,7 @@ public class QlCollection {
     public static boolean stack(QlLevel level, 
                                 ANSIColor[] msgColors,
                                 String name,
-                                Collection c,
+                                Collection<?> c,
                                 ANSIColor fileColor,
                                 ANSIColor classColor,
                                 ANSIColor methodColor,

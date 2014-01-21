@@ -1,8 +1,17 @@
 package org.incava.qualog;
 
-import java.io.*;
-import java.util.*;
-
+import java.io.FileDescriptor;
+import java.io.FileOutputStream;
+import java.io.PrintStream;
+import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 
 /**
  * <p>Writes the logging output, applying filters and decorations. The
@@ -13,27 +22,18 @@ import java.util.*;
  */
 public class QlWriter {
     public static final int NO_OUTPUT = 0;
-
-    public static final int QUIET = 1;
-    
+    public static final int QUIET = 1;    
     public static final int VERBOSE = 2;
     
     public int fileWidth = 25;
-
     public boolean columns = true;
-
     public int lineWidth = 5;
-
     public int functionWidth = 25;
-
     public int classWidth = 35;
-
     public boolean showFiles = true;
-
     public boolean showClasses = true;
 
     // this writes to stdout even in Gradle and Ant, which redirect stdout.
-
     public PrintWriter out = new PrintWriter(new PrintStream(new FileOutputStream(FileDescriptor.out)), true);
 
     public List<String> packagesSkipped = new ArrayList<String>(Arrays.asList(
@@ -53,25 +53,17 @@ public class QlWriter {
     private int outputType = NO_OUTPUT;
 
     private Map<String, ANSIColor> packageColors = new HashMap<String, ANSIColor>();
-
     private Map<String, ANSIColor> classColors = new HashMap<String, ANSIColor>();
-
     private Map<String, ANSIColor> methodColors = new HashMap<String, ANSIColor>();
-
     private Map<String, ANSIColor> fileColors = new HashMap<String, ANSIColor>();
 
-    private StackTraceElement prevStackElement = null;
-    
+    private StackTraceElement prevStackElement = null;    
     private Thread prevThread = null;
-
     private String prevDisplayedClass = null;
-
     private String prevDisplayedMethod = null;
 
     private QlLevel level = Qualog.LEVEL9;
-
     private List<QlFilter> filters = new ArrayList<QlFilter>();
-
     private boolean useColor = true;
 
     /**
@@ -83,7 +75,7 @@ public class QlWriter {
         filters.add(filter);
     }
 
-    public void setDisabled(Class cls) {
+    public void setDisabled(Class<?> cls) {
         addFilter(new QlClassFilter(cls, null));
     }
 
@@ -130,7 +122,7 @@ public class QlWriter {
         columns = cols;
     }
 
-    public void addClassSkipped(Class cls) {
+    public void addClassSkipped(Class<?> cls) {
         addClassSkipped(cls.getName());
     }
     
@@ -175,7 +167,7 @@ public class QlWriter {
                 return stack(level, msgColors, msg, fileColor, classColor, methodColor, numFrames);
             }
             else if (obj instanceof Collection) {
-                Collection c = (Collection)obj;
+                Collection<?> c = (Collection<?>)obj;
                 return QlCollection.stack(level, msgColors, nm, c, fileColor, classColor, methodColor, numFrames);
             }
             else if (obj instanceof Iterator) {
@@ -191,7 +183,7 @@ public class QlWriter {
                 return QlObjectArray.stack(level, msgColors, nm, ary, fileColor, classColor, methodColor, numFrames);
             }
             else if (obj instanceof Map) {
-                Map m = (Map)obj;
+                Map<?,?> m = (Map<?,?>)obj;
                 return QlMap.stack(level, msgColors, nm, m, fileColor, classColor, methodColor, numFrames);
             }
             else if (obj.getClass().isArray()) {
@@ -603,6 +595,4 @@ public class QlWriter {
         }
         return str;
     }
-        
-
 }

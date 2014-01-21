@@ -1,13 +1,13 @@
 package org.incava.qualog;
 
-import java.util.*;
-
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Enumeration;
 
 /**
  * Wraps Enumerations for output.
  */
-public class QlEnumeration {
-    
+public class QlEnumeration {    
     public static <T> boolean stack(QlLevel level, 
                                     ANSIColor[] msgColors,
                                     String name,
@@ -17,8 +17,6 @@ public class QlEnumeration {
                                     ANSIColor methodColor,
                                     int numFrames) {
         Collection<T> ary = Collections.list(en);
-
         return QlCollection.stack(level, msgColors, name, ary, fileColor, classColor, methodColor, numFrames);
     }
 }
-

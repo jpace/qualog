@@ -267,7 +267,7 @@ public class Qualog {
         return writer.isLoggable(level);
     }
 
-    public static void setDisabled(Class cls) {
+    public static void setDisabled(Class<?> cls) {
         addFilter(new QlClassFilter(cls, null));
     }
 
@@ -363,7 +363,7 @@ public class Qualog {
         writer.setColumns(cols);
     }
     
-    public static void addClassSkipped(Class cls) {
+    public static void addClassSkipped(Class<?> cls) {
         writer.addClassSkipped(cls);
     }
     
