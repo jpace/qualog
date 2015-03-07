@@ -1,5 +1,4 @@
 apply plugin: 'java'
-apply plugin: 'pmd'
 
 group = 'org.qualog'
 version ='2.0.0'
