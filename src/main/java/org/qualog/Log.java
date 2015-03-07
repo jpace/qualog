@@ -2,7 +2,6 @@ package org.qualog;
 
 import java.util.EnumSet;
 import org.qualog.output.ANSIColor;
-import org.incava.ijdk.util.PropertyExt;
 import static org.incava.ijdk.util.IUtil.*;
 
 /**
