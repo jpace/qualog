@@ -1,7 +1,7 @@
 package org.qualog.types;
 
-import java.util.*;
-import org.incava.ijdk.lang.*;
+import java.io.Serializable;
+import java.util.List;
 import org.qualog.Level;
 import org.qualog.output.ItemColors;
 import org.qualog.output.Writer;
@@ -16,12 +16,10 @@ public class LogElement {
     /**
      * Primitive or quasi-primitive classes, use for toString().
      */
-    public static final List<Class<?>> UNDECORATED_CLASSES = Arrays.asList(new Class<?>[] {
-            String.class,
-            Number.class,
-            Character.class,
-            Boolean.class
-        });
+    public static final List<Class<? extends Serializable>> UNDECORATED_CLASSES = list(String.class,
+                                                                                       Number.class,
+                                                                                       Character.class,
+                                                                                       Boolean.class);
     
     /**
      * Returns whether the class of the object is assignable from any of the

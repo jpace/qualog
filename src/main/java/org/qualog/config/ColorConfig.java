@@ -1,10 +1,9 @@
 package org.qualog.config;
 
-import java.util.*;
-import org.incava.ijdk.lang.*;
+import java.util.HashMap;
+import java.util.Map;
 import org.qualog.output.ANSIColor;
 import org.qualog.output.ANSIColorList;
-import static org.incava.ijdk.util.IUtil.*;
 
 public class ColorConfig {
     private final Map<String, ANSIColor> packageColors;

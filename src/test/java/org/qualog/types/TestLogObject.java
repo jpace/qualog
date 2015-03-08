@@ -1,7 +1,11 @@
 package org.qualog.types;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.EnumSet;
+import java.util.Map;
+import java.util.TreeMap;
 import junit.framework.TestCase;
-import java.util.*;
 
 public class TestLogObject extends TestCase {
     public TestLogObject(String name) {

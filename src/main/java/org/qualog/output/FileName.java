@@ -1,7 +1,6 @@
 package org.qualog.output;
 
-import java.util.*;
-import org.incava.ijdk.lang.*;
+import org.incava.ijdk.lang.StringExt;
 import static org.incava.ijdk.util.IUtil.*;
 
 public class FileName extends Item {    

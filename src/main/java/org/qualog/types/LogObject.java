@@ -1,7 +1,10 @@
 package org.qualog.types;
 
-import java.lang.reflect.*;
-import java.util.*;
+import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
+import java.util.EnumSet;
+import java.util.Map;
+import java.util.TreeMap;
 import org.qualog.Level;
 import static org.incava.ijdk.util.IUtil.*;
 

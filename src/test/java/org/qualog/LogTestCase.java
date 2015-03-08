@@ -1,8 +1,9 @@
 package org.qualog;
 
-import java.io.*;
-import java.util.*;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import junit.framework.TestCase;
+import org.qualog.config.WidthConfig;
 import org.qualog.output.OutputType;
 
 public class LogTestCase extends TestCase {
@@ -44,17 +45,21 @@ public class LogTestCase extends TestCase {
         Log.setOutput(type, level);
 
         Configuration cfg = Log.getConfiguration();
+        WidthConfig widths = cfg.getWidthConfig();
 
-        cfg.setFileWidth(fileWidth);
-        cfg.setLineWidth(lineWidth);
-        cfg.setClassWidth(classWidth);
-        cfg.setFunctionWidth(functionWidth);
+        widths.setFileWidth(fileWidth);
+        widths.setLineWidth(lineWidth);
+        widths.setClassWidth(classWidth);
+        widths.setFunctionWidth(functionWidth);
+
         Log.setColumns(columns);
 
         return sw;
     }
 
     public void assertStringsEqual(String exp, String act) {
+        // System.out.println(act);
+        
         if (!exp.equals(act)) {
             System.err.println("expected output:\n" + exp);
             System.err.println("log output:\n" + act);

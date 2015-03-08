@@ -1,7 +1,6 @@
 package org.qualog;
 
-import java.io.*;
-import java.util.*;
+import java.io.StringWriter;
 import junit.framework.TestCase;
 
 public class TestLogScalar extends LogTestCase {

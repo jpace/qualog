@@ -4,6 +4,7 @@ import java.io.PrintWriter;
 import java.util.EnumSet;
 import java.util.List;
 import java.util.Map;
+import org.qualog.config.WidthConfig;
 import org.qualog.output.ANSIColor;
 import org.qualog.output.ItemColors;
 import org.qualog.output.OutputType;
@@ -23,7 +24,7 @@ public class Logger {
     /**
      * The version of the log module.
      */
-    public final static String VERSION = "1.1.1";
+    public final static String VERSION = "2.0.0";
     
     public final static String CLASS_WIDTH_PROPERTY_KEY  = "org.qualog.classwidth";
     public final static String COLUMNAR_PROPERTY_KEY     = "org.qualog.columnar";
@@ -87,18 +88,22 @@ public class Logger {
 
         setVerbosity();
         
+        Configuration config = writer.getConfiguration();
+        
         if (System.getProperty("os.name").equals("Linux")) {
-            writer.getConfiguration().getColorConfig().setUseColor(true);
+            config.getColorConfig().setUseColor(true);
         }
+
+        WidthConfig widths = config.getWidthConfig();
         
         Boolean showFiles = PropertyExt.getBoolean(SHOW_FILES_PROPERTY_KEY);
         if (isNotNull(showFiles)) {
-            writer.setShowFiles(showFiles);
+            config.setShowFiles(showFiles);
         }
 
         Boolean showClasses = PropertyExt.getBoolean(SHOW_CLASSES_PROPERTY_KEY);
         if (isNotNull(showClasses)) {
-            writer.setShowClasses(showClasses);
+            config.setShowClasses(showClasses);
         }
 
         Boolean columnar = PropertyExt.getBoolean(COLUMNAR_PROPERTY_KEY);
@@ -108,22 +113,22 @@ public class Logger {
 
         Integer fileWidth = PropertyExt.getInteger(FILE_WIDTH_PROPERTY_KEY);
         if (isNotNull(fileWidth)) {
-            writer.setFileWidth(fileWidth);
+            widths.setFileWidth(fileWidth);
         }
 
         Integer lineWidth = PropertyExt.getInteger(LINE_WIDTH_PROPERTY_KEY);
         if (isNotNull(lineWidth)) {
-            writer.setLineWidth(lineWidth);
+            widths.setLineWidth(lineWidth);
         }
 
         Integer classWidth = PropertyExt.getInteger(CLASS_WIDTH_PROPERTY_KEY);
         if (isNotNull(classWidth)) {
-            writer.setClassWidth(classWidth);
+            widths.setClassWidth(classWidth);
         }
 
         Integer methodWidth = PropertyExt.getInteger(METHOD_WIDTH_PROPERTY_KEY);
         if (isNotNull(methodWidth)) {
-            writer.setFunctionWidth(methodWidth);
+            widths.setFunctionWidth(methodWidth);
         }
     }
     

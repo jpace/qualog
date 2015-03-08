@@ -1,8 +1,7 @@
 package org.qualog;
 
-import java.util.*;
-import org.incava.ijdk.lang.*;
 import org.qualog.config.ColorConfig;
+import org.qualog.config.WidthConfig;
 import org.qualog.output.ANSIColor;
 import org.qualog.output.ANSIColorList;
 import static org.incava.ijdk.util.IUtil.*;
@@ -11,75 +10,40 @@ import static org.incava.ijdk.util.IUtil.*;
  * System-wide settings for logging.
  */
 public class Configuration {
-    public static final Configuration WIDE = new Configuration(25, 5, 35, 25);
-    public static final Configuration MEDIUM = new Configuration(15, 4, 25, 15);
-    public static final Configuration NARROW = new Configuration(10, 4, 20, 10);
-    public static final Configuration DEFAULT = MEDIUM;
-
-    private int fileWidth = 15;
-    private int lineWidth = 4;
-    private int classWidth = 25;
-    private int functionWidth = 25;
+    // public static final Configuration WIDE = new Configuration(WidthConfig.WIDE);
+    // public static final Configuration MEDIUM = new Configuration(WidthConfig.WIDE);
+    // public static final Configuration NARROW = new Configuration(WidthConfig.WIDE);
+    // public static final Configuration DEFAULT = MEDIUM;
     
     private boolean showFiles = true;
     private boolean showClasses = true;
     private boolean useColumns = true;
 
     private final ColorConfig colorConfig;
+    private final WidthConfig widthConfig;
 
     public Configuration() {
         colorConfig = new ColorConfig();
+        widthConfig = new WidthConfig();
     }
 
-    public Configuration(int fileWidth, int lineWidth, int classWidth, int functionWidth) {
-        this();
-        
-        this.fileWidth = fileWidth;
-        this.lineWidth = lineWidth;
-        this.classWidth = classWidth;
-        this.functionWidth = functionWidth;
+    public Configuration(ColorConfig cc, WidthConfig wc) {
+        colorConfig = cc;
+        widthConfig = wc;
     }
 
     public ColorConfig getColorConfig() {
         return colorConfig;
     }
 
+    public WidthConfig getWidthConfig() {
+        return widthConfig;
+    }
+
     public ANSIColor getColor(StackTraceElement ste) {
         return or(colorConfig.getMethodColor(ste.getClassName(), ste.getMethodName()),
                   colorConfig.getClassColor(ste.getClassName()),
                   colorConfig.getFileColor(ste.getFileName()));
-    }
-
-    public int getFileWidth() {
-        return fileWidth;
-    }
-
-    public void setFileWidth(int fileWidth) {
-        this.fileWidth = fileWidth;
-    }
-
-    public int getLineWidth() {
-        return lineWidth;
-    }
-
-    public void setLineWidth(int lineWidth) {
-        this.lineWidth = lineWidth;
-    }
-
-    public int getFunctionWidth() {
-        return functionWidth;
-    }
-
-    public void setFunctionWidth(int functionWidth) {
-        this.functionWidth = functionWidth;
-    }
-
-    public int getClassWidth() {
-        return classWidth;
-    }
-
-    public void setClassWidth(int classWidth) {
-        this.classWidth = classWidth;
     }
 
     public boolean showFiles() {

@@ -4,7 +4,7 @@ import java.io.FileDescriptor;
 import java.io.FileOutputStream;
 import java.io.PrintStream;
 import java.io.PrintWriter;
-import java.util.*;
+import java.util.List;
 import java.util.regex.Pattern;
 import org.incava.ijdk.lang.*;
 import org.qualog.ClassFilter;
@@ -13,6 +13,7 @@ import org.qualog.Filter;
 import org.qualog.Level;
 import org.qualog.Log;
 import org.qualog.config.ColorConfig;
+import org.qualog.config.WidthConfig;
 import org.qualog.types.LogElement;
 import org.qualog.types.LogElementFactory;
 import org.incava.ijdk.util.IUtil;
@@ -64,10 +65,11 @@ public class Writer {
     }
 
     public void set(boolean columns, int fileWidth, int lineWidth, int classWidth, int functionWidth) {
-        config.setFileWidth(fileWidth);
-        config.setLineWidth(lineWidth);
-        config.setClassWidth(classWidth);
-        config.setFunctionWidth(functionWidth);
+        WidthConfig wc = config.getWidthConfig();
+        wc.setFileWidth(fileWidth);
+        wc.setLineWidth(lineWidth);
+        wc.setClassWidth(classWidth);
+        wc.setFunctionWidth(functionWidth);
         config.setUseColumns(columns);
     }
 
@@ -99,12 +101,12 @@ public class Writer {
      * Sets parameters to their defaults.
      */
     public void clear() {
-        this.config = Configuration.DEFAULT;
+        this.config = new Configuration();
         
         this.prevStackElement = null;
         this.prevThread = null;
         this.level = Log.LEVEL9;
-        this.filters = new ArrayList<Filter>();
+        this.filters = IUtil.<Filter>list();
     }
 
     /**
@@ -239,22 +241,6 @@ public class Writer {
             }
         }
         return isLoggable;
-    }
-
-    public void setLineWidth(int lnWidth) {
-        config.setLineWidth(lnWidth);
-    }
-
-    public void setFileWidth(int flWidth) {
-        config.setFileWidth(flWidth);
-    }
-
-    public void setFunctionWidth(int funcWidth) {
-        config.setFunctionWidth(funcWidth);
-    }
-
-    public void setClassWidth(int clsWidth) {
-        config.setClassWidth(clsWidth);
     }
 
     public void setShowClasses(boolean showCls) {

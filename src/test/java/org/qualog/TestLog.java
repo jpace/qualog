@@ -1,7 +1,9 @@
 package org.qualog;
 
-import java.io.*;
-import java.util.*;
+import java.io.StringWriter;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import junit.framework.TestCase;
 import org.qualog.config.ColorConfig;
 

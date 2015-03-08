@@ -1,6 +1,7 @@
 package org.qualog.output;
 
 import org.qualog.Configuration;
+import org.qualog.config.WidthConfig;
 
 /**
  * A log message.
@@ -43,17 +44,18 @@ public class Line {
         sb.append("[");
 
         ANSIColor color = colors.getFileColor();
+        WidthConfig widths = config.getWidthConfig();
         
         if (config.useColumns()) {
-            FileName lfn = new FileName(color, stackElements, config.getFileWidth());
+            FileName lfn = new FileName(color, stackElements, widths.getFileWidth());
             String flstr = lfn.getFormatted();
 
-            LineNumber lln = new LineNumber(color, stackElements, config.getLineWidth());
+            LineNumber lln = new LineNumber(color, stackElements, widths.getLineWidth());
             String lnstr = lln.getFormatted();
             sb.append(flstr).append(' ').append(lnstr);
         }
         else {
-            FileNameLineNumber lfnln = new FileNameLineNumber(color, stackElements, config.getFileWidth());
+            FileNameLineNumber lfnln = new FileNameLineNumber(color, stackElements, widths.getFileWidth());
             sb.append(lfnln.getFormatted());
         }
 
@@ -61,14 +63,16 @@ public class Line {
     }
 
     public void appendClassAndMethod(StringBuilder sb) {
+        WidthConfig widths = config.getWidthConfig();
+
         sb.append("{");
 
-        ClassName lcn = new ClassName(colors.getClassColor(), stackElements, config.getClassWidth());
+        ClassName lcn = new ClassName(colors.getClassColor(), stackElements, widths.getClassWidth());
         sb.append(lcn.getFormatted());
         
         sb.append('#');
 
-        MethodName lmn = new MethodName(colors.getMethodColor(), stackElements, config.getFunctionWidth());
+        MethodName lmn = new MethodName(colors.getMethodColor(), stackElements, widths.getFunctionWidth());
         sb.append(lmn.getFormatted());
 
         sb.append("} ");

@@ -1,7 +1,6 @@
 package org.qualog.types;
 
-import java.io.*;
-import java.util.*;
+import java.io.StringWriter;
 import junit.framework.TestCase;
 import org.qualog.Log;
 import org.qualog.LogTestCase;
@@ -20,7 +19,7 @@ public class TestLogElementFactory extends LogTestCase {
         String expected = "" +
             "[LgCustomElement              11] {o.i.l.LgCustomElement    #run              } ce: h,e,l,l,o, ,w,o,r,l,d\n" +
             "[                             14] {                         #                 } dce: f,o,o,:, ,b,a,r\n";
-        
+
         System.out.println("sw: \n" + sw);
         
         compare(expected, sw.toString());

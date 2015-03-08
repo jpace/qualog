@@ -1,9 +1,7 @@
 package org.qualog;
 
-import java.util.*;
 import junit.framework.TestCase;
 import org.incava.ijdk.lang.Range;
-
 
 public class TestFilter extends TestCase {
     public TestFilter(String name) {
