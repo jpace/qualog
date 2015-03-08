@@ -50,7 +50,3 @@ Please email me at jeugenepace at gmail dot com if you have questions about Qual
 
 I'm eager to learn how others use this library, and what additional features
 they would like. Please email me at the above address.
-
-# Credits
-
-Much of this was inspired by Ruby, as well as Groovy and Gradle.
