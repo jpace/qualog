@@ -5,7 +5,6 @@ import java.io.FileOutputStream;
 import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.util.List;
-import java.util.regex.Pattern;
 import org.incava.ijdk.lang.*;
 import org.qualog.ClassFilter;
 import org.qualog.Configuration;
@@ -71,6 +70,22 @@ public class Writer {
         wc.setClassWidth(classWidth);
         wc.setFunctionWidth(functionWidth);
         config.setUseColumns(columns);
+    }
+
+    public void setShowClasses(boolean showClasses) {
+        config.setShowClasses(showClasses);
+    }
+
+    public void setShowFiles(boolean showFiles) {
+        config.setShowFiles(showFiles);
+    }
+
+    public void setConfiguration(Configuration config) {
+        this.config = config;
+    }
+
+    public Configuration getConfiguration() {
+        return config;
     }
 
     /**
@@ -145,48 +160,20 @@ public class Writer {
     }
 
     /**
-     * Returns the index in the stack where logging (stacks) should be
-     * displayed. Returns -1 if the end of the stack is reached and no logging
-     * should occur.
-     */
-    public synchronized int findStackStart(StackTraceElement[] stack) {
-        for (int fi = 0; fi < stack.length; ++fi) {
-            if (!isSkipped(stack[fi])) {
-                return fi;
-            }
-        }
-        return stack.length;
-    }
-
-    public ANSIColor getFileColor(ItemColors elmtColors, StackTraceElement stackElement) {
-        ColorConfig cc = config.getColorConfig();
-        return or(elmtColors.getFileColor(), cc.getFileColor(stackElement.getFileName()));
-    }
-
-    public ANSIColor getClassColor(ItemColors elmtColors, StackTraceElement stackElement) {
-        ColorConfig cc = config.getColorConfig();
-        return or(elmtColors.getClassColor(), cc.getClassColor(stackElement.getClassName()));
-    }
-
-    public ANSIColor getMethodColor(ItemColors elmtColors, StackTraceElement stackElement) {
-        ColorConfig cc = config.getColorConfig();
-        return or(elmtColors.getMethodColor(), cc.getMethodColor(stackElement.getClassName(), stackElement.getMethodName()));
-    }
-
-    /**
      * Logs the element. Assumes the level is already matched.
      */
-    public synchronized boolean stack(LogElement le) {
+    public synchronized boolean stack(LogElement logElmt) {
         // when we're switching threads, reset to a null state.
         if (!Thread.currentThread().equals(prevThread)) {
             reset();
         }
 
         // only show 1 frame in quiet mode:
-        int numFrames = outputType.equals(OutputType.QUIET) ? 1 : le.getNumFrames();
+        int numFrames = outputType.equals(OutputType.QUIET) ? 1 : logElmt.getNumFrames();
         StackTraceElement[] stack = getStack(numFrames);
 
         int fi = findStackStart(stack);
+        
         for (int framesShown = 0; fi < stack.length && framesShown < numFrames; ++fi, ++framesShown) {
             StackTraceElement stackElement = stack[fi];
 
@@ -194,7 +181,7 @@ public class Writer {
                 return true;
             }
 
-            ItemColors elmtColors = le.getColors();
+            ItemColors elmtColors = logElmt.getColors();
 
             // the colors of the message part, not the whole line:
             ANSIColorList msgColors = getMessageColors(elmtColors, stackElement);
@@ -203,7 +190,7 @@ public class Writer {
                                                    getClassColor(elmtColors, stackElement),
                                                    getMethodColor(elmtColors, stackElement));
             
-            Line line = new Line(le.getMessage(), lineColors, stackElement, prevStackElement, config);
+            Line line = new Line(logElmt.getMessage(), lineColors, stackElement, prevStackElement, config);
             out.println(line.getLine(framesShown > 0, outputType.equals(OutputType.VERBOSE)));
             prevStackElement = stackElement;
         }
@@ -232,7 +219,7 @@ public class Writer {
         return msgColors;
     }
 
-    public boolean isLoggable(StackTraceElement stackElement) {
+    private boolean isLoggable(StackTraceElement stackElement) {
         boolean isLoggable = true;
         for (Filter filter : filters) {
             Level flevel = filter.getLevel();
@@ -243,23 +230,36 @@ public class Writer {
         return isLoggable;
     }
 
-    public void setShowClasses(boolean showCls) {
-        config.setShowClasses(showCls);
-    }
-
-    public void setShowFiles(boolean showFls) {
-        config.setShowFiles(showFls);
-    }
-
-    public void setConfiguration(Configuration config) {
-        this.config = config;
-    }
-
-    public Configuration getConfiguration() {
-        return config;
-    }
-
-    protected static StackTraceElement[] getStack(int depth) {
+    private static StackTraceElement[] getStack(int depth) {
         return (new Exception("")).getStackTrace();
+    }
+
+    /**
+     * Returns the index in the stack where logging (stacks) should be
+     * displayed. Returns -1 if the end of the stack is reached and no logging
+     * should occur.
+     */
+    public synchronized int findStackStart(StackTraceElement[] stack) {
+        for (int fi = 0; fi < stack.length; ++fi) {
+            if (!isSkipped(stack[fi])) {
+                return fi;
+            }
+        }
+        return stack.length;
+    }
+
+    private ANSIColor getFileColor(ItemColors elmtColors, StackTraceElement stackElement) {
+        ColorConfig cc = config.getColorConfig();
+        return or(elmtColors.getFileColor(), cc.getFileColor(stackElement.getFileName()));
+    }
+
+    private ANSIColor getClassColor(ItemColors elmtColors, StackTraceElement stackElement) {
+        ColorConfig cc = config.getColorConfig();
+        return or(elmtColors.getClassColor(), cc.getClassColor(stackElement.getClassName()));
+    }
+
+    private ANSIColor getMethodColor(ItemColors elmtColors, StackTraceElement stackElement) {
+        ColorConfig cc = config.getColorConfig();
+        return or(elmtColors.getMethodColor(), cc.getMethodColor(stackElement.getClassName(), stackElement.getMethodName()));
     }
 }

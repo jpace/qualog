@@ -6,13 +6,13 @@ package org.qualog.config;
 public class WidthConfig {
     public static final WidthConfig WIDE = new WidthConfig(25, 5, 35, 25);
     public static final WidthConfig MEDIUM = new WidthConfig(15, 4, 25, 15);
-    public static final WidthConfig NARROW = new WidthConfig(10, 4, 20, 10);
+    public static final WidthConfig NARROW = new WidthConfig(10, 4, 15, 15);
     public static final WidthConfig DEFAULT = MEDIUM;
 
     private int fileWidth = 15;
     private int lineWidth = 4;
     private int classWidth = 25;
-    private int functionWidth = 25;
+    private int functionWidth = 15;
 
     public WidthConfig() {
     }

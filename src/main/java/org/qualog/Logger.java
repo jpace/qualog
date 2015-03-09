@@ -301,7 +301,7 @@ public class Logger {
         return stack(LEVEL5, EnumSet.noneOf(ANSIColor.class), null, obj, 1);
     }
 
-    protected static StackTraceElement[] getStack(int depth) {
+    private static StackTraceElement[] getStack(int depth) {
         return (new Exception("")).getStackTrace();
     }
 }
