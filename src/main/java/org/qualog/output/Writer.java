@@ -172,13 +172,13 @@ public class Writer {
         int numFrames = outputType.equals(OutputType.QUIET) ? 1 : logElmt.getNumFrames();
         StackTraceElement[] stack = getStack(numFrames);
 
-        int fi = findStackStart(stack);
+        int frameIdx = findStackStart(stack);
         
-        for (int framesShown = 0; fi < stack.length && framesShown < numFrames; ++fi, ++framesShown) {
-            StackTraceElement stackElement = stack[fi];
+        for (int framesShown = 0; frameIdx < stack.length && framesShown < numFrames; ++frameIdx, ++framesShown) {
+            StackTraceElement stackElement = stack[frameIdx];
 
             if (framesShown == 0 && !isLoggable(stackElement)) {
-                return true;
+                break;
             }
 
             ItemColors elmtColors = logElmt.getColors();

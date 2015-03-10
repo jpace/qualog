@@ -13,6 +13,9 @@ name.
 
 # Usage
 
+## Basics
+
+    // enable logging output:
     tr.Ace.setVerbose(true);
 
     // a variety of configuration options:
@@ -100,7 +103,22 @@ All log and stack methods return true, so they can be used inside conditionals:
 
     if ((x > 3 && tr.Ace.log("x", x)) || (y > 17 && tr.Ace.log("y", y)) || z > 37) {
     }
-    
+
+## Colors
+
+All `log` methods have equivalent methods for each of the ANSI colors (bold, underscore, underline,
+blink, reverse, black, red, green, yellow, blue, magenta, cyan, white, onBlack, onRed, onGreen,
+onYellow, onBlue, onMagenta, onCyan, onWhite), for colorized output:
+
+    tr.Ace.bold("hello");
+    tr.Ace.red("list", list);
+    tr.Ace.onBlue("map", map);
+
+    // and combined, with an EnumSet:
+    tr.Ace.log(EnumSet.of(ANSIColor.BLUE, ANSIColor.BOLD, ANSIColor.ON_YELLOW), "obj", obj);
+
+Note that this currently is available only on Linux systems.
+
 # Help
 
 Please email me at jeugenepace at gmail dot com if you have questions about Qualog.
