@@ -5,6 +5,7 @@ import org.qualog.Configuration;
 import org.qualog.config.ColorConfig;
 import org.qualog.config.WidthConfig;
 import static org.incava.ijdk.util.IUtil.list;
+import static tr.Ace.*;
 
 public class Example {
     private final String name;

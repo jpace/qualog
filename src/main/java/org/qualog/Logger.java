@@ -4,6 +4,9 @@ import java.io.PrintWriter;
 import java.util.EnumSet;
 import java.util.List;
 import java.util.Map;
+import org.incava.ijdk.util.PropertyExt;
+import org.qualog.config.ConfigFactory;
+import org.qualog.config.Properties;
 import org.qualog.config.WidthConfig;
 import org.qualog.output.ANSIColor;
 import org.qualog.output.ItemColors;
@@ -11,7 +14,6 @@ import org.qualog.output.OutputType;
 import org.qualog.output.Writer;
 import org.qualog.timer.Timer;
 import org.qualog.types.LogObject;
-import org.incava.ijdk.util.PropertyExt;
 import static org.incava.ijdk.util.IUtil.*;
 
 /**
@@ -25,16 +27,6 @@ public class Logger {
      * The version of the log module.
      */
     public final static String VERSION = "2.0.0";
-    
-    public final static String CLASS_WIDTH_PROPERTY_KEY  = "org.qualog.classwidth";
-    public final static String COLUMNAR_PROPERTY_KEY     = "org.qualog.columnar";
-    public final static String FILE_WIDTH_PROPERTY_KEY   = "org.qualog.filewidth";
-    public final static String LEVEL_PROPERTY_KEY        = "org.qualog.level";
-    public final static String LINE_WIDTH_PROPERTY_KEY   = "org.qualog.linewidth";
-    public final static String METHOD_WIDTH_PROPERTY_KEY = "org.qualog.methodwidth";
-    public final static String SHOW_CLASSES_PROPERTY_KEY = "org.qualog.showclasses";
-    public final static String SHOW_FILES_PROPERTY_KEY   = "org.qualog.showfiles";
-    public final static String VERBOSE_PROPERTY_KEY      = "org.qualog.verbose";
     
     public final static Level LEVEL0 = new Level(0);
     public final static Level LEVEL1 = new Level(1);
@@ -62,7 +54,7 @@ public class Logger {
      * Sets verbose from system property settings.
      */
     protected static void setVerbosity() {
-        String verStr = System.getProperty(VERBOSE_PROPERTY_KEY, System.getProperty("verbose"));
+        String verStr = System.getProperty(Properties.VERBOSE, System.getProperty("verbose"));
 
         if (isNull(verStr)) {
             return;
@@ -71,64 +63,28 @@ public class Logger {
         boolean verbose = Boolean.valueOf(verStr);
         Level level = LEVEL5;
             
-        String lvlStr = System.getProperty(LEVEL_PROPERTY_KEY);
+        String lvlStr = System.getProperty(Properties.LEVEL);
         if (isNotNull(lvlStr)) {
             level = new Level(new Integer(lvlStr));
         }
 
         if (verbose) {
             setOutput(OutputType.VERBOSE, level);
-            System.out.println("Log, version " + VERSION);
+            System.out.println("Qualog, version " + VERSION);
         }
     }
 
     static {
-        writer = new Writer();
         timer = new Timer();
 
         setVerbosity();
         
-        Configuration config = writer.getConfiguration();
+        Configuration config = ConfigFactory.createFromProperties();
+        writer = new Writer(config);
         
-        if (System.getProperty("os.name").equals("Linux")) {
-            config.getColorConfig().setUseColor(true);
-        }
-
-        WidthConfig widths = config.getWidthConfig();
-        
-        Boolean showFiles = PropertyExt.getBoolean(SHOW_FILES_PROPERTY_KEY);
-        if (isNotNull(showFiles)) {
-            config.setShowFiles(showFiles);
-        }
-
-        Boolean showClasses = PropertyExt.getBoolean(SHOW_CLASSES_PROPERTY_KEY);
-        if (isNotNull(showClasses)) {
-            config.setShowClasses(showClasses);
-        }
-
-        Boolean columnar = PropertyExt.getBoolean(COLUMNAR_PROPERTY_KEY);
+        Boolean columnar = PropertyExt.getBoolean(Properties.COLUMNAR);
         if (isNotNull(columnar)) {
             writer.setColumns(columnar);
-        }
-
-        Integer fileWidth = PropertyExt.getInteger(FILE_WIDTH_PROPERTY_KEY);
-        if (isNotNull(fileWidth)) {
-            widths.setFileWidth(fileWidth);
-        }
-
-        Integer lineWidth = PropertyExt.getInteger(LINE_WIDTH_PROPERTY_KEY);
-        if (isNotNull(lineWidth)) {
-            widths.setLineWidth(lineWidth);
-        }
-
-        Integer classWidth = PropertyExt.getInteger(CLASS_WIDTH_PROPERTY_KEY);
-        if (isNotNull(classWidth)) {
-            widths.setClassWidth(classWidth);
-        }
-
-        Integer methodWidth = PropertyExt.getInteger(METHOD_WIDTH_PROPERTY_KEY);
-        if (isNotNull(methodWidth)) {
-            widths.setFunctionWidth(methodWidth);
         }
     }
     

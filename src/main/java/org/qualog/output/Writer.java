@@ -27,20 +27,40 @@ import static org.incava.ijdk.util.IUtil.*;
  * @see org.qualog.Logger
  */
 public class Writer {
-    private Configuration config = new Configuration();
+    private Configuration config;
 
-    // this writes to stdout even in Gradle and Ant, which redirect stdout:
-    private PrintWriter out = new PrintWriter(new PrintStream(new FileOutputStream(FileDescriptor.out)), true);
+    private PrintWriter out;
 
-    private List<String> packagesSkipped = list("org.qualog", "org.incava.qualog", "org.qualog");
-    private List<String> classesSkipped = list("tr.Ace");
-    private List<String> methodsSkipped = IUtil.<String>list();
+    private List<String> packagesSkipped;
+    private List<String> classesSkipped;
+    private List<String> methodsSkipped;
     
-    private OutputType outputType = OutputType.NONE;
-    private StackTraceElement prevStackElement = null;    
-    private Thread prevThread = null;
-    private Level level = new Level(9);
-    private List<Filter> filters = IUtil.<Filter>list();
+    private OutputType outputType;
+    private StackTraceElement prevStackElement;    
+    private Thread prevThread;
+    private Level level;
+    private List<Filter> filters;
+    
+    public Writer() {
+        this(new Configuration());
+    }
+
+    public Writer(Configuration config) {
+        this.config = config;
+
+        // this writes to stdout even in Gradle and Ant, which redirect stdout:
+        this.out = new PrintWriter(new PrintStream(new FileOutputStream(FileDescriptor.out)), true);
+
+        this.packagesSkipped = list("org.qualog", "org.incava.qualog", "org.qualog");
+        this.classesSkipped = list("tr.Ace");
+        this.methodsSkipped = IUtil.<String>list();
+    
+        this.outputType = OutputType.NONE;
+        this.prevStackElement = null;    
+        this.prevThread = null;
+        this.level = new Level(9);
+        this.filters = IUtil.<Filter>list();
+    }
 
     /**
      * Adds a filter to be applied for output.
