@@ -7,7 +7,6 @@ import java.util.Map;
 import org.incava.ijdk.util.PropertyExt;
 import org.qualog.config.ConfigFactory;
 import org.qualog.config.Properties;
-import org.qualog.config.WidthConfig;
 import org.qualog.output.ANSIColor;
 import org.qualog.output.ItemColors;
 import org.qualog.output.OutputType;
@@ -24,7 +23,7 @@ import static org.incava.ijdk.util.IUtil.*;
  */
 public class Logger {
     /**
-     * The version of the log module.
+     * The version of the qualog library.
      */
     public final static String VERSION = "2.0.0";
     

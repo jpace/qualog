@@ -61,7 +61,7 @@ public class Example {
     
     public static void main(String[] args) {
         tr.Ace.setVerbose(true);
-        tr.Ace.setConfiguration(new Configuration(new ColorConfig(), WidthConfig.NARROW));
+        tr.Ace.setConfiguration(new Configuration(new ColorConfig(), WidthConfig.NARROW, true, true, true));
         Example ex = new Example("demo");
         ex.process();
     }

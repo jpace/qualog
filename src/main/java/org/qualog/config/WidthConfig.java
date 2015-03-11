@@ -4,17 +4,26 @@ package org.qualog.config;
  * Widths of columns in log lines.
  */
 public class WidthConfig {
+    public static final int DEFAULT_FILE_WIDTH = 15;
+    public static final int DEFAULT_LINE_WIDTH = 4;
+    public static final int DEFAULT_CLASS_WIDTH = 25;
+    public static final int DEFAULT_FUNCTION_WIDTH = 15;
+
     public static final WidthConfig WIDE = new WidthConfig(25, 5, 35, 25);
-    public static final WidthConfig MEDIUM = new WidthConfig(15, 4, 25, 15);
+    public static final WidthConfig MEDIUM = new WidthConfig(DEFAULT_FILE_WIDTH, DEFAULT_LINE_WIDTH,
+                                                             DEFAULT_CLASS_WIDTH, DEFAULT_FUNCTION_WIDTH);
+    
     public static final WidthConfig NARROW = new WidthConfig(10, 4, 15, 15);
     public static final WidthConfig DEFAULT = MEDIUM;
 
-    private int fileWidth = 15;
-    private int lineWidth = 4;
-    private int classWidth = 25;
-    private int functionWidth = 15;
+    private int fileWidth;
+    private int lineWidth;
+    private int classWidth;
+    private int functionWidth;
 
     public WidthConfig() {
+        this(DEFAULT_FILE_WIDTH, DEFAULT_LINE_WIDTH,
+             DEFAULT_CLASS_WIDTH, DEFAULT_FUNCTION_WIDTH);
     }
 
     public WidthConfig(int fileWidth, int lineWidth, int classWidth, int functionWidth) {

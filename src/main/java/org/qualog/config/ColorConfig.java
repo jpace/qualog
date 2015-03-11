@@ -13,11 +13,15 @@ public class ColorConfig {
     private boolean useColor;
 
     public ColorConfig() {
+        this(true);
+    }
+    
+    public ColorConfig(boolean useColor) {
         packageColors = new HashMap<String, ANSIColor>();
         classColors = new HashMap<String, ANSIColor>();
         methodColors = new HashMap<String, ANSIColor>();
         fileColors = new HashMap<String, ANSIColor>();
-        useColor = true;
+        this.useColor = useColor;
     }
 
     public ANSIColor getMethodColor(String className, String methodName) {

@@ -3,8 +3,6 @@ package org.qualog.config;
 import org.incava.ijdk.util.PropertyExt;
 import org.qualog.Configuration;
 import org.qualog.config.Properties;
-import org.qualog.output.ANSIColor;
-import org.qualog.output.ANSIColorList;
 import static org.incava.ijdk.util.IUtil.*;
 
 public class ConfigFactory {
@@ -14,49 +12,35 @@ public class ConfigFactory {
     // public static final Configuration DEFAULT = MEDIUM;
 
     public static Configuration createFromProperties() {
-        Configuration config = new Configuration();
+        boolean useColor = System.getProperty("os.name").equals("Linux");
+
+        WidthConfig widths = createWidthConfigFromProperties();
         
-        if (System.getProperty("os.name").equals("Linux")) {
-            config.getColorConfig().setUseColor(true);
-        }
+        Boolean showFiles = getProperty(Properties.SHOW_FILES, true);
+        Boolean showClasses = getProperty(Properties.SHOW_CLASSES, true);        
+        Boolean useColumns = getProperty(Properties.COLUMNAR, true);
 
-        WidthConfig widths = config.getWidthConfig();
-        
-        Boolean showFiles = PropertyExt.getBoolean(Properties.SHOW_FILES);
-        if (isNotNull(showFiles)) {
-            config.setShowFiles(showFiles);
-        }
+        ColorConfig colors = new ColorConfig(useColor);
 
-        Boolean showClasses = PropertyExt.getBoolean(Properties.SHOW_CLASSES);
-        if (isNotNull(showClasses)) {
-            config.setShowClasses(showClasses);
-        }
+        return new Configuration(colors, widths, showFiles, showClasses, useColumns);
+    }
 
-        // Boolean columnar = PropertyExt.getBoolean(Properties.COLUMNAR);
-        // if (isNotNull(columnar)) {
-        //     writer.setColumns(columnar);
-        // }
+    public static WidthConfig createWidthConfigFromProperties() {
+        Integer fileWidth = getProperty(Properties.FILE_WIDTH, WidthConfig.DEFAULT_FILE_WIDTH);
+        Integer lineWidth = getProperty(Properties.LINE_WIDTH, WidthConfig.DEFAULT_LINE_WIDTH);
+        Integer classWidth = getProperty(Properties.CLASS_WIDTH, WidthConfig.DEFAULT_CLASS_WIDTH);
+        Integer functionWidth = getProperty(Properties.METHOD_WIDTH, WidthConfig.DEFAULT_FUNCTION_WIDTH);
 
-        Integer fileWidth = PropertyExt.getInteger(Properties.FILE_WIDTH);
-        if (isNotNull(fileWidth)) {
-            widths.setFileWidth(fileWidth);
-        }
+        return new WidthConfig(fileWidth, lineWidth, classWidth, functionWidth);
+    }
 
-        Integer lineWidth = PropertyExt.getInteger(Properties.LINE_WIDTH);
-        if (isNotNull(lineWidth)) {
-            widths.setLineWidth(lineWidth);
-        }
+    private static Integer getProperty(String name, Integer defValue) {
+        Integer value = PropertyExt.getInteger(name);
+        return value == null ? defValue : value;
+    }
 
-        Integer classWidth = PropertyExt.getInteger(Properties.CLASS_WIDTH);
-        if (isNotNull(classWidth)) {
-            widths.setClassWidth(classWidth);
-        }
-
-        Integer methodWidth = PropertyExt.getInteger(Properties.METHOD_WIDTH);
-        if (isNotNull(methodWidth)) {
-            widths.setFunctionWidth(methodWidth);
-        }
-
-        return config;
+    private static Boolean getProperty(String name, Boolean defValue) {
+        Boolean value = PropertyExt.getBoolean(name);
+        return value == null ? defValue : value;
     }
 }
