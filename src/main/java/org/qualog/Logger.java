@@ -4,14 +4,16 @@ import java.io.PrintWriter;
 import java.util.EnumSet;
 import java.util.List;
 import java.util.Map;
-import org.qualog.config.WidthConfig;
+import org.incava.ijdk.util.PropertyExt;
+import org.qualog.config.ConfigFactory;
+import org.qualog.config.ConfigType;
+import org.qualog.config.Properties;
 import org.qualog.output.ANSIColor;
 import org.qualog.output.ItemColors;
 import org.qualog.output.OutputType;
 import org.qualog.output.Writer;
 import org.qualog.timer.Timer;
 import org.qualog.types.LogObject;
-import org.incava.ijdk.util.PropertyExt;
 import static org.incava.ijdk.util.IUtil.*;
 
 /**
@@ -22,39 +24,35 @@ import static org.incava.ijdk.util.IUtil.*;
  */
 public class Logger {
     /**
-     * The version of the log module.
+     * The version of the qualog library.
      */
     public final static String VERSION = "2.0.0";
     
-    public final static String CLASS_WIDTH_PROPERTY_KEY  = "org.qualog.classwidth";
-    public final static String COLUMNAR_PROPERTY_KEY     = "org.qualog.columnar";
-    public final static String FILE_WIDTH_PROPERTY_KEY   = "org.qualog.filewidth";
-    public final static String LEVEL_PROPERTY_KEY        = "org.qualog.level";
-    public final static String LINE_WIDTH_PROPERTY_KEY   = "org.qualog.linewidth";
-    public final static String METHOD_WIDTH_PROPERTY_KEY = "org.qualog.methodwidth";
-    public final static String SHOW_CLASSES_PROPERTY_KEY = "org.qualog.showclasses";
-    public final static String SHOW_FILES_PROPERTY_KEY   = "org.qualog.showfiles";
-    public final static String VERBOSE_PROPERTY_KEY      = "org.qualog.verbose";
-    
-    public final static Level LEVEL0 = new Level(0);
-    public final static Level LEVEL1 = new Level(1);
-    public final static Level LEVEL2 = new Level(2);
-    public final static Level LEVEL3 = new Level(3);
-    public final static Level LEVEL4 = new Level(4);
-    public final static Level LEVEL5 = new Level(5);
-    public final static Level LEVEL6 = new Level(6);
-    public final static Level LEVEL7 = new Level(7);
-    public final static Level LEVEL8 = new Level(8);
-    public final static Level LEVEL9 = new Level(9);
+    public static final Level LEVEL0 = new Level(0);
+    public static final Level LEVEL1 = new Level(1);
+    public static final Level LEVEL2 = new Level(2);
+    public static final Level LEVEL3 = new Level(3);
+    public static final Level LEVEL4 = new Level(4);
+    public static final Level LEVEL5 = new Level(5);
+    public static final Level LEVEL6 = new Level(6);
+    public static final Level LEVEL7 = new Level(7);
+    public static final Level LEVEL8 = new Level(8);
+    public static final Level LEVEL9 = new Level(9);
 
     public static final OutputType NO_OUTPUT = OutputType.NONE;
     public static final OutputType QUIET     = OutputType.QUIET;    
     public static final OutputType VERBOSE   = OutputType.VERBOSE;
+
+    public static final ConfigType WIDE    = ConfigType.WIDE;
+    public static final ConfigType MEDIUM  = ConfigType.MEDIUM;
+    public static final ConfigType DEFAULT = ConfigType.DEFAULT;
+    public static final ConfigType NARROW  = ConfigType.NARROW;
     
     /**
      * The default number of stack trace elements to display in a stack.
      */
     protected static final int DEFAULT_STACK_DEPTH = 5;
+
     protected static Writer writer;
     protected static Timer timer;
 
@@ -62,7 +60,7 @@ public class Logger {
      * Sets verbose from system property settings.
      */
     protected static void setVerbosity() {
-        String verStr = System.getProperty(VERBOSE_PROPERTY_KEY, System.getProperty("verbose"));
+        String verStr = System.getProperty(Properties.VERBOSE, System.getProperty("verbose"));
 
         if (isNull(verStr)) {
             return;
@@ -71,65 +69,24 @@ public class Logger {
         boolean verbose = Boolean.valueOf(verStr);
         Level level = LEVEL5;
             
-        String lvlStr = System.getProperty(LEVEL_PROPERTY_KEY);
+        String lvlStr = System.getProperty(Properties.LEVEL);
         if (isNotNull(lvlStr)) {
             level = new Level(new Integer(lvlStr));
         }
 
         if (verbose) {
             setOutput(OutputType.VERBOSE, level);
-            System.out.println("Log, version " + VERSION);
+            System.out.println("Qualog, version " + VERSION);
         }
     }
 
     static {
-        writer = new Writer();
         timer = new Timer();
 
         setVerbosity();
         
-        Configuration config = writer.getConfiguration();
-        
-        if (System.getProperty("os.name").equals("Linux")) {
-            config.getColorConfig().setUseColor(true);
-        }
-
-        WidthConfig widths = config.getWidthConfig();
-        
-        Boolean showFiles = PropertyExt.getBoolean(SHOW_FILES_PROPERTY_KEY);
-        if (isNotNull(showFiles)) {
-            config.setShowFiles(showFiles);
-        }
-
-        Boolean showClasses = PropertyExt.getBoolean(SHOW_CLASSES_PROPERTY_KEY);
-        if (isNotNull(showClasses)) {
-            config.setShowClasses(showClasses);
-        }
-
-        Boolean columnar = PropertyExt.getBoolean(COLUMNAR_PROPERTY_KEY);
-        if (isNotNull(columnar)) {
-            writer.setColumns(columnar);
-        }
-
-        Integer fileWidth = PropertyExt.getInteger(FILE_WIDTH_PROPERTY_KEY);
-        if (isNotNull(fileWidth)) {
-            widths.setFileWidth(fileWidth);
-        }
-
-        Integer lineWidth = PropertyExt.getInteger(LINE_WIDTH_PROPERTY_KEY);
-        if (isNotNull(lineWidth)) {
-            widths.setLineWidth(lineWidth);
-        }
-
-        Integer classWidth = PropertyExt.getInteger(CLASS_WIDTH_PROPERTY_KEY);
-        if (isNotNull(classWidth)) {
-            widths.setClassWidth(classWidth);
-        }
-
-        Integer methodWidth = PropertyExt.getInteger(METHOD_WIDTH_PROPERTY_KEY);
-        if (isNotNull(methodWidth)) {
-            widths.setFunctionWidth(methodWidth);
-        }
+        Configuration config = ConfigFactory.createFromProperties();
+        writer = new Writer(config);
     }
     
     public static boolean isLoggable(Level level) {
@@ -166,11 +123,12 @@ public class Logger {
         // writer.setFileColor(fileName, color);
     }
 
-    public static void set(boolean columns, int fileWidth, int lineWidth, int classWidth, int funcWidth) {
-        writer.set(columns, fileWidth, lineWidth, classWidth, funcWidth);
+    public static void setConfiguration(Configuration config) {
+        writer.setConfiguration(config);
     }
 
-    public static void setConfiguration(Configuration config) {
+    public static void setConfiguration(ConfigType configType) {
+        Configuration config = ConfigFactory.create(configType);
         writer.setConfiguration(config);
     }
 
@@ -205,23 +163,7 @@ public class Logger {
     public static boolean verbose() {
         return writer.verbose();
     }
-
-    public static void setColumns(boolean cols) {
-        writer.setColumns(cols);
-    }
     
-    public static void addClassSkipped(Class<?> cls) {
-        writer.addClassSkipped(cls);
-    }
-    
-    public static void addClassSkipped(String clsName) {
-        writer.addClassSkipped(clsName);
-    }
-    
-    public static void addPackageSkipped(String pkgName) {
-        writer.addPackageSkipped(pkgName);
-    }
-
     public static void reset() {
         writer.reset();
     }

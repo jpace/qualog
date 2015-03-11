@@ -27,9 +27,12 @@ public class Configuration {
         widthConfig = new WidthConfig();
     }
 
-    public Configuration(ColorConfig cc, WidthConfig wc) {
-        colorConfig = cc;
-        widthConfig = wc;
+    public Configuration(ColorConfig cc, WidthConfig wc, boolean showFiles, boolean showClasses, boolean useColumns) {
+        this.colorConfig = cc;
+        this.widthConfig = wc;
+        this.showFiles = showFiles;
+        this.showClasses = showClasses;
+        this.useColumns = useColumns;
     }
 
     public ColorConfig getColorConfig() {

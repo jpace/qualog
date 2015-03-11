@@ -35,7 +35,7 @@ public class LogTestCase extends TestCase {
                               int lineWidth,
                               int classWidth,
                               int functionWidth,
-                              boolean columns) {
+                              boolean useColumns) {
         Log.clear();
         
         StringWriter sw = new StringWriter();
@@ -52,7 +52,7 @@ public class LogTestCase extends TestCase {
         widths.setClassWidth(classWidth);
         widths.setFunctionWidth(functionWidth);
 
-        Log.setColumns(columns);
+        cfg.setUseColumns(useColumns);
 
         return sw;
     }

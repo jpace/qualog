@@ -12,7 +12,6 @@ import org.qualog.Filter;
 import org.qualog.Level;
 import org.qualog.Log;
 import org.qualog.config.ColorConfig;
-import org.qualog.config.WidthConfig;
 import org.qualog.types.LogElement;
 import org.qualog.types.LogElementFactory;
 import org.incava.ijdk.util.IUtil;
@@ -27,20 +26,40 @@ import static org.incava.ijdk.util.IUtil.*;
  * @see org.qualog.Logger
  */
 public class Writer {
-    private Configuration config = new Configuration();
+    private Configuration config;
 
-    // this writes to stdout even in Gradle and Ant, which redirect stdout:
-    private PrintWriter out = new PrintWriter(new PrintStream(new FileOutputStream(FileDescriptor.out)), true);
+    private PrintWriter out;
 
-    private List<String> packagesSkipped = list("org.qualog", "org.incava.qualog", "org.qualog");
-    private List<String> classesSkipped = list("tr.Ace");
-    private List<String> methodsSkipped = IUtil.<String>list();
+    private List<String> packagesSkipped;
+    private List<String> classesSkipped;
+    private List<String> methodsSkipped;
     
-    private OutputType outputType = OutputType.NONE;
-    private StackTraceElement prevStackElement = null;    
-    private Thread prevThread = null;
-    private Level level = new Level(9);
-    private List<Filter> filters = IUtil.<Filter>list();
+    private OutputType outputType;
+    private StackTraceElement prevStackElement;    
+    private Thread prevThread;
+    private Level level;
+    private List<Filter> filters;
+    
+    public Writer() {
+        this(new Configuration());
+    }
+
+    public Writer(Configuration config) {
+        this.config = config;
+
+        // this writes to stdout even in Gradle and Ant, which redirect stdout:
+        this.out = new PrintWriter(new PrintStream(new FileOutputStream(FileDescriptor.out)), true);
+
+        this.packagesSkipped = list("org.qualog", "org.incava.qualog", "org.qualog");
+        this.classesSkipped = list("tr.Ace");
+        this.methodsSkipped = IUtil.<String>list();
+    
+        this.outputType = OutputType.NONE;
+        this.prevStackElement = null;    
+        this.prevThread = null;
+        this.level = new Level(9);
+        this.filters = IUtil.<Filter>list();
+    }
 
     /**
      * Adds a filter to be applied for output.
@@ -51,33 +70,12 @@ public class Writer {
         filters.add(filter);
     }
 
-    public void setColumns(boolean cols) {
-        config.setUseColumns(cols);
-    }
-
     public void setOut(PrintWriter out) {
         this.out = out;
     }
 
     public void setDisabled(Class<?> cls) {
         addFilter(new ClassFilter(cls, null));
-    }
-
-    public void set(boolean columns, int fileWidth, int lineWidth, int classWidth, int functionWidth) {
-        WidthConfig wc = config.getWidthConfig();
-        wc.setFileWidth(fileWidth);
-        wc.setLineWidth(lineWidth);
-        wc.setClassWidth(classWidth);
-        wc.setFunctionWidth(functionWidth);
-        config.setUseColumns(columns);
-    }
-
-    public void setShowClasses(boolean showClasses) {
-        config.setShowClasses(showClasses);
-    }
-
-    public void setShowFiles(boolean showFiles) {
-        config.setShowFiles(showFiles);
     }
 
     public void setConfiguration(Configuration config) {
@@ -198,7 +196,7 @@ public class Writer {
     }
 
     private ANSIColorList getMessageColors(ItemColors elmtColors, StackTraceElement ste) {
-        ColorConfig cc = config.getColorConfig();
+        ColorConfig cc = getColorConfig();
         if (!cc.useColor()) {
             return null;
         }
@@ -249,17 +247,21 @@ public class Writer {
     }
 
     private ANSIColor getFileColor(ItemColors elmtColors, StackTraceElement stackElement) {
-        ColorConfig cc = config.getColorConfig();
+        ColorConfig cc = getColorConfig();
         return or(elmtColors.getFileColor(), cc.getFileColor(stackElement.getFileName()));
     }
 
     private ANSIColor getClassColor(ItemColors elmtColors, StackTraceElement stackElement) {
-        ColorConfig cc = config.getColorConfig();
+        ColorConfig cc = getColorConfig();
         return or(elmtColors.getClassColor(), cc.getClassColor(stackElement.getClassName()));
     }
 
     private ANSIColor getMethodColor(ItemColors elmtColors, StackTraceElement stackElement) {
-        ColorConfig cc = config.getColorConfig();
+        ColorConfig cc = getColorConfig();
         return or(elmtColors.getMethodColor(), cc.getMethodColor(stackElement.getClassName(), stackElement.getMethodName()));
+    }
+
+    private ColorConfig getColorConfig() {
+        return config.getColorConfig();
     }
 }

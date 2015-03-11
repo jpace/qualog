@@ -5,6 +5,7 @@ import org.qualog.Configuration;
 import org.qualog.config.ColorConfig;
 import org.qualog.config.WidthConfig;
 import static org.incava.ijdk.util.IUtil.list;
+import static tr.Ace.*;
 
 public class Example {
     private final String name;
@@ -60,7 +61,7 @@ public class Example {
     
     public static void main(String[] args) {
         tr.Ace.setVerbose(true);
-        tr.Ace.setConfiguration(new Configuration(new ColorConfig(), WidthConfig.NARROW));
+        tr.Ace.setConfiguration(new Configuration(new ColorConfig(), WidthConfig.NARROW, true, true, true));
         Example ex = new Example("demo");
         ex.process();
     }
