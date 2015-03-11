@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 import org.incava.ijdk.util.PropertyExt;
 import org.qualog.config.ConfigFactory;
+import org.qualog.config.ConfigType;
 import org.qualog.config.Properties;
 import org.qualog.output.ANSIColor;
 import org.qualog.output.ItemColors;
@@ -27,25 +28,31 @@ public class Logger {
      */
     public final static String VERSION = "2.0.0";
     
-    public final static Level LEVEL0 = new Level(0);
-    public final static Level LEVEL1 = new Level(1);
-    public final static Level LEVEL2 = new Level(2);
-    public final static Level LEVEL3 = new Level(3);
-    public final static Level LEVEL4 = new Level(4);
-    public final static Level LEVEL5 = new Level(5);
-    public final static Level LEVEL6 = new Level(6);
-    public final static Level LEVEL7 = new Level(7);
-    public final static Level LEVEL8 = new Level(8);
-    public final static Level LEVEL9 = new Level(9);
+    public static final Level LEVEL0 = new Level(0);
+    public static final Level LEVEL1 = new Level(1);
+    public static final Level LEVEL2 = new Level(2);
+    public static final Level LEVEL3 = new Level(3);
+    public static final Level LEVEL4 = new Level(4);
+    public static final Level LEVEL5 = new Level(5);
+    public static final Level LEVEL6 = new Level(6);
+    public static final Level LEVEL7 = new Level(7);
+    public static final Level LEVEL8 = new Level(8);
+    public static final Level LEVEL9 = new Level(9);
 
     public static final OutputType NO_OUTPUT = OutputType.NONE;
     public static final OutputType QUIET     = OutputType.QUIET;    
     public static final OutputType VERBOSE   = OutputType.VERBOSE;
+
+    public static final ConfigType WIDE    = ConfigType.WIDE;
+    public static final ConfigType MEDIUM  = ConfigType.MEDIUM;
+    public static final ConfigType DEFAULT = ConfigType.DEFAULT;
+    public static final ConfigType NARROW  = ConfigType.NARROW;
     
     /**
      * The default number of stack trace elements to display in a stack.
      */
     protected static final int DEFAULT_STACK_DEPTH = 5;
+
     protected static Writer writer;
     protected static Timer timer;
 
@@ -80,11 +87,6 @@ public class Logger {
         
         Configuration config = ConfigFactory.createFromProperties();
         writer = new Writer(config);
-        
-        Boolean columnar = PropertyExt.getBoolean(Properties.COLUMNAR);
-        if (isNotNull(columnar)) {
-            writer.setColumns(columnar);
-        }
     }
     
     public static boolean isLoggable(Level level) {
@@ -121,11 +123,12 @@ public class Logger {
         // writer.setFileColor(fileName, color);
     }
 
-    public static void set(boolean columns, int fileWidth, int lineWidth, int classWidth, int funcWidth) {
-        writer.set(columns, fileWidth, lineWidth, classWidth, funcWidth);
+    public static void setConfiguration(Configuration config) {
+        writer.setConfiguration(config);
     }
 
-    public static void setConfiguration(Configuration config) {
+    public static void setConfiguration(ConfigType configType) {
+        Configuration config = ConfigFactory.create(configType);
         writer.setConfiguration(config);
     }
 
@@ -160,23 +163,7 @@ public class Logger {
     public static boolean verbose() {
         return writer.verbose();
     }
-
-    public static void setColumns(boolean cols) {
-        writer.setColumns(cols);
-    }
     
-    public static void addClassSkipped(Class<?> cls) {
-        writer.addClassSkipped(cls);
-    }
-    
-    public static void addClassSkipped(String clsName) {
-        writer.addClassSkipped(clsName);
-    }
-    
-    public static void addPackageSkipped(String pkgName) {
-        writer.addPackageSkipped(pkgName);
-    }
-
     public static void reset() {
         writer.reset();
     }

@@ -6,22 +6,22 @@ import org.qualog.config.Properties;
 import static org.incava.ijdk.util.IUtil.*;
 
 public class ConfigFactory {
-    // public static final Configuration WIDE = new Configuration(WidthConfig.WIDE);
-    // public static final Configuration MEDIUM = new Configuration(WidthConfig.WIDE);
-    // public static final Configuration NARROW = new Configuration(WidthConfig.WIDE);
-    // public static final Configuration DEFAULT = MEDIUM;
-
     public static Configuration createFromProperties() {
-        boolean useColor = System.getProperty("os.name").equals("Linux");
+        WidthConfig widths      = createWidthConfigFromProperties();        
+        boolean     showFiles   = getProperty(Properties.SHOW_FILES,   true);
+        boolean     showClasses = getProperty(Properties.SHOW_CLASSES, true);
+        boolean     useColumns  = getProperty(Properties.COLUMNAR,     true);
+        return create(widths, showFiles, showClasses, useColumns);
+    }
 
-        WidthConfig widths = createWidthConfigFromProperties();
-        
-        Boolean showFiles = getProperty(Properties.SHOW_FILES, true);
-        Boolean showClasses = getProperty(Properties.SHOW_CLASSES, true);        
-        Boolean useColumns = getProperty(Properties.COLUMNAR, true);
+    public static Configuration create(ConfigType configType) {
+        WidthConfig widths = createWidthConfig(configType);
+        return create(widths, true, true, true);
+    }
 
+    public static Configuration create(WidthConfig widths, boolean showFiles, boolean showClasses, boolean useColumns) {
+        boolean useColor = System.getProperty("os.name").equals("Linux");        
         ColorConfig colors = new ColorConfig(useColor);
-
         return new Configuration(colors, widths, showFiles, showClasses, useColumns);
     }
 
@@ -32,6 +32,21 @@ public class ConfigFactory {
         Integer functionWidth = getProperty(Properties.METHOD_WIDTH, WidthConfig.DEFAULT_FUNCTION_WIDTH);
 
         return new WidthConfig(fileWidth, lineWidth, classWidth, functionWidth);
+    }
+
+    public static WidthConfig createWidthConfig(ConfigType configType) {
+        switch (configType) {
+            case WIDE:
+                return WidthConfig.WIDE;
+            case MEDIUM:
+                return WidthConfig.MEDIUM;
+            case DEFAULT:
+                return WidthConfig.DEFAULT;
+            case NARROW:
+                return WidthConfig.NARROW;
+            default:
+                return WidthConfig.DEFAULT;
+        }
     }
 
     private static Integer getProperty(String name, Integer defValue) {

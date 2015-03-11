@@ -62,7 +62,7 @@ public class TestLogObject extends TestCase {
     }
 
     public void testInspectThree() {
-        Map<String, Object> attrs = LogObject.inspect(new java.util.ArrayList<String>(Arrays.asList(new String[] { "this", "is", "a", "test" })));
+        Map<String, Object> attrs = LogObject.inspect(new ArrayList<String>(Arrays.asList(new String[] { "this", "is", "a", "test" })));
         tr.Ace.log("attrs", attrs);
         Map<String, Object> exp = new TreeMap<String, Object>();
         exp.put("elementData", new Object[] { "this", "is", "a", "test" });

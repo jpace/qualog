@@ -1,11 +1,10 @@
 package org.qualog.timer;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import org.incava.ijdk.lang.ObjectExt;
 import org.incava.ijdk.lang.Pair;
-import org.qualog.Log;
+import org.qualog.Logger;
 import static org.incava.ijdk.util.IUtil.*;
 
 public class Timer {
@@ -54,10 +53,10 @@ public class Timer {
         
         for (int idx : iter(periods.size())) {
             TimedPeriod qtp       = periods.get(idx);
-            int            matchness = (getScore(msg,        qtp.getMessage()) +
-                                        getScore(className,  qtp.getClassName()) + 
-                                        getScore(fileName,   qtp.getFileName()) +
-                                        getScore(methodName, qtp.getMethodName()));
+            int         matchness = (getScore(msg,        qtp.getMessage()) +
+                                     getScore(className,  qtp.getClassName()) + 
+                                     getScore(fileName,   qtp.getFileName()) +
+                                     getScore(methodName, qtp.getMethodName()));
             
             if (matchness >= bestMatch.getSecond()) {
                 bestMatch = new Pair<Integer, Integer>(idx, matchness);
@@ -80,7 +79,7 @@ public class Timer {
             long        elapsed = endTime - qtp.getStartTime();
             String      str     = getMessage(ste, msg, elapsed);
 
-            Log.log(str);
+            Logger.log(str);
         }
         else {
             System.err.println("ERROR no matching start!");
@@ -123,10 +122,8 @@ public class Timer {
 
     protected StackTraceElement getFrame() {
         StackTraceElement[] stack = (new Exception("")).getStackTrace();
-        int                 stIdx = Log.findStackStart(stack);
-        StackTraceElement   ste   = stack[stIdx];
-
-        return ste;
+        int stIdx = Logger.findStackStart(stack);
+        return stack[stIdx];
     }
 
     public String format(long duration) {

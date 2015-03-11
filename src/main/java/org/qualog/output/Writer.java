@@ -12,7 +12,6 @@ import org.qualog.Filter;
 import org.qualog.Level;
 import org.qualog.Log;
 import org.qualog.config.ColorConfig;
-import org.qualog.config.WidthConfig;
 import org.qualog.types.LogElement;
 import org.qualog.types.LogElementFactory;
 import org.incava.ijdk.util.IUtil;
@@ -71,33 +70,12 @@ public class Writer {
         filters.add(filter);
     }
 
-    public void setColumns(boolean cols) {
-        config.setUseColumns(cols);
-    }
-
     public void setOut(PrintWriter out) {
         this.out = out;
     }
 
     public void setDisabled(Class<?> cls) {
         addFilter(new ClassFilter(cls, null));
-    }
-
-    public void set(boolean columns, int fileWidth, int lineWidth, int classWidth, int functionWidth) {
-        WidthConfig wc = config.getWidthConfig();
-        wc.setFileWidth(fileWidth);
-        wc.setLineWidth(lineWidth);
-        wc.setClassWidth(classWidth);
-        wc.setFunctionWidth(functionWidth);
-        config.setUseColumns(columns);
-    }
-
-    public void setShowClasses(boolean showClasses) {
-        config.setShowClasses(showClasses);
-    }
-
-    public void setShowFiles(boolean showFiles) {
-        config.setShowFiles(showFiles);
     }
 
     public void setConfiguration(Configuration config) {
@@ -218,7 +196,7 @@ public class Writer {
     }
 
     private ANSIColorList getMessageColors(ItemColors elmtColors, StackTraceElement ste) {
-        ColorConfig cc = config.getColorConfig();
+        ColorConfig cc = getColorConfig();
         if (!cc.useColor()) {
             return null;
         }
@@ -269,17 +247,21 @@ public class Writer {
     }
 
     private ANSIColor getFileColor(ItemColors elmtColors, StackTraceElement stackElement) {
-        ColorConfig cc = config.getColorConfig();
+        ColorConfig cc = getColorConfig();
         return or(elmtColors.getFileColor(), cc.getFileColor(stackElement.getFileName()));
     }
 
     private ANSIColor getClassColor(ItemColors elmtColors, StackTraceElement stackElement) {
-        ColorConfig cc = config.getColorConfig();
+        ColorConfig cc = getColorConfig();
         return or(elmtColors.getClassColor(), cc.getClassColor(stackElement.getClassName()));
     }
 
     private ANSIColor getMethodColor(ItemColors elmtColors, StackTraceElement stackElement) {
-        ColorConfig cc = config.getColorConfig();
+        ColorConfig cc = getColorConfig();
         return or(elmtColors.getMethodColor(), cc.getMethodColor(stackElement.getClassName(), stackElement.getMethodName()));
+    }
+
+    private ColorConfig getColorConfig() {
+        return config.getColorConfig();
     }
 }
