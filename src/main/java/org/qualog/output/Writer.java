@@ -52,7 +52,7 @@ public class Writer {
 
         this.packagesSkipped = list("org.qualog", "org.incava.qualog", "org.qualog");
         this.classesSkipped = list("tr.Ace");
-        this.methodsSkipped = IUtil.<String>list();
+        this.methodsSkipped = list("log");
     
         this.outputType = OutputType.NONE;
         this.prevStackElement = null;    

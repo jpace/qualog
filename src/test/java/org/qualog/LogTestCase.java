@@ -1,9 +1,7 @@
 package org.qualog;
 
-import java.io.PrintWriter;
 import java.io.StringWriter;
 import junit.framework.TestCase;
-import org.qualog.config.WidthConfig;
 import org.qualog.output.OutputType;
 
 public class LogTestCase extends TestCase {
@@ -12,21 +10,7 @@ public class LogTestCase extends TestCase {
     }
 
     public void compare(String expected, String actual) {
-        int i = 0;
-        while (i < expected.length() && i < actual.length()) {
-            // System.err.println("char[" + i + "]: " + expected.charAt(i) + " <=> " + actual.charAt(i));
-            if (expected.charAt(i) != actual.charAt(i)) {
-                System.err.println("mismatch");
-                return;
-            }
-            ++i;
-        }
-        if (i < expected.length()) {
-            System.err.println("i not at end of expected");
-        }
-        else if (i < actual.length()) {
-            System.err.println("i not at end of actual");
-        }
+        LogUtil.compare(expected, actual);
     }
 
     public StringWriter reset(OutputType type, 
@@ -36,49 +20,11 @@ public class LogTestCase extends TestCase {
                               int classWidth,
                               int functionWidth,
                               boolean useColumns) {
-        Log.clear();
-        
-        StringWriter sw = new StringWriter();
-        PrintWriter pw = new PrintWriter(sw, true);
-        Log.setOut(pw);
-
-        Log.setOutput(type, level);
-
-        Configuration cfg = Log.getConfiguration();
-        WidthConfig widths = cfg.getWidthConfig();
-
-        widths.setFileWidth(fileWidth);
-        widths.setLineWidth(lineWidth);
-        widths.setClassWidth(classWidth);
-        widths.setFunctionWidth(functionWidth);
-
-        cfg.setUseColumns(useColumns);
-
-        return sw;
+        return LogUtil.reset(type, level, fileWidth, lineWidth, classWidth, functionWidth, useColumns);
     }
 
     public void assertStringsEqual(String exp, String act) {
-        // System.out.println(act);
-        
-        if (!exp.equals(act)) {
-            System.err.println("expected output:\n" + exp);
-            System.err.println("log output:\n" + act);
-
-            String[] expLines = exp.split("\n");
-            String[] actLines = act.split("\n");
-
-            int nLines = Math.max(expLines.length, actLines.length);
-            for (int li = 0; li < nLines; ++li) {
-                String expLine = li < expLines.length ? expLines[li] : null;
-                String actLine = li < actLines.length ? actLines[li] : null;
-                
-                if (!expLine.equals(actLine)) {
-                    compare(expLine, actLine);
-                }
-
-                assertEquals("line[" + li + "]", expLine, actLine);
-            }
-        }
+        LogUtil.assertStringsEqual(exp, act);
     }
 
     public void testNothing() {
