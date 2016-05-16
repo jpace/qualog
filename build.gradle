@@ -2,6 +2,8 @@ apply plugin: 'java'
 
 group = 'org.qualog'
 version ='2.0.0'
+sourceCompatibility = 1.5
+sourceCompatibility = 1.5
 
 repositories {
     mavenCentral()
@@ -12,12 +14,14 @@ dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.10'
 }
 
+/*
 allprojects {
     tasks.withType(Compile).all { Compile compile ->
         compile.options.debug = true
         compile.options.compilerArgs = ['-Xlint:all']
     }
 }
+*/
 
 test {
     excludes = [ '**/Abstract*' ]
