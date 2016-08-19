@@ -67,6 +67,9 @@ public class LogUtil {
             for (int li = 0; li < nLines; ++li) {
                 String expLine = li < expLines.length ? expLines[li] : null;
                 String actLine = li < actLines.length ? actLines[li] : null;
+
+                Assert.assertNotNull("expLine[" + li + "]", expLine);
+                Assert.assertNotNull("actLine[" + li + "]", actLine);
                 
                 if (!expLine.equals(actLine)) {
                     compare(expLine, actLine);

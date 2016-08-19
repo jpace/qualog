@@ -66,6 +66,10 @@ public class LogElementFactory {
             Map<?, ?> map = (Map<?, ?>)obj;
             return new LogMap(level, colors, name, map, numFrames);
         }
+        else if (obj instanceof Throwable) {
+            Throwable thr = (Throwable)obj;
+            return new LogException(level, colors, name, thr, numFrames);
+        }
         else {
             return new LogElement(level, colors, name, obj, numFrames);
         }

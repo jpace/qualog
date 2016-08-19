@@ -19,7 +19,8 @@ public class LogElement {
     public static final List<Class<? extends Serializable>> UNDECORATED_CLASSES = list(String.class,
                                                                                        Number.class,
                                                                                        Character.class,
-                                                                                       Boolean.class);
+                                                                                       Boolean.class,
+                                                                                       StackTraceElement.class);
     
     /**
      * Returns whether the class of the object is assignable from any of the
