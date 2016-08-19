@@ -47,6 +47,10 @@ public class TestLogObject extends TestCase {
         exp.put("MIN_EXPONENT", Double.MIN_EXPONENT);
         exp.put("SIZE", Double.SIZE);
         exp.put("TYPE", Double.TYPE);
+
+        if (System.getProperty("java.version").startsWith("1.8")) {
+            exp.put("BYTES", Double.BYTES);
+        }
         
         assertEquals(exp, attrs);
     }
