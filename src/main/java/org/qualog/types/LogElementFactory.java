@@ -37,8 +37,10 @@ public class LogElementFactory {
     }
 
     public static LogElement create(Level level, ItemColors colors, String name, Object obj, int numFrames) {
+        ElementParams params = new ElementParams(level, colors, name, numFrames);
+        
         if (obj == null) {
-            return new LogElement(level, colors, name, obj, numFrames);
+            return new LogElement(params, obj);
         }
         else {
             Class<? extends LogElement> elmtCls = findElmtClass(obj);

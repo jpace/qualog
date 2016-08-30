@@ -50,6 +50,10 @@ public class LogElement {
         this.object = obj;
         this.numFrames = numFrames;
     }
+        
+    public LogElement(ElementParams params, Object obj) {
+        this(params.getLevel(), params.getColors(), params.getName(), obj, params.getNumFrames());
+    }
 
     public Level getLevel() {
         return level;
