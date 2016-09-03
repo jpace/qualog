@@ -7,7 +7,7 @@ colors and stack traces.
 A sample session with qualog (taken from [diffj](http://github.com/jpace/diffj "DiffJ project at
 Github") appears as:
 
-![example](/qualog/img/diffj-qualog.png?raw=true)
+![example](https://cloud.githubusercontent.com/assets/918072/18225444/95081818-71bf-11e6-82c3-f31de638af68.png)
 
 The class tr.Ace is the equivalent (a subclass, in fact) of org.qualog.Log, just with a shorter
 name.
