@@ -3,8 +3,6 @@ package org.qualog.types;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
-import org.qualog.Level;
-import org.qualog.output.ItemColors;
 
 /**
  * Wraps Iterators for output.

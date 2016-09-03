@@ -37,34 +37,28 @@ public class LogElement {
         return false;
     }
 
-    private final Level level;
-    private final ItemColors colors;
-    private final String name;
+    private final ElementParams params;
     private final Object object;
-    private final int numFrames;
         
     public LogElement(Level level, ItemColors colors, String name, Object obj, int numFrames) {
-        this.level = level;
-        this.colors = colors;
-        this.name = name;
-        this.object = obj;
-        this.numFrames = numFrames;
+        this(new ElementParams(level, colors, name, numFrames), obj);
     }
         
     public LogElement(ElementParams params, Object obj) {
-        this(params.getLevel(), params.getColors(), params.getName(), obj, params.getNumFrames());
+        this.params = params;
+        this.object = obj;
     }
 
     public Level getLevel() {
-        return level;
+        return params.getLevel();
     }
     
     public ItemColors getColors() {
-        return colors;
+        return params.getColors();
     }
 
     public String getName() {
-        return name;
+        return params.getName();
     }
 
     public Object getObject() {
@@ -72,7 +66,7 @@ public class LogElement {
     }
 
     public int getNumFrames() {
-        return numFrames;
+        return params.getNumFrames();
     }
     
     public String getMessage() {
@@ -85,7 +79,7 @@ public class LogElement {
     }
 
     public boolean stackEmptyCollection(Writer lw) {
-        return lw.stack(level, colors, name, "()", numFrames);
+        return lw.stack(getLevel(), getColors(), getName(), "()", getNumFrames());
     }
 
     public String toString(Object obj) {

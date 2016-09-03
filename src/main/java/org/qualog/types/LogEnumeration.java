@@ -2,8 +2,6 @@ package org.qualog.types;
 
 import java.util.Collections;
 import java.util.Enumeration;
-import org.qualog.Level;
-import org.qualog.output.ItemColors;
 
 /**
  * Wraps Enumerations for output.
