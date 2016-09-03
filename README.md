@@ -1,12 +1,13 @@
 # Overview
 
 Qualog (Quasi Log) is a simple library for producing logging statements from Java code. It resembles
-log4j, with reduced functionality and a simpler configuration.
+log4j, with a simpler configuration and much cleaner and more concise output, as well as output in
+colors and stack traces.
 
-The GitHub project [qualog](http://github.com/jpace/qualog "Qualog project at Github") contains the
-full project.
+A sample session with qualog (taken from [diffj](http://github.com/jpace/diffj "DiffJ project at
+Github") appears as:
 
-Qualog requires [ijdk](http://github.com/jpace/ijdk "IJDK project at Github").
+![example](qualog/img/diffj-qualog.png)
 
 The class tr.Ace is the equivalent (a subclass, in fact) of org.qualog.Log, just with a shorter
 name.
@@ -117,7 +118,10 @@ onYellow, onBlue, onMagenta, onCyan, onWhite), for colorized output:
     // and combined, with an EnumSet:
     tr.Ace.log(EnumSet.of(ANSIColor.BLUE, ANSIColor.BOLD, ANSIColor.ON_YELLOW), "obj", obj);
 
-Note that this currently is available only on Linux systems.
+Note that this currently is available only on Linux systems. (I welcome volunteers to test and
+develop this on Windows Command Prompt and PowerShell.)
+
+Qualog requires [ijdk](http://github.com/jpace/ijdk "IJDK project at Github").
 
 # Help
 
