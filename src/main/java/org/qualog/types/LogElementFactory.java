@@ -29,7 +29,17 @@ public class LogElementFactory {
     public static LogElement createLogElement(Class<? extends LogElement> elmtCls, Level level, ItemColors colors, String name, Object obj, int numFrames) {
         try {
             Constructor<?> ctor = elmtCls.getConstructor(Level.class, ItemColors.class, String.class, Object.class, int.class);
-            return (LogElement)ctor.newInstance(level, colors, name, obj, numFrames);
+            return ctor == null ? null : (LogElement)ctor.newInstance(level, colors, name, obj, numFrames);
+        }
+        catch (Exception ex) {
+            return null;
+        }
+    }
+
+    public static LogElement createLogElement(Class<? extends LogElement> elmtCls, ElementParams params, Object obj) {
+        try {
+            Constructor<?> ctor = elmtCls.getConstructor(ElementParams.class, Object.class);
+            return ctor == null ? null : (LogElement)ctor.newInstance(params, obj);
         }
         catch (Exception ex) {
             return null;
@@ -45,35 +55,36 @@ public class LogElementFactory {
         else {
             Class<? extends LogElement> elmtCls = findElmtClass(obj);
             if (elmtCls != null) {
-                return createLogElement(elmtCls, level, colors, name, obj, numFrames);
+                LogElement elmt = createLogElement(elmtCls, level, colors, name, obj, numFrames);
+                return elmt == null ? createLogElement(elmtCls, params, obj) : elmt;
             }
         }
 
         if (obj.getClass().isArray()) {
-            return LogObjectArray.create(level, colors, name, obj, numFrames);
+            return LogObjectArray.create(params, obj);
         }
         else if (obj instanceof Collection) {
             Collection<?> coll = (Collection<?>)obj;
-            return new LogCollection(level, colors, name, coll, numFrames);
+            return new LogCollection(params, coll);
         }
         else if (obj instanceof Iterator) {
             Iterator<?> it = (Iterator<?>)obj;
-            return LogIterator.create(level, colors, name, it, numFrames);
+            return LogIterator.create(params, it);
         }
         else if (obj instanceof Enumeration) {
             Enumeration<?> en = (Enumeration<?>)obj;
-            return new LogEnumeration(level, colors, name, en, numFrames);
+            return new LogEnumeration(params, en);
         }
         else if (obj instanceof Map) {
             Map<?, ?> map = (Map<?, ?>)obj;
-            return new LogMap(level, colors, name, map, numFrames);
+            return new LogMap(params, map);
         }
         else if (obj instanceof Throwable) {
             Throwable thr = (Throwable)obj;
-            return new LogException(level, colors, name, thr, numFrames);
+            return new LogException(params, thr);
         }
         else {
-            return new LogElement(level, colors, name, obj, numFrames);
+            return new LogElement(params, obj);
         }
     }
 }

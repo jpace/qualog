@@ -10,56 +10,67 @@ import org.qualog.output.ItemColors;
  */
 public class LogObjectArray extends LogElement {
     public static LogObjectArray create(Level level, ItemColors colors, String name, Object obj, int numFrames) {
-        Object[] objAry;
+        Object[] objAry = toObjectArray(obj);
+        return new LogObjectArray(level, colors, name, objAry, numFrames);
+    }
 
+    public static LogObjectArray create(ElementParams params, Object obj) {
+        Object[] objAry = toObjectArray(obj);
+        return new LogObjectArray(params, objAry);
+    }
+
+    public static Object[] toObjectArray(Object obj) {
         if (obj == null) {
-            objAry = null;
+            return null;
         }
         else if (obj instanceof Object[]) {
-            objAry = (Object[])obj;
+            return (Object[])obj;
         }
         else if (obj instanceof boolean[]) {
             boolean[] ary = (boolean[])obj;
-            objAry = BooleanArray.toStringArray(ary);
+            return BooleanArray.toStringArray(ary);
         }
         else if (obj instanceof byte[]) {
             byte[] ary = (byte[])obj;
-            objAry = ByteArray.toStringArray(ary);
+            return ByteArray.toStringArray(ary);
         }
         else if (obj instanceof char[]) {
             char[] ary = (char[])obj;
-            objAry = CharArray.toStringArray(ary);
+            return CharArray.toStringArray(ary);
         }
         else if (obj instanceof double[]) {
             double[] ary = (double[])obj;
-            objAry = DoubleArray.toStringArray(ary);
+            return DoubleArray.toStringArray(ary);
         } 
         else if (obj instanceof float[]) {
             float[] ary = (float[])obj;
-            objAry = FloatArray.toStringArray(ary);
+            return FloatArray.toStringArray(ary);
         }
         else if (obj instanceof int[]) {
             int[] ary = (int[])obj;
-            objAry = IntArray.toStringArray(ary);
+            return IntArray.toStringArray(ary);
         }
         else if (obj instanceof long[]) {
             long[] ary = (long[])obj;
-            objAry = LongArray.toStringArray(ary);
+            return LongArray.toStringArray(ary);
         }
         else if (obj instanceof short[]) {
             short[] ary = (short[])obj;
-            objAry = ShortArray.toStringArray(ary);
+            return ShortArray.toStringArray(ary);
         }
         else {
-            objAry = null;
+            return null;
         }
-        return new LogObjectArray(level, colors, name, objAry, numFrames);
     }
 
     private final Object[] ary;
     
     public LogObjectArray(Level level, ItemColors colors, String name, Object[] ary, int numFrames) {
-        super(level, colors, name, ary, numFrames);
+        this(new ElementParams(level, colors, name, numFrames), ary);
+    }
+    
+    public LogObjectArray(ElementParams params, Object[] ary) {
+        super(params, ary);
         this.ary = ary;
     }
 

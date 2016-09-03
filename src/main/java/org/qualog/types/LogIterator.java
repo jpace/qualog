@@ -10,8 +10,8 @@ import org.qualog.output.ItemColors;
  * Wraps Iterators for output.
  */
 public class LogIterator extends LogCollection {
-    public static <T> LogIterator create(Level level, ItemColors colors, String name, Iterator<T> it, int numFrames) {
-        return new LogIterator(level, colors, name, it, numFrames);
+    public static <T> LogIterator create(ElementParams params, Iterator<T> it) {
+        return new LogIterator(params, it);
     }
 
     public static <T> Collection<T> iteratorToCollection(Iterator<T> it) {
@@ -22,7 +22,7 @@ public class LogIterator extends LogCollection {
         return coll;
     }
 
-    public <T> LogIterator(Level level, ItemColors colors, String name, Iterator<T> it, int numFrames) {
-        super(level, colors, name, iteratorToCollection(it), numFrames);
+    public <T> LogIterator(ElementParams params, Iterator<T> it) {
+        super(params, iteratorToCollection(it));
     }
 }

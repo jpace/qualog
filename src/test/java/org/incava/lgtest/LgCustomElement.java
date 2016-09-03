@@ -30,5 +30,4 @@ public class LgCustomElement {
         
         tr.Ace.log("numbers", numbers);
     }
-
 }

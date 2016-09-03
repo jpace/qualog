@@ -12,8 +12,8 @@ import org.qualog.output.Writer;
 public class LogException extends LogElement {
     private final Throwable thr;
 
-    public LogException(Level level, ItemColors colors, String name, Throwable thr, int numFrames) {
-        super(level, colors, name, thr, numFrames);
+    public LogException(ElementParams params, Throwable thr) {
+        super(params, thr);
         this.thr = thr;
     }
 

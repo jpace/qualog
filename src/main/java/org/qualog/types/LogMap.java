@@ -12,8 +12,8 @@ import org.qualog.output.Writer;
 public class LogMap extends LogElement {
     private final Map<?, ?> map;
 
-    public LogMap(Level level, ItemColors colors, String name, Map<?,?> map, int numFrames) {
-        super(level, colors, name, map, numFrames);
+    public LogMap(ElementParams params, Map<?,?> map) {
+        super(params, map);
         this.map = map;
     }
 

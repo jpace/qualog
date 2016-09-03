@@ -9,7 +9,7 @@ import org.qualog.output.ItemColors;
  * Wraps Enumerations for output.
  */
 public class LogEnumeration extends LogCollection {
-    public LogEnumeration(Level level, ItemColors colors, String name, Enumeration<?> en, int numFrames) {
-        super(level, colors, name, Collections.list(en), numFrames);
+    public LogEnumeration(ElementParams params, Enumeration<?> en) {
+        super(params, Collections.list(en));
     }
 }
