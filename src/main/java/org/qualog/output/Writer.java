@@ -1,11 +1,9 @@
 package org.qualog.output;
 
-import java.io.FileDescriptor;
-import java.io.FileOutputStream;
-import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.util.List;
 import org.incava.ijdk.lang.*;
+import org.incava.ijdk.util.IUtil;
 import org.qualog.ClassFilter;
 import org.qualog.Configuration;
 import org.qualog.Filter;
@@ -14,13 +12,11 @@ import org.qualog.Log;
 import org.qualog.config.ColorConfig;
 import org.qualog.types.LogElement;
 import org.qualog.types.LogElementFactory;
-import org.incava.ijdk.util.IUtil;
 import static org.incava.ijdk.util.IUtil.*;
 
 /**
- * <p>Writes the logging output, applying filters and decorations. The
- * <code>Log</code> and <code>Logger</code> classes offers cleaner and more
- * thorough interfaces than this class.</p>
+ * <p>Writes the logging output, applying filters and decorations. The <code>Log</code> and
+ * <code>Logger</code> classes offers cleaner and more thorough interfaces than this class.</p>
  *
  * @see org.qualog.Log
  * @see org.qualog.Logger
@@ -30,15 +26,13 @@ public class Writer {
 
     private PrintWriter out;
 
-    private List<String> packagesSkipped;
-    private List<String> classesSkipped;
-    private List<String> methodsSkipped;
+    private final OmittedFilter omitted;
     
     private OutputType outputType;
     private StackTraceElement prevStackElement;    
     private Thread prevThread;
     private Level level;
-    private List<Filter> filters;
+    private FilterList filters;
     
     public Writer() {
         this(new Configuration());
@@ -46,19 +40,17 @@ public class Writer {
 
     public Writer(Configuration config) {
         this.config = config;
-
+        
         // this writes to stdout even in Gradle and Ant, which redirect stdout:
-        this.out = new PrintWriter(new PrintStream(new FileOutputStream(FileDescriptor.out)), true);
+        this.out = new StdOut();
 
-        this.packagesSkipped = list("org.qualog", "org.incava.qualog", "org.qualog");
-        this.classesSkipped = list("tr.Ace");
-        this.methodsSkipped = list("log");
+        this.omitted = new OmittedFilter();
     
         this.outputType = OutputType.NONE;
         this.prevStackElement = null;    
         this.prevThread = null;
         this.level = new Level(9);
-        this.filters = IUtil.<Filter>list();
+        this.filters = new FilterList();
     }
 
     /**
@@ -99,15 +91,15 @@ public class Writer {
     }
 
     public void addClassSkipped(Class<?> cls) {
-        addClassSkipped(cls.getName());
+        omitted.addClassSkipped(cls);
     }
     
     public void addClassSkipped(String clsName) {
-        classesSkipped.add(clsName);
+        omitted.addClassSkipped(clsName);
     }
 
     public void addPackageSkipped(String pkgName) {
-        packagesSkipped.add(pkgName);
+        omitted.addPackageSkipped(pkgName);
     }
 
     /**
@@ -119,7 +111,7 @@ public class Writer {
         this.prevStackElement = null;
         this.prevThread = null;
         this.level = Log.LEVEL9;
-        this.filters = IUtil.<Filter>list();
+        this.filters = new FilterList();
     }
 
     /**
@@ -140,17 +132,7 @@ public class Writer {
     }
 
     public boolean isSkipped(StackTraceElement ste) {
-        String className = ste.getClassName();
-        if (classesSkipped.contains(className) || methodsSkipped.contains(ste.getMethodName())) {
-            return true;
-        }
-        
-        for (String pkgName : packagesSkipped) {
-            if (className.startsWith(pkgName + ".")) {
-                return true;
-            }
-        }
-        return false;
+        return omitted.isSkipped(ste);
     }
 
     public boolean isLoggable(Level lvl) {
@@ -168,6 +150,7 @@ public class Writer {
 
         // only show 1 frame in quiet mode:
         int numFrames = outputType.equals(OutputType.QUIET) ? 1 : logElmt.getNumFrames();
+        
         StackTraceElement[] stack = getStack(numFrames);
 
         int frameIdx = findStackStart(stack);
@@ -175,7 +158,7 @@ public class Writer {
         for (int framesShown = 0; frameIdx < stack.length && framesShown < numFrames; ++frameIdx, ++framesShown) {
             StackTraceElement stackElement = stack[frameIdx];
 
-            if (framesShown == 0 && !isLoggable(stackElement)) {
+            if (framesShown == 0 && !filters.isLoggable(stackElement, level)) {
                 break;
             }
 
@@ -189,7 +172,9 @@ public class Writer {
                                                    getMethodColor(elmtColors, stackElement));
             
             Line line = new Line(logElmt.getMessage(), lineColors, stackElement, prevStackElement, config);
-            out.println(line.getLine(framesShown > 0, outputType.equals(OutputType.VERBOSE)));
+            boolean isRepeated = framesShown > 0;
+            boolean verboseOutput = outputType.equals(OutputType.VERBOSE);
+            out.println(line.getLine(isRepeated, verboseOutput));
             prevStackElement = stackElement;
         }
         return true;
@@ -217,25 +202,13 @@ public class Writer {
         return msgColors;
     }
 
-    private boolean isLoggable(StackTraceElement stackElement) {
-        boolean isLoggable = true;
-        for (Filter filter : filters) {
-            Level flevel = filter.getLevel();
-            if (filter.isMatch(stackElement)) {
-                isLoggable = flevel != null && level.compareTo(flevel) >= 0;
-            }
-        }
-        return isLoggable;
-    }
-
     private static StackTraceElement[] getStack(int depth) {
         return (new Exception("")).getStackTrace();
     }
 
     /**
-     * Returns the index in the stack where logging (stacks) should be
-     * displayed. Returns -1 if the end of the stack is reached and no logging
-     * should occur.
+     * Returns the index in the stack where logging (stacks) should be displayed. Returns -1 if the
+     * end of the stack is reached and no logging should occur.
      */
     public synchronized int findStackStart(StackTraceElement[] stack) {
         for (int fi = 0; fi < stack.length; ++fi) {

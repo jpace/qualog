@@ -14,6 +14,7 @@ public class TestXmas extends TestCase {
     }
 
     public void testDisplay() {
+        // uncomment the below section for ASCII gaudiness
         /*
         tr.Ace.setVerbose(true);
         Configuration cfg = tr.Ace.getConfiguration();
@@ -111,7 +112,7 @@ public class TestXmas extends TestCase {
                 else {
                     ANSIColor color = ListExt.getRandomElement(colors);
                     if (Math.random() < 0.3) {
-                        // blinkenlights!
+                        // blinkenlights! (not on all terminals; XTerm still supports blink)
                         sb.append(ANSIColor.BLINK);
                     }
                     sb.append(color);

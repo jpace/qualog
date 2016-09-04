@@ -25,42 +25,46 @@ public class ColorConfig {
     }
 
     public ANSIColor getMethodColor(String className, String methodName) {
-        return methodColors.get(className + "#" + methodName);
+        return getColor(methodColors, className + "#" + methodName);
     }
 
     public void setMethodColor(String className, String methodName, ANSIColor color) {
-        methodColors.put(className + "#" + methodName, color);
+        setColor(methodColors, className + "#" + methodName, color);
     }
 
     public ANSIColor getPackageColor(String packageName) {
-        return packageColors.get(packageName);
+        return getColor(packageColors, packageName);
     }
 
     public void setPackageColor(String packageName, ANSIColor color) {
-        packageColors.put(packageName, color);
+        setColor(packageColors, packageName, color);
     }
 
     public ANSIColor getClassColor(String className) {
-        return classColors.get(className);
+        return getColor(classColors, className);
     }
 
     public void setClassColor(String className, ANSIColor color) {
-        classColors.put(className, color);
+        setColor(classColors, className, color);
     }
 
     public ANSIColor getFileColor(String fileName) {
-        return fileColors.get(fileName);
+        return getColor(fileColors, fileName);
     }    
 
     public void setFileColor(String fileName, ANSIColor color) {
-        fileColors.put(fileName, color);
+        setColor(fileColors, fileName, color);
     }
 
     public boolean useColor() {
         return useColor;
     }
 
-    public void setUseColor(boolean useColor) {
-        this.useColor = useColor;
+    private ANSIColor getColor(Map<String, ANSIColor> colors, String key) {
+        return colors.get(key);
+    }    
+
+    private void setColor(Map<String, ANSIColor> colors, String key, ANSIColor color) {
+        colors.put(key, color);
     }
 }
