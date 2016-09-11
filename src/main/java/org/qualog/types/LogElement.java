@@ -13,30 +13,6 @@ import static org.incava.ijdk.util.IUtil.*;
  * @see org.qualog.Log
  */
 public class LogElement {
-    /**
-     * Primitive or quasi-primitive classes, use for toString().
-     */
-    public static final List<Class<? extends Serializable>> UNDECORATED_CLASSES = list(String.class,
-                                                                                       Number.class,
-                                                                                       Character.class,
-                                                                                       Boolean.class,
-                                                                                       StackTraceElement.class);
-    
-    /**
-     * Returns whether the class of the object is assignable from any of the
-     * undecorated classes.
-     */
-    protected static boolean isUndecorated(Object obj) {
-        Class<?> objCls = obj.getClass();
-        for (int ci = 0; ci < UNDECORATED_CLASSES.size(); ++ci) {
-            Class<?> undecCls = UNDECORATED_CLASSES.get(ci);
-            if (undecCls.isAssignableFrom(objCls)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
     private final ElementParams params;
     private final Object object;
         
@@ -86,19 +62,19 @@ public class LogElement {
         if (isNull(obj)) {
             return "null";
         }
-
-        if (isUndecorated(obj)) {
+        else if (LogPrimitives.isUndecorated(obj)) {
             return obj.toString();
         }
-
-        StringBuilder sb = new StringBuilder();
-        sb.append(obj.toString());
-        sb.append(" (");
-        sb.append(obj.getClass().getName());
-        sb.append(')');
-        sb.append(" #");
-        sb.append(Integer.toHexString(obj.hashCode()));
+        else {
+            StringBuilder sb = new StringBuilder();
+            sb.append(obj.toString());
+            sb.append(" (");
+            sb.append(obj.getClass().getName());
+            sb.append(')');
+            sb.append(" #");
+            sb.append(Integer.toHexString(obj.hashCode()));
         
-        return sb.toString();
+            return sb.toString();
+        }
     }
 }
