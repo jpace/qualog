@@ -37,6 +37,7 @@ public class TestLogObject extends TestCase {
         exp.put("value", 3.14);        
         exp.put("serialVersionUID", -9172774392245257468L); // at least as of 04 Nov 11
 
+        exp.put("BYTES", Integer.valueOf(8));
         exp.put("POSITIVE_INFINITY", Double.POSITIVE_INFINITY);
         exp.put("NEGATIVE_INFINITY", Double.NEGATIVE_INFINITY);
         exp.put("NaN", Double.NaN);
