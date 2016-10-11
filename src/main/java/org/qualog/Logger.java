@@ -7,6 +7,7 @@ import java.util.Map;
 import org.incava.ijdk.util.PropertyExt;
 import org.qualog.config.ConfigFactory;
 import org.qualog.config.ConfigType;
+import org.qualog.config.MessageFormat;
 import org.qualog.config.Properties;
 import org.qualog.output.ANSIColor;
 import org.qualog.output.ItemColors;
@@ -26,7 +27,7 @@ public class Logger {
     /**
      * The version of the qualog library.
      */
-    public final static String VERSION = "2.0.0";
+    public final static String VERSION = "2.1.0";
     
     public static final Level LEVEL0 = new Level(0);
     public static final Level LEVEL1 = new Level(1);
@@ -142,6 +143,10 @@ public class Logger {
 
     public static void setVerbose(boolean verbose) {
         setOutput(OutputType.VERBOSE, verbose ? LEVEL5 : LEVEL0);
+    }
+
+    public static void setFormat(String format) {
+        MessageFormat.setFormat(format);
     }
 
     public static void setQuiet() {

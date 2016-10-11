@@ -123,6 +123,13 @@ develop this on Windows Command Prompt and PowerShell.)
 
 Qualog requires [ijdk](http://github.com/jpace/ijdk "IJDK project at Github").
 
+## Format
+
+As of Qualog 2.1.0, the output format for the message can be set using the fields of
+java.lang.String#format:
+
+    tr.Ace.setFormat("%-20s | %s");
+
 # Help
 
 Please email me at jeugenepace at gmail dot com if you have questions about Qualog.
