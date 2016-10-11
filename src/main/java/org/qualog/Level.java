@@ -31,4 +31,8 @@ public class Level implements Comparable<Level> {
     public boolean isLoggable(OutputType outputType, Level lvl) {
         return !outputType.equals(OutputType.NONE) && level != null && compareTo(lvl) >= 0;
     }
+
+    public int hashCode() {
+        return level;
+    }
 }

@@ -14,14 +14,12 @@ dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.10'
 }
 
-/*
 allprojects {
     tasks.withType(JavaCompile).all { JavaCompile compile ->
         compile.options.debug = true
         compile.options.compilerArgs = ['-Xlint:all']
     }
 }
-*/
 
 test {
     excludes = [ '**/Abstract*' ]

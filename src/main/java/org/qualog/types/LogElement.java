@@ -1,11 +1,9 @@
 package org.qualog.types;
 
-import java.io.Serializable;
-import java.util.List;
 import org.qualog.Level;
+import org.qualog.config.MessageFormat;
 import org.qualog.output.ItemColors;
 import org.qualog.output.Writer;
-import static org.incava.ijdk.util.IUtil.*;
 
 /**
  * An item that can be logged.
@@ -25,7 +23,7 @@ public class LogElement {
         this.object = obj;
     }
 
-    public Level getLevel() {
+    protected Level getLevel() {
         return params.getLevel();
     }
     
@@ -33,11 +31,11 @@ public class LogElement {
         return params.getColors();
     }
 
-    public String getName() {
+    protected String getName() {
         return params.getName();
     }
 
-    public Object getObject() {
+    protected Object getObject() {
         return object;
     }
 
@@ -46,35 +44,17 @@ public class LogElement {
     }
     
     public String getMessage() {
-        String nm = getName();
-        return (nm == null ? "" : (nm + ": ")) + toString(object);
+        MessageFormat mf = MessageFormat.create();
+        String name = getName();
+        LogMessage lm = name == null ? new LogObjectMessage(object) : new LogNameObjectMessage(name, object);
+        return lm.getMessage(mf);
     }
 
     public boolean stack(Writer lw) {
         return lw.stack(this);
     }
 
-    public boolean stackEmptyCollection(Writer lw) {
-        return lw.stack(getLevel(), getColors(), getName(), "()", getNumFrames());
-    }
-
-    public String toString(Object obj) {
-        if (isNull(obj)) {
-            return "null";
-        }
-        else if (LogPrimitives.isUndecorated(obj)) {
-            return obj.toString();
-        }
-        else {
-            StringBuilder sb = new StringBuilder();
-            sb.append(obj.toString());
-            sb.append(" (");
-            sb.append(obj.getClass().getName());
-            sb.append(')');
-            sb.append(" #");
-            sb.append(Integer.toHexString(obj.hashCode()));
-        
-            return sb.toString();
-        }
+    protected boolean stackEmptyCollection(Writer lw) {
+        return lw.stack(params.getLevel(), params.getColors(), params.getName(), "()", params.getNumFrames());
     }
 }
