@@ -7,31 +7,35 @@ public class TestLogPrimitives extends TestCase {
         super(name);
     }
 
-    public void assertUndecorated(Object obj) {
-        assert(LogPrimitives.isUndecorated(obj));
+    // isUndecorated
+
+    private boolean assertIsUndecorated(Object obj) {
+        boolean result = LogPrimitives.isUndecorated(obj);
+        assertTrue("obj: " + obj, result);
+        return result;
     }
 
     public void testString() {
-        assertUndecorated(String.valueOf(""));
+        assertIsUndecorated(String.valueOf(""));
     }
 
     public void testBoolean() {
-        assertUndecorated(Boolean.TRUE);
+        assertIsUndecorated(Boolean.TRUE);
     }
     
     public void testInteger() {
-        assertUndecorated(Integer.valueOf(1));
+        assertIsUndecorated(Integer.valueOf(1));
     }
     
     public void testDouble() {
-        assertUndecorated(Double.valueOf(3.14));
+        assertIsUndecorated(Double.valueOf(3.14));
     }
     
     public void testCharacter() {
-        assertUndecorated(Character.valueOf('c'));
+        assertIsUndecorated(Character.valueOf('c'));
     }
     
     public void testStackTraceElement() {
-        assertUndecorated(new StackTraceElement("", "", "", 0));
+        assertIsUndecorated(new StackTraceElement("", "", "", 0));
     }
 }

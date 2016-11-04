@@ -1,6 +1,7 @@
 package org.qualog.types;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import static org.incava.ijdk.util.IUtil.list;
 
@@ -11,11 +12,15 @@ public class LogPrimitives {
     /**
      * Primitive or quasi-primitive classes, use for toString().
      */
-    private static final List<Class<? extends Serializable>> UNDECORATED_CLASSES = list(String.class,
-                                                                                        Number.class,
-                                                                                        Character.class,
-                                                                                        Boolean.class,
-                                                                                        StackTraceElement.class);
+    private static final List<Class<?>> UNDECORATED_CLASSES = new ArrayList<Class<?>>();
+    
+    static {
+        UNDECORATED_CLASSES.add(String.class);
+        UNDECORATED_CLASSES.add(Number.class);
+        UNDECORATED_CLASSES.add(Character.class);
+        UNDECORATED_CLASSES.add(Boolean.class);
+        UNDECORATED_CLASSES.add(StackTraceElement.class);
+    }
     
     /**
      * Returns whether the class of the object is assignable from any of the

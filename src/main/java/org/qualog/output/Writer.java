@@ -152,7 +152,7 @@ public class Writer {
         int numFrames = outputType.equals(OutputType.QUIET) ? 1 : logElmt.getNumFrames();
         
         StackTraceElement[] stack = getStack(numFrames);
-
+        
         int frameIdx = findStackStart(stack);
         
         for (int framesShown = 0; frameIdx < stack.length && framesShown < numFrames; ++frameIdx, ++framesShown) {
