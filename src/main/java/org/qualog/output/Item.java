@@ -8,7 +8,7 @@ public abstract class Item {
     private final ANSIColorList colors;
     private final StackElements stackElements;
 
-    protected final Integer width;    
+    protected final Integer width;
     
     public Item(ANSIColor color, StackElements stackElements, Integer width) {
         this(color == null ? null : new ANSIColorList(color), stackElements, width);
@@ -20,14 +20,22 @@ public abstract class Item {
         this.width = width;
     }
 
-    public ANSIColorList getColors() {
-        return isRepeated() ? null : colors;
-    }
-
     /**
      * Returns the value, as this item represents in the logging line.
      */
-    public abstract Object getValue(StackTraceElement stackElement);
+    protected abstract Object getValue(StackTraceElement stackElement);
+
+    private ANSIColorList getColors() {
+        return colors;
+    }
+
+    /**
+     * Returns the value from the current stack element, as this item represents in the logging
+     * line.
+     */
+    public Object getValue() {
+        return getValue(stackElements.getCurrent());
+    }
 
     public boolean isRepeated(StackElements stackElements) {
         return stackElements.getPrevious() != null && ObjectExt.areEqual(getStackField(stackElements.getPrevious()), getStackField(stackElements.getCurrent()));
@@ -59,7 +67,7 @@ public abstract class Item {
     public abstract String getStackField(StackTraceElement stackElement);
 
     public String getFormatted() {
-        ANSIColorList colors = getColors();
+        ANSIColorList colors = isRepeated() ? null : this.colors;
         
         Object value = getValue(stackElements.getCurrent());
         String str = String.valueOf(value);

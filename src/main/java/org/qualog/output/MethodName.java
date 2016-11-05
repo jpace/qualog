@@ -8,7 +8,7 @@ public class MethodName extends Item {
         super(color, stackElements, methodWidth);
     }
 
-    public Object getValue(StackTraceElement stackElement) {
+    protected Object getValue(StackTraceElement stackElement) {
         if (isRepeated()) {
             return StringExt.repeat(' ', width);
         }

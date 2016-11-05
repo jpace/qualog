@@ -29,7 +29,7 @@ public class Writer {
     private final OmittedFilter omitted;
     
     private OutputType outputType;
-    private StackTraceElement prevStackElement;    
+    private StackTraceElement prevStackElement;
     private Thread prevThread;
     private Level level;
     private FilterList filters;
@@ -154,6 +154,8 @@ public class Writer {
         StackTraceElement[] stack = getStack(numFrames);
         
         int frameIdx = findStackStart(stack);
+
+        Colors colors = new Colors(config.getColorConfig());
         
         for (int framesShown = 0; frameIdx < stack.length && framesShown < numFrames; ++frameIdx, ++framesShown) {
             StackTraceElement stackElement = stack[frameIdx];
@@ -163,13 +165,7 @@ public class Writer {
             }
 
             ItemColors elmtColors = logElmt.getColors();
-
-            // the colors of the message part, not the whole line:
-            ANSIColorList msgColors = getMessageColors(elmtColors, stackElement);
-            ItemColors lineColors = new ItemColors(msgColors,
-                                                   getFileColor(elmtColors, stackElement),
-                                                   getClassColor(elmtColors, stackElement),
-                                                   getMethodColor(elmtColors, stackElement));
+            ItemColors lineColors = colors.getLineColors(elmtColors, stackElement);
             
             Line line = new Line(logElmt.getMessage(), lineColors, stackElement, prevStackElement, config);
             boolean isRepeated = framesShown > 0;
@@ -179,29 +175,7 @@ public class Writer {
         }
         return true;
     }
-
-    private ANSIColorList getMessageColors(ItemColors elmtColors, StackTraceElement ste) {
-        ColorConfig cc = getColorConfig();
-        if (!cc.useColor()) {
-            return null;
-        }
-
-        // the colors of the message part, not the whole line:
-        ANSIColorList msgColors = elmtColors.getMessageColors();
-
-        if (isEmpty(msgColors)) {
-            ANSIColor col = or(cc.getMethodColor(ste.getClassName(), ste.getMethodName()),
-                               cc.getClassColor(ste.getClassName()),
-                               cc.getFileColor(ste.getFileName()));
-
-            if (isTrue(col)) {
-                msgColors = new ANSIColorList(col);
-            }
-        }
-
-        return msgColors;
-    }
-
+    
     private static StackTraceElement[] getStack(int depth) {
         return (new Exception("")).getStackTrace();
     }
@@ -217,24 +191,5 @@ public class Writer {
             }
         }
         return stack.length;
-    }
-
-    private ANSIColor getFileColor(ItemColors elmtColors, StackTraceElement stackElement) {
-        ColorConfig cc = getColorConfig();
-        return or(elmtColors.getFileColor(), cc.getFileColor(stackElement.getFileName()));
-    }
-
-    private ANSIColor getClassColor(ItemColors elmtColors, StackTraceElement stackElement) {
-        ColorConfig cc = getColorConfig();
-        return or(elmtColors.getClassColor(), cc.getClassColor(stackElement.getClassName()));
-    }
-
-    private ANSIColor getMethodColor(ItemColors elmtColors, StackTraceElement stackElement) {
-        ColorConfig cc = getColorConfig();
-        return or(elmtColors.getMethodColor(), cc.getMethodColor(stackElement.getClassName(), stackElement.getMethodName()));
-    }
-
-    private ColorConfig getColorConfig() {
-        return config.getColorConfig();
     }
 }

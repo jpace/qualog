@@ -17,9 +17,16 @@ public class Line {
                 StackTraceElement stackElement, 
                 StackTraceElement previousStackElement, 
                 Configuration config) {
+        this(message, colors, new StackElements(stackElement, previousStackElement), config);
+    }
+    
+    public Line(String message,
+                ItemColors colors,
+                StackElements stackElements, 
+                Configuration config) {
         this.message = message;
         this.colors = colors;
-        this.stackElements = new StackElements(stackElement, previousStackElement);
+        this.stackElements = stackElements;
         this.config = config;
     }
 
