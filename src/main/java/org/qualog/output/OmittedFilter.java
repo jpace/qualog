@@ -1,22 +1,17 @@
 package org.qualog.output;
 
 import java.util.List;
-import static org.incava.ijdk.util.IUtil.list;
+
+import static ijdk.lang.ICore.list;
 
 /**
  * Contains lists of classes, methods, and packages that should be omitted from logged elements.
  */
 public class OmittedFilter {
-    private List<String> packagesSkipped;
-    private List<String> classesSkipped;
-    private List<String> methodsSkipped;
+    private final List<String> packagesSkipped = list("org.qualog", "org.incava.qualog", "org.qualog");
+    private final List<String> classesSkipped = list("tr.Ace");
+    private final List<String> methodsSkipped = list("log");
     
-    public OmittedFilter() {
-        this.packagesSkipped = list("org.qualog", "org.incava.qualog", "org.qualog");
-        this.classesSkipped = list("tr.Ace");
-        this.methodsSkipped = list("log");
-    }
-
     public void addClassSkipped(Class<?> cls) {
         addClassSkipped(cls.getName());
     }
