@@ -132,7 +132,7 @@ java.lang.String#format:
 
 # Help
 
-Please email me at jeugenepace at gmail dot com if you have questions about Qualog.
+Please email me if you have questions about Qualog.
 
 # Contributing
 
