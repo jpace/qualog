@@ -2,7 +2,7 @@ package org.qualog.output;
 
 import java.util.List;
 
-import static ijdk.lang.ICore.list;
+import static org.incava.ijdk.lang.Common.list;
 
 /**
  * Contains lists of classes, methods, and packages that should be omitted from logged elements.

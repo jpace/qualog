@@ -2,9 +2,9 @@ package org.qualog.output;
 
 import org.qualog.config.ColorConfig;
 
-import static ijdk.lang.ICore.or;
-import static ijdk.lang.ICore.isEmpty;
-import static ijdk.lang.ICore.isTrue;
+import static org.incava.ijdk.lang.ICore.or;
+import static org.incava.ijdk.lang.ICore.isEmpty;
+import static org.incava.ijdk.lang.ICore.isTrue;
 
 public class Colors {
     private final ColorConfig colorConfig;

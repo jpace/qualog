@@ -1,7 +1,7 @@
 package org.qualog.output;
 
-import ijdk.lang.Str;
 import junit.framework.TestCase;
+import org.incava.ijdk.lang.Str;
 
 public class TestMethodName extends TestCase {
     public TestMethodName(String name) {
