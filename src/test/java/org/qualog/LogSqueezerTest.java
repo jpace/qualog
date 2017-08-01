@@ -4,8 +4,8 @@ import java.io.*;
 import java.util.*;
 import junit.framework.TestCase;
 
-public class TestLogSqueezer extends TestCase {
-    public TestLogSqueezer(String name) {
+public class LogSqueezerTest extends TestCase {
+    public LogSqueezerTest(String name) {
         super(name);
     }
 

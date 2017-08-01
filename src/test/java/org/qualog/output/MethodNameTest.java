@@ -3,8 +3,8 @@ package org.qualog.output;
 import junit.framework.TestCase;
 import org.incava.ijdk.lang.Str;
 
-public class TestMethodName extends TestCase {
-    public TestMethodName(String name) {
+public class MethodNameTest extends TestCase {
+    public MethodNameTest(String name) {
         super(name);
     }
 

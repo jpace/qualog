@@ -62,7 +62,6 @@ public class Logger {
      */
     protected static void setVerbosity() {
         String verStr = System.getProperty(Properties.VERBOSE, System.getProperty("verbose"));
-
         if (isNull(verStr)) {
             return;
         }
@@ -83,9 +82,7 @@ public class Logger {
 
     static {
         timer = new Timer();
-
         setVerbosity();
-        
         Configuration config = ConfigFactory.createFromProperties();
         writer = new Writer(config);
     }

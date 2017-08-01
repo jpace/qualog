@@ -3,18 +3,18 @@ package org.qualog;
 import java.io.StringWriter;
 import junit.framework.TestCase;
 
-public class TestLogScalar extends LogTestCase {
-    public TestLogScalar(String name) {
+public class MethodSkippedTest extends LogTestCase {
+    public MethodSkippedTest(String name) {
         super(name);
     }
     
-    public void testScalar() {
+    public void testFiltered() {
         StringWriter sw = reset(Log.VERBOSE, Log.LEVEL5, 15, 5, 25, 17, true);
-        org.incava.lgtest.LgScalar.run();
+        new org.incava.lgtest.LgMethodFiltered().run();
 
         String expected = "" +
-            "[LgScalar            5] {o.i.l.LgScalar           #run              } one: 1\n" +
-            "[                    6] {                         #                 } pi: 3.14\n";
+            "[LgMethodFilter-    11] {o.i.l.LgMethodFiltered   #run              } one: 1\n" +
+            "[                   12] {                         #                 } pi: 3.14\n";
         
         System.out.println("sw: " + sw);
         

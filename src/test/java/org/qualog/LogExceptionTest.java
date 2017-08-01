@@ -3,8 +3,8 @@ package org.qualog;
 import java.io.StringWriter;
 import junit.framework.TestCase;
 
-public class TestLogException extends LogTestCase {
-    public TestLogException(String name) {
+public class LogExceptionTest extends LogTestCase {
+    public LogExceptionTest(String name) {
         super(name);
     }
     
@@ -30,7 +30,7 @@ public class TestLogException extends LogTestCase {
         String expected = "" +
             "[LgException        13] {o.i.l.LgException        #execute          } iae: java.lang.IllegalArgumentException: badarg\n" +
             "[                   13] {                         #                 } iae[0]: org.incava.lgtest.LgException.execute(LgException.java:12)\n" +
-            "[                   13] {                         #                 } iae[1]: org.qualog.TestLogException.testStackMethod(TestLogException.java:28)\n" +
+            "[                   13] {                         #                 } iae[1]: org.qualog.LogExceptionTest.testStackMethod(LogExceptionTest.java:28)\n" +
             "[                   13] {                         #                 } iae[2]: sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)\n" +
             "[                   13] {                         #                 } iae[3]: sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)\n" +
             "";        

@@ -2,8 +2,8 @@ package org.qualog.types;
 
 import junit.framework.TestCase;
 
-public class TestLogPrimitives extends TestCase {
-    public TestLogPrimitives(String name) {
+public class LogPrimitivesTest extends TestCase {
+    public LogPrimitivesTest(String name) {
         super(name);
     }
 

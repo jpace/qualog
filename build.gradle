@@ -2,16 +2,13 @@ apply plugin: 'java'
 
 group = 'org.qualog'
 version ='2.2.0'
-sourceCompatibility = 1.5
-sourceCompatibility = 1.5
 
 repositories {
     mavenCentral()
-    jcenter()
 }
 
 dependencies {
-    compile group: 'org.incava', name: 'ijdk', version: '3.2+'
+    compile group: 'org.incava', name: 'ijdk', version: '3.3+'
     testCompile group: 'junit', name: 'junit', version: '4.10'
 }
 
@@ -23,10 +20,10 @@ allprojects {
 }
 
 test {
-    excludes = [ '**/Abstract*' ]
     testLogging {
         exceptionFormat = "full"
     }
+    scanForTestClasses = true
 }
 
 logging.captureStandardOutput LogLevel.ERROR

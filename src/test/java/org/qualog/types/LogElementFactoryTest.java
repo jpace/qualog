@@ -7,8 +7,8 @@ import org.qualog.LogSplitter;
 import org.qualog.LogSqueezer;
 import org.qualog.LogTestCase;
 
-public class TestLogElementFactory extends LogTestCase {
-    public TestLogElementFactory(String name) {
+public class LogElementFactoryTest extends LogTestCase {
+    public LogElementFactoryTest(String name) {
         super(name);
     }
 
