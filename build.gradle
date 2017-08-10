@@ -1,15 +1,22 @@
 apply plugin: 'java'
 
 group = 'org.qualog'
-version ='2.2.0'
+version ='2.2.1'
 
 repositories {
     mavenCentral()
 }
 
 dependencies {
-    compile group: 'org.incava', name: 'ijdk', version: '3.3+'
-    testCompile group: 'junit', name: 'junit', version: '4.10'
+    compile 'org.incava:ijdk:+'
+    testCompile 'pl.pragmatists:JUnitParams:1.0.6'
+    testCompile('junit:junit:4.12') {
+        exclude group: 'org.hamcrest'
+    }
+    testCompile('org.mockito:mockito-core:1.10.19') {
+        exclude group: 'org.hamcrest'
+    }
+    testCompile 'org.hamcrest:hamcrest-library:1.3'
 }
 
 allprojects {
