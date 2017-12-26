@@ -7,8 +7,8 @@ import java.util.Map;
 import java.util.TreeMap;
 import junit.framework.TestCase;
 
-public class TestLogObject extends TestCase {
-    public TestLogObject(String name) {
+public class LogObjectTest extends TestCase {
+    public LogObjectTest(String name) {
         super(name);
     }
     

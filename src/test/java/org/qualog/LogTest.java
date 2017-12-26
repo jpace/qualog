@@ -7,8 +7,8 @@ import java.util.List;
 import junit.framework.TestCase;
 import org.qualog.config.ColorConfig;
 
-public class TestLog extends LogTestCase {
-    public TestLog(String name) {
+public class LogTest extends LogTestCase {
+    public LogTest(String name) {
         super(name);
     }
 

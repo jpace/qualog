@@ -8,8 +8,8 @@ import org.qualog.config.WidthConfig;
 import org.qualog.output.ANSIColor;
 import static org.incava.ijdk.util.IUtil.list;
 
-public class TestXmas extends TestCase {
-    public TestXmas(String name) {
+public class XmasTest extends TestCase {
+    public XmasTest(String name) {
         super(name);
     }
 

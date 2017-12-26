@@ -2,8 +2,8 @@ package org.qualog;
 
 import junit.framework.TestCase;
 
-public class TestLevel extends TestCase {
-    public TestLevel(String name) {
+public class LevelTest extends TestCase {
+    public LevelTest(String name) {
         super(name);
     }
 

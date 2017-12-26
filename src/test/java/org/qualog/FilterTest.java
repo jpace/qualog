@@ -3,8 +3,8 @@ package org.qualog;
 import junit.framework.TestCase;
 import org.incava.ijdk.lang.Range;
 
-public class TestFilter extends TestCase {
-    public TestFilter(String name) {
+public class FilterTest extends TestCase {
+    public FilterTest(String name) {
         super(name);
     }
 
