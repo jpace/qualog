@@ -9,6 +9,7 @@ repositories {
 
 dependencies {
     compile 'org.incava:ijdk:+'
+    testCompile 'org.incava:attest:[0.0.4,)'
     testCompile 'pl.pragmatists:JUnitParams:1.0.6'
     testCompile('junit:junit:4.12') {
         exclude group: 'org.hamcrest'
