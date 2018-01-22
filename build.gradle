@@ -1,7 +1,7 @@
 apply plugin: 'java'
 
 group = 'org.qualog'
-version ='2.2.1'
+version ='2.2.2'
 
 repositories {
     mavenCentral()
