@@ -24,7 +24,7 @@ public class ClassName extends Item {
         return stackElement.getClassName();
     }
 
-    private String asConcise(String className) {
+    protected String asConcise(String className) {
         // this used to be "(com|org)\\.\\w+\\.", "...", replacing only the top domain.
         return className.replaceAll("(\\w)\\w+\\.", "$1.");
     }

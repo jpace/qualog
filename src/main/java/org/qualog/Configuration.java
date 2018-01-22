@@ -4,7 +4,8 @@ import org.qualog.config.ColorConfig;
 import org.qualog.config.WidthConfig;
 import org.qualog.output.ANSIColor;
 import org.qualog.output.ANSIColorList;
-import static org.incava.ijdk.util.IUtil.*;
+
+import static org.incava.ijdk.lang.ICore.or;
 
 /**
  * System-wide settings for logging.
@@ -15,16 +16,15 @@ public class Configuration {
     // public static final Configuration NARROW = new Configuration(WidthConfig.WIDE);
     // public static final Configuration DEFAULT = MEDIUM;
     
-    private boolean showFiles = true;
-    private boolean showClasses = true;
-    private boolean useColumns = true;
+    private boolean showFiles;
+    private boolean showClasses;
+    private boolean useColumns;
 
     private final ColorConfig colorConfig;
     private final WidthConfig widthConfig;
 
     public Configuration() {
-        colorConfig = new ColorConfig();
-        widthConfig = new WidthConfig();
+        this(new ColorConfig(), new WidthConfig(), true, true, true);
     }
 
     public Configuration(ColorConfig cc, WidthConfig wc, boolean showFiles, boolean showClasses, boolean useColumns) {

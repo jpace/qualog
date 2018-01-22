@@ -1,9 +1,6 @@
 package org.qualog.output;
 
 import java.io.PrintWriter;
-import java.util.List;
-import org.incava.ijdk.lang.*;
-import org.incava.ijdk.util.IUtil;
 import org.qualog.ClassFilter;
 import org.qualog.Configuration;
 import org.qualog.Filter;
@@ -12,7 +9,6 @@ import org.qualog.Log;
 import org.qualog.config.ColorConfig;
 import org.qualog.types.LogElement;
 import org.qualog.types.LogElementFactory;
-import static org.incava.ijdk.util.IUtil.*;
 
 /**
  * <p>Writes the logging output, applying filters and decorations. The <code>Log</code> and
