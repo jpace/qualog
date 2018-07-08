@@ -6,6 +6,7 @@ import java.util.Arrays;
 import java.util.List;
 import junit.framework.TestCase;
 import org.qualog.config.ColorConfig;
+import org.qualog.config.Configuration;
 
 public class LogTest extends LogTestCase {
     public LogTest(String name) {

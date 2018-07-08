@@ -1,7 +1,7 @@
 package org.qualog.output;
 
-import org.incava.ijdk.lang.StringExt;
-import static org.incava.ijdk.util.IUtil.*;
+import org.incava.ijdk.lang.Strings;
+import org.incava.ijdk.util.IUtil;
 
 public class FileNameLineNumber extends Item {    
     public FileNameLineNumber(ANSIColor color, StackElements stackElements, int fileWidth) {
@@ -13,10 +13,10 @@ public class FileNameLineNumber extends Item {
         fileName = fileName.replace(".java", "");
 
         if (isRepeated()) {
-            fileName = StringExt.repeat(' ', fileName.length());
+            fileName = Strings.repeat(' ', fileName.length());
         }
         
-        fileName = or(fileName, "");
+        fileName = IUtil.or(fileName, "");
 
         int lineNum = stackElement.getLineNumber();
         String lnStr = lineNum >= 0 ? String.valueOf(lineNum) : "";

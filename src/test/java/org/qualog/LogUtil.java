@@ -3,6 +3,7 @@ package org.qualog;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import org.junit.Assert;
+import org.qualog.config.Configuration;
 import org.qualog.config.WidthConfig;
 import org.qualog.output.OutputType;
 

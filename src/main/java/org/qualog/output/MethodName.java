@@ -1,6 +1,6 @@
 package org.qualog.output;
 
-import org.incava.ijdk.lang.ObjectExt;
+import org.incava.ijdk.lang.Objects;
 import org.incava.ijdk.lang.Str;
 
 public class MethodName extends Item {    
@@ -25,8 +25,8 @@ public class MethodName extends Item {
         }
 
         StackTraceElement current = stackElements.getCurrent();
-        return (ObjectExt.areEqual(previous.getMethodName(), current.getMethodName()) &&
-                ObjectExt.areEqual(previous.getClassName(), current.getClassName()));
+        return (Objects.equal(previous.getMethodName(), current.getMethodName()) &&
+                Objects.equal(previous.getClassName(),  current.getClassName()));
     }
     
     public String getStackField(StackTraceElement stackElement) {

@@ -4,9 +4,9 @@ import java.io.PrintWriter;
 import java.util.EnumSet;
 import java.util.List;
 import java.util.Map;
-import org.incava.ijdk.util.PropertyExt;
 import org.qualog.config.ConfigFactory;
 import org.qualog.config.ConfigType;
+import org.qualog.config.Configuration;
 import org.qualog.config.MessageFormat;
 import org.qualog.config.Properties;
 import org.qualog.output.ANSIColor;
@@ -15,7 +15,6 @@ import org.qualog.output.OutputType;
 import org.qualog.output.Writer;
 import org.qualog.timer.Timer;
 import org.qualog.types.LogObject;
-import static org.incava.ijdk.util.IUtil.*;
 
 /**
  * Base class of the Log class, which expands the interface via generated
@@ -62,7 +61,7 @@ public class Logger {
      */
     protected static void setVerbosity() {
         String verStr = System.getProperty(Properties.VERBOSE, System.getProperty("verbose"));
-        if (isNull(verStr)) {
+        if (verStr == null) {
             return;
         }
 
@@ -70,7 +69,7 @@ public class Logger {
         Level level = LEVEL5;
             
         String lvlStr = System.getProperty(Properties.LEVEL);
-        if (isNotNull(lvlStr)) {
+        if (lvlStr != null) {
             level = new Level(new Integer(lvlStr));
         }
 
@@ -214,7 +213,7 @@ public class Logger {
 
     public static boolean inspect(Level level, EnumSet<ANSIColor> msgColors, String name, Object obj, int numFrames) {
         ItemColors colors = new ItemColors(msgColors);
-        if (isNull(obj)) {
+        if (obj == null) {
             return stack(level, colors, name, obj, numFrames);
         }
         else {

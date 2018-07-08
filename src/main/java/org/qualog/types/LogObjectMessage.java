@@ -1,7 +1,6 @@
 package org.qualog.types;
 
 import org.qualog.config.MessageFormat;
-import static org.incava.ijdk.util.IUtil.*;
 
 public class LogObjectMessage implements LogMessage {
     private final Object object;
@@ -15,7 +14,7 @@ public class LogObjectMessage implements LogMessage {
     }
     
     public String toString() {
-        if (isNull(object)) {
+        if (object == null) {
             return "null";
         }
         else if (LogPrimitives.isUndecorated(object)) {

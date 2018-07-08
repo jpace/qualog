@@ -3,6 +3,7 @@ package org.qualog.config;
 public interface Properties {
     public final static String CLASS_WIDTH  = "org.qualog.classwidth";
     public final static String COLUMNAR     = "org.qualog.columnar";
+    public final static String CONCISE      = "org.qualog.concise";
     public final static String FILE_WIDTH   = "org.qualog.filewidth";
     public final static String LEVEL        = "org.qualog.level";
     public final static String LINE_WIDTH   = "org.qualog.linewidth";

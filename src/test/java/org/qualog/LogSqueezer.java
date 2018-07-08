@@ -1,7 +1,5 @@
 package org.qualog;
 
-import org.incava.ijdk.lang.StringExt;
-import org.qualog.output.ItemColors;
 import org.qualog.types.LogElement;
 import org.qualog.types.ElementParams;
 

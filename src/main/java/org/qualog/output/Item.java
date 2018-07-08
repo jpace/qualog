@@ -1,8 +1,8 @@
 package org.qualog.output;
 
-import org.incava.ijdk.lang.ObjectExt;
-import org.incava.ijdk.lang.StringExt;
-import static org.incava.ijdk.util.IUtil.*;
+import org.incava.ijdk.collect.Iterate;
+import org.incava.ijdk.lang.Objects;
+import org.incava.ijdk.lang.Strings;
 
 public abstract class Item {
     private final ANSIColorList colors;
@@ -38,7 +38,7 @@ public abstract class Item {
     }
 
     public boolean isRepeated(StackElements stackElements) {
-        return stackElements.getPrevious() != null && ObjectExt.areEqual(getStackField(stackElements.getPrevious()), getStackField(stackElements.getCurrent()));
+        return stackElements.getPrevious() != null && Objects.equal(getStackField(stackElements.getPrevious()), getStackField(stackElements.getCurrent()));
     }
 
     public boolean isRepeated() {
@@ -46,7 +46,7 @@ public abstract class Item {
     }
 
     public String getSnipped(String str) {
-        return StringExt.snip(str, width);
+        return Strings.snip(str, width);
     }
 
     public int getWidth() {
@@ -78,7 +78,7 @@ public abstract class Item {
         int nSpaces = 0;
         int strlen = str.length();
         if (snipIfLong() && strlen > width) {
-            str = StringExt.snip(str, width);
+            str = Strings.snip(str, width);
         }
         else {
             nSpaces = width - strlen;
@@ -86,7 +86,7 @@ public abstract class Item {
         String colstr = colors == null ? str : colors.toString(str);
         StringBuilder sb = new StringBuilder(colstr);
         int insertPoint = justifyLeft() ? sb.length() : 0;
-        for (int i : iter(nSpaces)) {
+        for (Integer i : Iterate.count(nSpaces)) {
             sb.insert(insertPoint, ' ');
         }
         return sb.toString();

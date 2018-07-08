@@ -2,11 +2,11 @@ package org.qualog.output;
 
 import java.io.PrintWriter;
 import org.qualog.ClassFilter;
-import org.qualog.Configuration;
 import org.qualog.Filter;
 import org.qualog.Level;
 import org.qualog.Log;
 import org.qualog.config.ColorConfig;
+import org.qualog.config.Configuration;
 import org.qualog.types.LogElement;
 import org.qualog.types.LogElementFactory;
 

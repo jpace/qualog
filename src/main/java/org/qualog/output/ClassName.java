@@ -1,9 +1,6 @@
 package org.qualog.output;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import org.incava.ijdk.lang.Str;
-import org.incava.ijdk.lang.StringExt;
 
 public class ClassName extends Item {    
     public ClassName(ANSIColor color, StackElements stackElements, int classWidth) {

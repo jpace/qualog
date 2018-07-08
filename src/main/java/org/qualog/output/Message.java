@@ -1,13 +1,14 @@
 package org.qualog.output;
 
-import org.incava.ijdk.lang.StringExt;
+import org.incava.ijdk.lang.Strings;
 
 public class Message extends Item {
     private final String message;
     
     public Message(ANSIColorList colors, StackElements stackElements, String msg) {
         super(colors, stackElements, null);
-        this.message = StringExt.chomp(msg);
+        
+        this.message = Strings.chomp(msg);
     }
 
     public boolean isRepeated() {

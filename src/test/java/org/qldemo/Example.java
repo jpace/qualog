@@ -1,9 +1,10 @@
 package org.qldemo;
 
 import java.util.*;
-import org.qualog.Configuration;
 import org.qualog.config.ColorConfig;
+import org.qualog.config.Configuration;
 import org.qualog.config.WidthConfig;
+
 import static org.incava.ijdk.util.IUtil.list;
 import static tr.Ace.*;
 
@@ -61,7 +62,7 @@ public class Example {
     
     public static void main(String[] args) {
         tr.Ace.setVerbose(true);
-        tr.Ace.setConfiguration(new Configuration(new ColorConfig(), WidthConfig.NARROW, true, true, true));
+        tr.Ace.setConfiguration(new Configuration(new ColorConfig(), WidthConfig.NARROW, true, true, true, true));
         Example ex = new Example("demo");
         ex.process();
     }

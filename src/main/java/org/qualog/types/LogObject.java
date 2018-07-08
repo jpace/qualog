@@ -6,7 +6,6 @@ import java.util.EnumSet;
 import java.util.Map;
 import java.util.TreeMap;
 import org.qualog.Level;
-import static org.incava.ijdk.util.IUtil.*;
 
 /**
  * Wraps logging for an object.
@@ -19,7 +18,7 @@ public class LogObject {
     }
 
     public static Map<String, Object> inspect(EnumSet<InspectOptionType> inspOpts, Object obj) {
-        return isNotNull(obj) ? inspectForClass(inspOpts, obj.getClass(), obj) : null;
+        return obj == null ? null : inspectForClass(inspOpts, obj.getClass(), obj);
     }
 
     public static Map<String, Object> inspectFully(Object obj) {
@@ -27,7 +26,7 @@ public class LogObject {
     }
 
     public static Map<String, Object> inspectFully(EnumSet<InspectOptionType> inspOpts, Object obj) {
-        if (isNull(obj)) {
+        if (obj == null) {
             return null;
         }
 
@@ -42,7 +41,7 @@ public class LogObject {
     }
 
     public static Map<String, Object> inspectForClass(EnumSet<InspectOptionType> inspOpts, Class<?> cls, Object obj) {
-        if (isNull(obj)) {
+        if (obj == null) {
             return null;
         }
 

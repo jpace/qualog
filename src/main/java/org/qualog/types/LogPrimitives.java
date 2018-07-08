@@ -3,7 +3,6 @@ package org.qualog.types;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import static org.incava.ijdk.util.IUtil.list;
 
 /**
  * Elements that are not logged with their classes and hashcodes.

@@ -2,10 +2,11 @@ package org.incava.ijdk.example;
 
 import java.util.List;
 import junit.framework.TestCase;
-import org.incava.ijdk.util.ListExt;
-import org.qualog.Configuration;
+import org.incava.ijdk.util.Lists;
+import org.qualog.config.Configuration;
 import org.qualog.config.WidthConfig;
 import org.qualog.output.ANSIColor;
+
 import static org.incava.ijdk.util.IUtil.list;
 
 public class XmasTest extends TestCase {
@@ -110,7 +111,7 @@ public class XmasTest extends TestCase {
                     sb.append(' ');
                 }
                 else {
-                    ANSIColor color = ListExt.getRandomElement(colors);
+                    ANSIColor color = Lists.getRandomElement(colors);
                     if (Math.random() < 0.3) {
                         // blinkenlights! (not on all terminals; XTerm still supports blink)
                         sb.append(ANSIColor.BLINK);

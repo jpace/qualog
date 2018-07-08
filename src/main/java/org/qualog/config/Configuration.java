@@ -1,7 +1,5 @@
-package org.qualog;
+package org.qualog.config;
 
-import org.qualog.config.ColorConfig;
-import org.qualog.config.WidthConfig;
 import org.qualog.output.ANSIColor;
 import org.qualog.output.ANSIColorList;
 
@@ -11,28 +9,29 @@ import static org.incava.ijdk.lang.ICore.or;
  * System-wide settings for logging.
  */
 public class Configuration {
-    // public static final Configuration WIDE = new Configuration(WidthConfig.WIDE);
-    // public static final Configuration MEDIUM = new Configuration(WidthConfig.WIDE);
-    // public static final Configuration NARROW = new Configuration(WidthConfig.WIDE);
-    // public static final Configuration DEFAULT = MEDIUM;
-    
     private boolean showFiles;
     private boolean showClasses;
     private boolean useColumns;
+    private boolean isConcise;
 
     private final ColorConfig colorConfig;
     private final WidthConfig widthConfig;
 
     public Configuration() {
-        this(new ColorConfig(), new WidthConfig(), true, true, true);
+        this(new ColorConfig(), new WidthConfig(), true, true, true, true);
     }
 
-    public Configuration(ColorConfig cc, WidthConfig wc, boolean showFiles, boolean showClasses, boolean useColumns) {
+    public Configuration(ColorConfig cc, WidthConfig wc, boolean showFiles, boolean showClasses, boolean useColumns, boolean isConcise) {
         this.colorConfig = cc;
         this.widthConfig = wc;
         this.showFiles = showFiles;
         this.showClasses = showClasses;
         this.useColumns = useColumns;
+        this.isConcise = isConcise;
+    }
+
+    public boolean isConcise() {
+        return isConcise;
     }
 
     public ColorConfig getColorConfig() {

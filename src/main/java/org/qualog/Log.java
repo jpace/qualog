@@ -2,7 +2,6 @@ package org.qualog;
 
 import java.util.EnumSet;
 import org.qualog.output.ANSIColor;
-import static org.incava.ijdk.util.IUtil.*;
 
 /**
  * <p>Provides quasi-logging support, more akin to debugging/development output

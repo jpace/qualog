@@ -1,6 +1,6 @@
 package org.qualog.output;
 
-import org.qualog.Configuration;
+import org.qualog.config.Configuration;
 import org.qualog.config.WidthConfig;
 
 /**

@@ -2,10 +2,10 @@ package org.qualog.timer;
 
 import java.util.ArrayList;
 import java.util.List;
-import org.incava.ijdk.lang.ObjectExt;
-import org.incava.ijdk.lang.Pair;
+import org.incava.ijdk.collect.Iterate;
+import org.incava.ijdk.lang.Objects;
+import org.incava.ijdk.tuple.Pair;
 import org.qualog.Logger;
-import static org.incava.ijdk.util.IUtil.*;
 
 public class Timer {
     private final List<TimedPeriod> periods;
@@ -40,7 +40,7 @@ public class Timer {
      * Returns 1 if the objects are equal, and otherwise zero.
      */
     private int getScore(Object x, Object y) {
-        return ObjectExt.areEqual(x, y) ? 1 : 0;
+        return Objects.equal(x, y) ? 1 : 0;
     }
 
     private Integer findBestMatch(StackTraceElement ste, String msg) {
@@ -51,7 +51,7 @@ public class Timer {
         // first is index, second is score.
         Pair<Integer, Integer> bestMatch = new Pair<Integer, Integer>(-1, -1);
         
-        for (int idx : iter(periods.size())) {
+        for (Integer idx : Iterate.count(periods.size())) {
             TimedPeriod qtp       = periods.get(idx);
             int         matchness = (getScore(msg,        qtp.getMessage()) +
                                      getScore(className,  qtp.getClassName()) + 
@@ -59,7 +59,7 @@ public class Timer {
                                      getScore(methodName, qtp.getMethodName()));
             
             if (matchness >= bestMatch.getSecond()) {
-                bestMatch = new Pair<Integer, Integer>(idx, matchness);
+                bestMatch = Pair.of(idx, matchness);
             }
         }
 

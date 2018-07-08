@@ -1,7 +1,7 @@
 package org.qualog.output;
 
-import org.incava.ijdk.lang.StringExt;
-import static org.incava.ijdk.util.IUtil.*;
+import org.incava.ijdk.lang.Strings;
+import org.incava.ijdk.util.IUtil;
 
 public class FileName extends Item {    
     public FileName(ANSIColor color, StackElements stackElements, int fileWidth) {
@@ -18,10 +18,10 @@ public class FileName extends Item {
         String stackFileName = getSnipped(fileName);
 
         if (isRepeated()) {
-            return StringExt.repeat(' ', stackFileName.length());
+            return Strings.repeat(' ', stackFileName.length());
         }
         
-        return or(stackFileName, "");
+        return IUtil.or(stackFileName, "");
     }
 
     public String getStackField(StackTraceElement stackElement) {

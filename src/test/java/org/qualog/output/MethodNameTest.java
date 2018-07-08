@@ -63,8 +63,8 @@ public class MethodNameTest extends TestCase {
         StackElements stackElements = stes(ste("a.B", "c", "B.java", 1),
                                            ste("a.B", "c", "B.java", 4));
         int methodWidth = 15;
-        String value = new Str(" ").repeat(methodWidth);
-        assertGetValue(value, methodName(null, stackElements, methodWidth));
+        Str value = new Str(" ").repeat(methodWidth);
+        assertGetValue(value.toString(), methodName(null, stackElements, methodWidth));
     }
 
     public void testGetValueSnipped() {
