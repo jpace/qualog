@@ -6,36 +6,37 @@ import java.util.EnumSet;
 import java.util.Map;
 import java.util.TreeMap;
 import junit.framework.TestCase;
+import org.incava.ijdk.collect.Hash;
+import org.junit.Test;
 
-public class LogObjectTest extends TestCase {
-    public LogObjectTest(String name) {
-        super(name);
-    }
-    
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
+
+public class LogObjectTest {
+    @Test
     public void testInspectSimple() {
         Object obj = new Double(3.14);
         Map<String, Object> attrs = LogObject.inspect(obj);
-        Map<String, Object> exp = new TreeMap<String, Object>();
-        exp.put("value", 3.14);
+        Map<String, Object> exp = Hash.of("value", 3.14);
         
-        assertEquals(exp, attrs);
+        assertThat(attrs, equalTo(exp));
     }
 
+    @Test
     public void testInspectTwo() {
         Map<String, Object> attrs = LogObject.inspect(new java.awt.Point(666, 777));
-        Map<String, Object> exp = new TreeMap<String, Object>();
-        exp.put("x", 666);
-        exp.put("y", 777);
+        Map<String, Object> exp = Hash.of("x", 666, "y", 777);
         
-        assertEquals(exp, attrs);
+        assertThat(attrs, equalTo(exp));
     }
 
+    @Test
     public void testInspectSimpleIncludeStatic() {
         Object obj = new Double(3.14);
         Map<String, Object> attrs = LogObject.inspect(EnumSet.of(LogObject.InspectOptionType.INCLUDE_STATIC), obj);
-        Map<String, Object> exp = new TreeMap<String, Object>();
+        Map<String, Object> exp = Hash.empty();
         exp.put("value", 3.14);        
-        exp.put("serialVersionUID", -9172774392245257468L); // at least as of 04 Nov 11
+        exp.put("serialVersionUID", -9172774392245257468L); // at least as of 1.8
 
         exp.put("BYTES", Integer.valueOf(8));
         exp.put("POSITIVE_INFINITY", Double.POSITIVE_INFINITY);
@@ -53,29 +54,6 @@ public class LogObjectTest extends TestCase {
             exp.put("BYTES", Double.BYTES);
         }
         
-        assertEquals(exp, attrs);
-    }
-
-    public void testInspectTwoIncludeStatic() {
-        Map<String, Object> attrs = LogObject.inspect(EnumSet.of(LogObject.InspectOptionType.INCLUDE_STATIC), new java.awt.Point(666, 777));
-        Map<String, Object> exp = new TreeMap<String, Object>();
-        exp.put("x", 666);
-        exp.put("y", 777);
-        exp.put("serialVersionUID", -5276940640259749850L);
-        
-        assertEquals(exp, attrs);
-    }
-
-    public void testInspectThree() {
-        Map<String, Object> attrs = LogObject.inspect(new ArrayList<String>(Arrays.asList(new String[] { "this", "is", "a", "test" })));
-        tr.Ace.log("attrs", attrs);
-        Map<String, Object> exp = new TreeMap<String, Object>();
-        exp.put("elementData", new Object[] { "this", "is", "a", "test" });
-        exp.put("size", 4);
-        
-        assertEquals(exp.keySet(), attrs.keySet());
-        assertEquals(exp.get("size"), attrs.get("size"));
-        Object[] elmtData = (Object[])attrs.get("elementData");
-        assertEquals(Arrays.asList(new String[] { "this", "is", "a", "test" }), Arrays.asList(elmtData));        
+        assertThat(attrs, equalTo(exp));
     }
 }
