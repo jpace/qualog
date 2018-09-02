@@ -1,6 +1,9 @@
 package org.qldemo;
 
-import java.util.*;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 import org.qualog.config.ColorConfig;
 import org.qualog.config.Configuration;
 import org.qualog.config.WidthConfig;

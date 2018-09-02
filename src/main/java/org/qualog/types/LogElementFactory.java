@@ -1,6 +1,6 @@
 package org.qualog.types;
 
-import java.lang.reflect.*;
+import java.lang.reflect.Constructor;
 import java.util.Collection;
 import java.util.Enumeration;
 import java.util.HashMap;

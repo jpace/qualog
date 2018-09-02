@@ -1,7 +1,5 @@
 package org.qualog;
 
-import java.io.*;
-import java.util.*;
 import junit.framework.TestCase;
 
 public class LogSqueezerTest extends TestCase {

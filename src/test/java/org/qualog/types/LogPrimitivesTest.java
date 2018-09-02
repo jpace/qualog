@@ -1,41 +1,27 @@
 package org.qualog.types;
 
-import junit.framework.TestCase;
+import junitparams.Parameters;
+import junitparams.naming.TestCaseName;
+import org.incava.attest.Parameterized;
+import org.junit.Test;
 
-public class LogPrimitivesTest extends TestCase {
-    public LogPrimitivesTest(String name) {
-        super(name);
-    }
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
 
-    // isUndecorated
-
-    private boolean assertIsUndecorated(Object obj) {
-        boolean result = LogPrimitives.isUndecorated(obj);
-        assertTrue("obj: " + obj, result);
-        return result;
-    }
-
-    public void testString() {
-        assertIsUndecorated(String.valueOf(""));
-    }
-
-    public void testBoolean() {
-        assertIsUndecorated(Boolean.TRUE);
+public class LogPrimitivesTest extends Parameterized {
+    @Test @Parameters @TestCaseName("{method}(...) #{index} [{params}]")
+    public void isUndecorated(Boolean expected, Object obj) {
+        Boolean result = new LogPrimitives().isUndecorated(obj);
+        assertThat(result, equalTo(expected));
     }
     
-    public void testInteger() {
-        assertIsUndecorated(Integer.valueOf(1));
-    }
-    
-    public void testDouble() {
-        assertIsUndecorated(Double.valueOf(3.14));
-    }
-    
-    public void testCharacter() {
-        assertIsUndecorated(Character.valueOf('c'));
-    }
-    
-    public void testStackTraceElement() {
-        assertIsUndecorated(new StackTraceElement("", "", "", 0));
+    private java.util.List<Object[]> parametersForIsUndecorated() {
+        return paramsList(params(true, String.valueOf("")),
+                          params(true, Boolean.TRUE),
+                          params(true, Integer.valueOf(1)),
+                          params(true, Double.valueOf(3.14)),
+                          params(true, Character.valueOf('c')),
+                          params(true, new StackTraceElement("", "", "", 0)),
+                          params(false, new Object()));
     }
 }

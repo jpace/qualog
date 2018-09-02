@@ -4,7 +4,7 @@ import org.incava.ijdk.lang.Objects;
 import org.incava.ijdk.lang.Str;
 
 public class MethodName extends Item {    
-    public MethodName(ANSIColor color, StackElements stackElements, int methodWidth) {
+    public MethodName(ANSIColor color, StackElements stackElements, Integer methodWidth) {
         super(color, stackElements, methodWidth);
     }
 

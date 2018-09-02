@@ -1,34 +1,31 @@
 package org.qualog.types;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
+import org.incava.ijdk.collect.Array;
 
 /**
- * Elements that are not logged with their classes and hashcodes.
+ * Elements that when written to a log do not include their classes and hashcodes.
  */
 public class LogPrimitives {
     /**
-     * Primitive or quasi-primitive classes, use for toString().
+     * Primitive or quasi-primitive classes, used for toString().
      */
-    private static final List<Class<?>> UNDECORATED_CLASSES = new ArrayList<Class<?>>();
-    
-    static {
-        UNDECORATED_CLASSES.add(String.class);
-        UNDECORATED_CLASSES.add(Number.class);
-        UNDECORATED_CLASSES.add(Character.class);
-        UNDECORATED_CLASSES.add(Boolean.class);
-        UNDECORATED_CLASSES.add(StackTraceElement.class);
+    private final Array<Class<?>> undecoratedClasses;
+
+    public LogPrimitives() {
+        undecoratedClasses = Array.of(String.class,
+                                      Number.class,
+                                      Character.class,
+                                      Boolean.class,
+                                      StackTraceElement.class);
     }
     
     /**
      * Returns whether the class of the object is assignable from any of the
      * undecorated classes.
      */
-    public static boolean isUndecorated(Object obj) {
+    public boolean isUndecorated(Object obj) {
         Class<?> objCls = obj.getClass();
-        for (int ci = 0; ci < UNDECORATED_CLASSES.size(); ++ci) {
-            Class<?> undecCls = UNDECORATED_CLASSES.get(ci);
+        for (Class<?> undecCls : undecoratedClasses) {
             if (undecCls.isAssignableFrom(objCls)) {
                 return true;
             }

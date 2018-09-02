@@ -3,7 +3,7 @@ package org.qualog.output;
 import org.incava.ijdk.lang.Str;
 
 public class ClassName extends Item {    
-    public ClassName(ANSIColor color, StackElements stackElements, int classWidth) {
+    public ClassName(ANSIColor color, StackElements stackElements, Integer classWidth) {
         super(color, stackElements, classWidth);
     }
 
@@ -13,8 +13,8 @@ public class ClassName extends Item {
         }
 
         String className = stackElement.getClassName();        
-        className = asConcise(className);
-        return getSnipped(className);
+        String concise = asConcise(className);
+        return getSnipped(concise);
     }
 
     public String getStackField(StackTraceElement stackElement) {

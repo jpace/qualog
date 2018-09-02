@@ -1,6 +1,7 @@
 package org.qldemo;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.List;
 
 public class Demo {
     public void announce() {

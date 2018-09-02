@@ -13,8 +13,8 @@ public class MethodSkippedTest extends LogTestCase {
         new org.incava.lgtest.LgMethodFiltered().run();
 
         String expected = "" +
-            "[LgMethodFilter-    11] {o.i.l.LgMethodFiltered   #run              } one: 1\n" +
-            "[                   12] {                         #                 } pi: 3.14\n";
+            "[LgMethodFilter-     9] {o.i.l.LgMethodFiltered   #run              } one: 1\n" +
+            "[                   10] {                         #                 } pi: 3.14\n";
         
         System.out.println("sw: " + sw);
         

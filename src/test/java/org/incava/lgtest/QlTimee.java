@@ -1,13 +1,9 @@
 package org.incava.lgtest;
 
-import java.util.*;
 import org.qualog.timer.Timer;
 
-
-public class QlTimee
-{
-    public void go()
-    {
+public class QlTimee {
+    public void go() {
         Timer t = new Timer();
 
         t.start("riley");
@@ -21,5 +17,4 @@ public class QlTimee
 
         t.end("riley");
     }
-
 }

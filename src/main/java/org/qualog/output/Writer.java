@@ -127,12 +127,13 @@ public class Writer {
         return le.stack(this);
     }
 
-    public boolean isSkipped(StackTraceElement ste) {
-        return omitted.isSkipped(ste);
-    }
-
     public boolean isLoggable(Level lvl) {
         return level.isLoggable(outputType, lvl);
+    }
+
+    private int getNumFrames(LogElement logElmt) {
+        // only show 1 frame in quiet mode:
+        return outputType.equals(OutputType.QUIET) ? 1 : logElmt.getNumFrames();
     }
 
     /**
@@ -144,14 +145,11 @@ public class Writer {
             reset();
         }
 
-        // only show 1 frame in quiet mode:
-        int numFrames = outputType.equals(OutputType.QUIET) ? 1 : logElmt.getNumFrames();
+        int numFrames = getNumFrames(logElmt);
         
         StackTraceElement[] stack = getStack(numFrames);
         
         int frameIdx = findStackStart(stack);
-
-        Colors colors = new Colors(config.getColorConfig());
         
         for (int framesShown = 0; frameIdx < stack.length && framesShown < numFrames; ++frameIdx, ++framesShown) {
             StackTraceElement stackElement = stack[frameIdx];
@@ -160,8 +158,7 @@ public class Writer {
                 break;
             }
 
-            ItemColors elmtColors = logElmt.getColors();
-            ItemColors lineColors = colors.getLineColors(elmtColors, stackElement);
+            ItemColors lineColors = getLineColors(logElmt, stackElement);
             
             Line line = new Line(logElmt.getMessage(), lineColors, stackElement, prevStackElement, config);
             boolean isRepeated = framesShown > 0;
@@ -170,6 +167,12 @@ public class Writer {
             prevStackElement = stackElement;
         }
         return true;
+    }
+
+    private ItemColors getLineColors(LogElement logElmt, StackTraceElement stackElement) {
+        Colors colors = new Colors(config.getColorConfig());
+        ItemColors elmtColors = logElmt.getColors();
+        return colors.getLineColors(elmtColors, stackElement);
     }
     
     private static StackTraceElement[] getStack(int depth) {
@@ -182,7 +185,7 @@ public class Writer {
      */
     public synchronized int findStackStart(StackTraceElement[] stack) {
         for (int fi = 0; fi < stack.length; ++fi) {
-            if (!isSkipped(stack[fi])) {
+            if (!omitted.isSkipped(stack[fi])) {
                 return fi;
             }
         }

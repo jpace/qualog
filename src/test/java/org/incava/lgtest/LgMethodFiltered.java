@@ -1,7 +1,5 @@
 package org.incava.lgtest;
 
-import java.util.*;
-
 public class LgMethodFiltered {
     public void log(String msg, Object obj) {
         tr.Ace.log(msg, obj);

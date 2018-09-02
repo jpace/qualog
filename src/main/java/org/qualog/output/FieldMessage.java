@@ -1,7 +1,5 @@
 package org.qualog.output;
 
-import java.util.*;
-
 public class FieldMessage extends Message {
     private final String field;
     

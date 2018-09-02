@@ -17,7 +17,7 @@ public class LogObjectMessage implements LogMessage {
         if (object == null) {
             return "null";
         }
-        else if (LogPrimitives.isUndecorated(object)) {
+        else if (new LogPrimitives().isUndecorated(object)) {
             return object.toString();
         }
         else {
