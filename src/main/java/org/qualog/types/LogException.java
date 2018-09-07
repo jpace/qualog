@@ -1,7 +1,9 @@
 package org.qualog.types;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import org.incava.ijdk.collect.StringArray;
 import org.qualog.Level;
 import org.qualog.output.ItemColors;
 import org.qualog.output.Writer;
@@ -33,5 +35,23 @@ public class LogException extends LogElement {
         else {
             return true;
         }
+    }
+
+    public StringArray lines(int numFrames) {
+        StringArray lines = StringArray.empty();
+        lines.add(thr.toString());
+
+        if (numFrames > 0) {
+            Level level = null;
+            ItemColors colors = null;
+            String name = getName();
+            
+            StackTraceElement[] stack = thr.getStackTrace();
+            LogObjectArray loa = new LogObjectArray(level, colors, name, stack, numFrames);
+
+            lines.addAll(loa.lines().get(0, numFrames - 1));
+        }
+        
+        return lines;
     }
 }

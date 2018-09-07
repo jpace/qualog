@@ -10,16 +10,15 @@ import org.incava.ijdk.lang.LongArray;
 import org.incava.ijdk.lang.ShortArray;
 
 /**
- * Wraps C-style arrays for output.
+ * Converts primitive arrays to object arrays.
  */
-public class StringArrayFactory {
-    public String[] toStringArray(Object obj) {
+public class ObjectArrayFactory {
+    public Object[] toObjectArray(Object obj) {
         if (obj == null) {
             return null;
         }
         else if (obj instanceof Object[]) {
-            Object[] ary = (Object[])obj;
-            return toArray(ary);
+            return (Object[])obj;
         }
         else if (obj instanceof boolean[]) {
             boolean[] ary = (boolean[])obj;

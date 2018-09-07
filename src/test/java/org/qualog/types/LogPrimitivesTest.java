@@ -1,5 +1,6 @@
 package org.qualog.types;
 
+import java.util.List;
 import junitparams.Parameters;
 import junitparams.naming.TestCaseName;
 import org.incava.attest.Parameterized;
@@ -15,13 +16,13 @@ public class LogPrimitivesTest extends Parameterized {
         assertThat(result, equalTo(expected));
     }
     
-    private java.util.List<Object[]> parametersForIsUndecorated() {
-        return paramsList(params(true, String.valueOf("")),
-                          params(true, Boolean.TRUE),
-                          params(true, Integer.valueOf(1)),
-                          params(true, Double.valueOf(3.14)),
-                          params(true, Character.valueOf('c')),
-                          params(true, new StackTraceElement("", "", "", 0)),
+    private List<Object[]> parametersForIsUndecorated() {
+        return paramsList(params(true,  String.valueOf("")),
+                          params(true,  Boolean.TRUE),
+                          params(true,  Integer.valueOf(1)),
+                          params(true,  Double.valueOf(3.14)),
+                          params(true,  Character.valueOf('c')),
+                          params(true,  new StackTraceElement("", "", "", 0)),
                           params(false, new Object()));
     }
 }

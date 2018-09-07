@@ -14,7 +14,7 @@ import org.qualog.output.ItemColors;
 import org.qualog.output.OutputType;
 import org.qualog.output.Writer;
 import org.qualog.timer.Timer;
-import org.qualog.types.LogObject;
+import org.qualog.types.LogInspectable;
 
 /**
  * Base class of the Log class, which expands the interface via generated
@@ -217,7 +217,7 @@ public class Logger {
             return stack(level, colors, name, obj, numFrames);
         }
         else {
-            Map<String, Object> objMap = LogObject.inspect(obj);
+            Map<String, Object> objMap = LogInspectable.inspect(obj);
             return stack(level, colors, name, objMap, numFrames);
         }
     }

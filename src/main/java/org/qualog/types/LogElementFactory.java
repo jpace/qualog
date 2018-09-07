@@ -11,6 +11,7 @@ import org.qualog.output.ItemColors;
 
 public class LogElementFactory {
     private static final Map<Class<?>, Class<? extends LogElement>> clsToElmtClasses = new HashMap<Class<?>, Class<? extends LogElement>>();
+    private static final ObjectArrayFactory objectArrayFactory = new ObjectArrayFactory();
     
     public static void add(Class<?> cls, Class<? extends LogElement> elmtCls) {
         clsToElmtClasses.put(cls, elmtCls);
@@ -61,7 +62,8 @@ public class LogElementFactory {
         }
 
         if (obj.getClass().isArray()) {
-            return LogObjectArray.create(params, obj);
+            Object[] ary = toObjectArray(obj);
+            return new LogObjectArray(params, ary);
         }
         else if (obj instanceof Collection) {
             Collection<?> coll = (Collection<?>)obj;
@@ -87,4 +89,8 @@ public class LogElementFactory {
             return new LogElement(params, obj);
         }
     }
+
+    public static Object[] toObjectArray(Object obj) {
+        return objectArrayFactory.toObjectArray(obj);
+    }    
 }
