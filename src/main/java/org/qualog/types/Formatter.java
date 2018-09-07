@@ -30,6 +30,110 @@ public class Formatter {
         }
     }
 
+    public StringArray lines(String name, boolean[] ary) {        
+        if (ary == null || ary.length == 0) {
+            return emptyLine(name);
+        }
+        else {
+            StringArray lines = StringArray.empty();
+            for (int ai = 0; ai < ary.length; ++ai) {
+                addLine(lines, name, ai, ary[ai]);
+            }
+            return lines;
+        }
+    }
+
+    public StringArray lines(String name, byte[] ary) {        
+        if (ary == null || ary.length == 0) {
+            return emptyLine(name);
+        }
+        else {
+            StringArray lines = StringArray.empty();
+            for (int ai = 0; ai < ary.length; ++ai) {
+                addLine(lines, name, ai, ary[ai]);
+            }
+            return lines;
+        }
+    }
+
+    public StringArray lines(String name, char[] ary) {        
+        if (ary == null || ary.length == 0) {
+            return emptyLine(name);
+        }
+        else {
+            StringArray lines = StringArray.empty();
+            for (int ai = 0; ai < ary.length; ++ai) {
+                addLine(lines, name, ai, ary[ai]);
+            }
+            return lines;
+        }
+    }
+
+    public StringArray lines(String name, double[] ary) {        
+        if (ary == null || ary.length == 0) {
+            return emptyLine(name);
+        }
+        else {
+            StringArray lines = StringArray.empty();
+            for (int ai = 0; ai < ary.length; ++ai) {
+                addLine(lines, name, ai, ary[ai]);
+            }
+            return lines;
+        }
+    }
+
+    public StringArray lines(String name, float[] ary) {        
+        if (ary == null || ary.length == 0) {
+            return emptyLine(name);
+        }
+        else {
+            StringArray lines = StringArray.empty();
+            for (int ai = 0; ai < ary.length; ++ai) {
+                addLine(lines, name, ai, ary[ai]);
+            }
+            return lines;
+        }
+    }
+
+    public StringArray lines(String name, int[] ary) {        
+        if (ary == null || ary.length == 0) {
+            return emptyLine(name);
+        }
+        else {
+            StringArray lines = StringArray.empty();
+            for (int ai = 0; ai < ary.length; ++ai) {
+                addLine(lines, name, ai, ary[ai]);
+            }
+            return lines;
+        }
+    }
+
+    public StringArray lines(String name, long[] ary) {        
+        if (ary == null || ary.length == 0) {
+            return emptyLine(name);
+        }
+        else {
+            StringArray lines = StringArray.empty();
+            for (int ai = 0; ai < ary.length; ++ai) {
+                addLine(lines, name, ai, ary[ai]);
+            }
+            return lines;
+        }
+    }
+
+    public StringArray lines(String name, short[] ary) {        
+        if (ary == null || ary.length == 0) {
+            return emptyLine(name);
+        }
+        else {
+            StringArray lines = StringArray.empty();
+            for (int ai = 0; ai < ary.length; ++ai) {
+                addLine(lines, name, ai, ary[ai]);
+            }
+            return lines;
+        }
+    }
+
     public StringArray lines(String name, Throwable thr, int numFrames) {
         StringArray lines = StringArray.empty();
         lines.add(thr.toString());
@@ -88,10 +192,20 @@ public class Formatter {
     }
 
     private void addLine(StringArray lines, String name, Object key, Object value) {
-        lines.add(name + "[" + key + "]: " + value);
+        addLine(lines, name + "[" + key + "]", value);
+    }
+
+    private void addLine(StringArray lines, String name, Object msg) {
+        lines.add(name + ": " + msg);
+    }
+
+    private void addLine(StringArray lines, Object msg) {
+        lines.add(String.valueOf(msg));
     }
 
     private StringArray emptyLine(String name) {
-        return StringArray.of(name + ": " + "()");
+        StringArray lines = StringArray.empty();
+        addLine(lines, name, "()");
+        return lines;
     }
 }
