@@ -1,7 +1,6 @@
 package org.qualog.types;
 
 import org.incava.ijdk.collect.StringArray;
-import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
@@ -11,201 +10,312 @@ import java.util.Set;
  */
 public class Formatter {
     private ObjectTypes objectTypes = new ObjectTypes();
+
+    private final StringArray lines;
+    // private final Integer limit;
+
+    public Formatter(StringArray lines) {
+        this.lines = lines;
+    }
     
-    public StringArray lines(String name, Object obj) {
-        String msg = objectTypes.toString(obj);
-        return StringArray.of(name + ": " + msg);
+    public Formatter() {
+        this(StringArray.empty());
     }
 
-    public StringArray lines(String name, Object[] ary) {        
-        if (ary == null || ary.length == 0) {
-            return emptyLine(name);
-        }
-        else {
-            StringArray lines = StringArray.empty();
-            for (int ai = 0; ai < ary.length; ++ai) {
-                addLine(lines, name, ai, ary[ai]);
-            }
-            return lines;
-        }
-    }
-
-    public StringArray lines(String name, boolean[] ary) {        
-        if (ary == null || ary.length == 0) {
-            return emptyLine(name);
-        }
-        else {
-            StringArray lines = StringArray.empty();
-            for (int ai = 0; ai < ary.length; ++ai) {
-                addLine(lines, name, ai, ary[ai]);
-            }
-            return lines;
-        }
-    }
-
-    public StringArray lines(String name, byte[] ary) {        
-        if (ary == null || ary.length == 0) {
-            return emptyLine(name);
-        }
-        else {
-            StringArray lines = StringArray.empty();
-            for (int ai = 0; ai < ary.length; ++ai) {
-                addLine(lines, name, ai, ary[ai]);
-            }
-            return lines;
-        }
-    }
-
-    public StringArray lines(String name, char[] ary) {        
-        if (ary == null || ary.length == 0) {
-            return emptyLine(name);
-        }
-        else {
-            StringArray lines = StringArray.empty();
-            for (int ai = 0; ai < ary.length; ++ai) {
-                addLine(lines, name, ai, ary[ai]);
-            }
-            return lines;
-        }
-    }
-
-    public StringArray lines(String name, double[] ary) {        
-        if (ary == null || ary.length == 0) {
-            return emptyLine(name);
-        }
-        else {
-            StringArray lines = StringArray.empty();
-            for (int ai = 0; ai < ary.length; ++ai) {
-                addLine(lines, name, ai, ary[ai]);
-            }
-            return lines;
-        }
-    }
-
-    public StringArray lines(String name, float[] ary) {        
-        if (ary == null || ary.length == 0) {
-            return emptyLine(name);
-        }
-        else {
-            StringArray lines = StringArray.empty();
-            for (int ai = 0; ai < ary.length; ++ai) {
-                addLine(lines, name, ai, ary[ai]);
-            }
-            return lines;
-        }
-    }
-
-    public StringArray lines(String name, int[] ary) {        
-        if (ary == null || ary.length == 0) {
-            return emptyLine(name);
-        }
-        else {
-            StringArray lines = StringArray.empty();
-            for (int ai = 0; ai < ary.length; ++ai) {
-                addLine(lines, name, ai, ary[ai]);
-            }
-            return lines;
-        }
-    }
-
-    public StringArray lines(String name, long[] ary) {        
-        if (ary == null || ary.length == 0) {
-            return emptyLine(name);
-        }
-        else {
-            StringArray lines = StringArray.empty();
-            for (int ai = 0; ai < ary.length; ++ai) {
-                addLine(lines, name, ai, ary[ai]);
-            }
-            return lines;
-        }
-    }
-
-    public StringArray lines(String name, short[] ary) {        
-        if (ary == null || ary.length == 0) {
-            return emptyLine(name);
-        }
-        else {
-            StringArray lines = StringArray.empty();
-            for (int ai = 0; ai < ary.length; ++ai) {
-                addLine(lines, name, ai, ary[ai]);
-            }
-            return lines;
-        }
-    }
-
-    public StringArray lines(String name, Throwable thr, int numFrames) {
-        StringArray lines = StringArray.empty();
-        lines.add(thr.toString());
-
-        if (numFrames > 0) {
-            StackTraceElement[] stack = thr.getStackTrace();
-            lines.addAll(lines(name, stack).get(0, numFrames - 1));
-        }
-        
+    public StringArray getLines() {
         return lines;
     }
-
-    public <K, V> StringArray lines(String name, Map<K, V> map) {
-        if (map.isEmpty()) {
-            return emptyLine(name);
+    
+    public void format(String key, Object value) {
+        if (value == null) {
+            lines.add(key + ": " + null);
         }
         else {
-            StringArray lines = StringArray.empty();
-            for (Map.Entry<K, V> it : map.entrySet()) {
-                addLine(lines, name, it.getKey(), it.getValue());
-            }
-            return lines;
-        }
-    }
-
-    public <T> StringArray lines(String name, Iterator<T> iterator) {
-        if (iterator.hasNext()) {
-            StringArray lines = StringArray.empty();
-            for (int idx = 0; iterator.hasNext(); ++idx) {
-                T obj = iterator.next();
-                addLine(lines, name, idx, obj);
-            }
-            return lines;
-        }
-        else {
-            return emptyLine(name);
+            String str = objectTypes.toString(value);
+            format(key, str);
         }        
     }
 
-    public <T> StringArray lines(String name, Iterable<T> iterable) {
-        return lines(name, iterable.iterator());
+    public void format(String key, String value) {
+        lines.add(key + ": " + value);
     }
 
-    public <T> StringArray lines(String name, Enumeration<T> enumeration) {
-        if (enumeration.hasMoreElements()) {
-            StringArray lines = StringArray.empty();
-            for (int idx = 0; enumeration.hasMoreElements(); ++idx) {
-                T obj = enumeration.nextElement();
-                addLine(lines, name, idx, obj);
-            }
-            return lines;
+    public void format(String key, Object[] ary) {
+        format(key, ary, null);
+    }
+
+    public void format(String key, Object[] ary, Integer limit) {        
+        if (ary == null) {
+            addLine(key, null);
+        }
+        else if (ary.length == 0) {
+            addEmptyLine(key);
         }
         else {
-            return emptyLine(name);
+            int max = limit == null ? ary.length : Math.min(ary.length, limit);
+            for (int ai = 0; ai < max; ++ai) {
+                addLine(key, ai, ary[ai]);
+            }
         }
     }
 
-    private void addLine(StringArray lines, String name, Object key, Object value) {
-        addLine(lines, name + "[" + key + "]", value);
+    public void format(String key, boolean[] ary) {        
+        format(key, ary, null);
+    }
+    
+    public void format(String key, boolean[] ary, Integer limit) {
+        if (ary == null) {
+            addLine(key, null);
+        }
+        else if (ary.length == 0) {
+            addEmptyLine(key);
+        }
+        else {
+            int max = limit == null ? ary.length : Math.min(ary.length, limit);
+            for (int ai = 0; ai < max; ++ai) {
+                addLine(key, ai, ary[ai]);
+            }
+        }
     }
 
-    private void addLine(StringArray lines, String name, Object msg) {
-        lines.add(name + ": " + msg);
+    public void format(String key, byte[] ary) {        
+        format(key, ary, null);
     }
 
-    private void addLine(StringArray lines, Object msg) {
-        lines.add(String.valueOf(msg));
+    public void format(String key, byte[] ary, Integer limit) {        
+        if (ary == null) {
+            addLine(key, null);
+        }
+        else if (ary.length == 0) {
+            addEmptyLine(key);
+        }
+        else {
+            for (int ai = 0; ai < ary.length; ++ai) {
+                addLine(key, ai, ary[ai]);
+            }
+        }
     }
 
-    private StringArray emptyLine(String name) {
-        StringArray lines = StringArray.empty();
-        addLine(lines, name, "()");
-        return lines;
+    public void format(String key, char[] ary) {        
+        format(key, ary, null);
+    }
+
+    public void format(String key, char[] ary, Integer limit) {
+        if (ary == null) {
+            addLine(key, null);
+        }
+        else if (ary.length == 0) {
+            addEmptyLine(key);
+        }
+        else {
+            for (int ai = 0; ai < ary.length; ++ai) {
+                addLine(key, ai, ary[ai]);
+            }
+        }
+    }
+
+    public void format(String key, double[] ary) {
+        format(key, ary, null);
+    }
+
+    public void format(String key, double[] ary, Integer limit) {
+        if (ary == null) {
+            addLine(key, null);
+        }
+        else if (ary.length == 0) {
+            addEmptyLine(key);
+        }
+        else {
+            for (int ai = 0; ai < ary.length; ++ai) {
+                addLine(key, ai, ary[ai]);
+            }
+        }
+    }
+
+    public void format(String key, float[] ary) {
+        format(key, ary, null);
+    }
+
+    public void format(String key, float[] ary, Integer limit) {
+        if (ary == null) {
+            addLine(key, null);
+        }
+        else if (ary.length == 0) {
+            addEmptyLine(key);
+        }
+        else {
+            for (int ai = 0; ai < ary.length; ++ai) {
+                addLine(key, ai, ary[ai]);
+            }
+        }
+    }
+
+    public void format(String key, int[] ary) {
+        format(key, ary, null);
+    }
+
+    public void format(String key, int[] ary, Integer limit) {
+        if (ary == null) {
+            addLine(key, null);
+        }
+        else if (ary.length == 0) {
+            addEmptyLine(key);
+        }
+        else {
+            for (int ai = 0; ai < ary.length; ++ai) {
+                addLine(key, ai, ary[ai]);
+            }
+        }
+    }
+
+    public void format(String key, long[] ary) {
+        format(key, ary, null);
+    }
+
+    public void format(String key, long[] ary, Integer limit) {
+        if (ary == null) {
+            addLine(key, null);
+        }
+        else if (ary.length == 0) {
+            addEmptyLine(key);
+        }
+        else {
+            for (int ai = 0; ai < ary.length; ++ai) {
+                addLine(key, ai, ary[ai]);
+            }
+        }
+    }
+
+    public void format(String key, short[] ary) {
+        format(key, ary, null);
+    }
+
+    public void format(String key, short[] ary, Integer limit) {
+        if (ary == null) {
+            addLine(key, null);
+        }
+        else if (ary.length == 0) {
+            addEmptyLine(key);
+        }
+        else {
+            for (int ai = 0; ai < ary.length; ++ai) {
+                addLine(key, ai, ary[ai]);
+            }
+        }
+    }
+
+    public void format(String key, Throwable thr) {
+        format(key, thr, null);
+    }
+
+    public void format(String key, Throwable thr, Integer numFrames) {
+        lines.add(thr.toString());
+
+        if (numFrames == null || numFrames > 0) {
+            StackTraceElement[] stack = thr.getStackTrace();
+            format(key, stack, numFrames);
+        }        
+    }
+
+    public <K, V> void format(String key, Map<K, V> map) {
+        format(key, map, null);
+    }
+
+    public <K, V> void format(String key, Map<K, V> map, Integer limit) {
+        if (map.isEmpty()) {
+            addEmptyLine(key);
+        }
+        else {
+            for (Map.Entry<K, V> it : map.entrySet()) {
+                addLine(key, it.getKey(), it.getValue());
+            }
+        }
+    }
+
+    public <T> void format(String key, Iterable<T> iterable) {
+        format(key, iterable, null);
+    }
+        
+    public <T> void format(String key, Iterable<T> iterable, Integer limit) {
+        Iterator<T> iterator = iterable.iterator();
+        if (iterator.hasNext()) {
+            for (int idx = 0; iterator.hasNext(); ++idx) {
+                T obj = iterator.next();
+                addLine(key, idx, obj);
+            }
+        }
+        else {
+            addEmptyLine(key);
+        }        
+    }
+
+    private void addLine(String key, Object idx, Object value) {
+        addLine(key + "[" + idx + "]", value);
+    }
+
+    private void addLine(String key, Object value) {
+        if (value == null) {
+            lines.add(key + ": " + null);
+        }
+        else if (value instanceof String) {
+            addLine(key, (String)value);
+        }
+        else if (value.getClass().isArray()) {
+            if (value instanceof Object[]) {
+                Object[] ary = (Object[])value;
+                format(key, ary);
+            }
+            else if (value instanceof boolean[]) {
+                boolean[] ary = (boolean[])value;
+                format(key, ary);
+            }
+            else if (value instanceof byte[]) {
+                byte[] ary = (byte[])value;
+                format(key, ary);
+            }
+            else if (value instanceof char[]) {
+                char[] ary = (char[])value;
+                format(key, ary);
+            }
+            else if (value instanceof double[]) {
+                double[] ary = (double[])value;
+                format(key, ary);
+            }
+            else if (value instanceof float[]) {
+                float[] ary = (float[])value;
+                format(key, ary);
+            }
+            else if (value instanceof int[]) {
+                int[] ary = (int[])value;
+                format(key, ary);
+            }
+            else if (value instanceof long[]) {
+                long[] ary = (long[])value;
+                format(key, ary);
+            }
+            else if (value instanceof short[]) {
+                short[] ary = (short[])value;
+                format(key, ary);
+            }
+        }
+        else if (value instanceof Iterable) {
+            Iterable<?> itb = (Iterable<?>)value;
+            format(key, itb);
+        }
+        else {
+            lines.add(key + ": " + value);
+        }
+    }
+
+    private void addLine(String key, String value) {
+        lines.add(key + ": " + value);
+    }
+
+    private void addLine(Object value) {
+        lines.add(String.valueOf(value));
+    }
+
+    private void addEmptyLine(String key) {
+        addLine(key, "()");
     }
 }

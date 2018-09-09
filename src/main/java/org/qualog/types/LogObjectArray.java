@@ -40,6 +40,8 @@ public class LogObjectArray extends LogElement {
     }
 
     public StringArray lines() {
-        return new Formatter().lines(getName(), ary);
+        StringArray lines = StringArray.empty();
+        new Formatter(lines).format(getName(), ary);
+        return lines;
     }   
 }
