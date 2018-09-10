@@ -1,5 +1,6 @@
 package org.qualog.types;
 
+import org.incava.ijdk.collect.Array;
 import org.incava.ijdk.collect.StringArray;
 import java.util.Iterator;
 import java.util.Map;
@@ -8,15 +9,19 @@ import java.util.Set;
 /**
  * Generates lists of lines for various object types.
  */
-public class Formatter {
+public class Formatter extends BaseFormatter {
     private ObjectTypes objectTypes = new ObjectTypes();
 
-    private final StringArray lines;
     private final Integer limit;
+    private final Array<Object> objects;
+    private final PrimitiveFormatter primitiveFormatter;
 
     public Formatter(StringArray lines, Integer limit) {
-        this.lines = lines;
+        super(lines, limit);
+        
         this.limit = limit;
+        this.objects = Array.empty();
+        this.primitiveFormatter = new PrimitiveFormatter(lines, limit);
     }
 
     public Formatter(StringArray lines) {
@@ -30,14 +35,10 @@ public class Formatter {
     public Formatter(Integer limit) {
         this(StringArray.empty(), limit);
     }
-
-    public StringArray getLines() {
-        return lines;
-    }
     
     public void format(String key, Object value) {
         if (value == null) {
-            lines.add(key + ": " + null);
+            format(key, "null");
         }
         else if (value instanceof String) {
             format(key, (String)value);
@@ -49,35 +50,35 @@ public class Formatter {
             }
             else if (value instanceof boolean[]) {
                 boolean[] ary = (boolean[])value;
-                format(key, ary);
+                primitiveFormatter.format(key, ary);
             }
             else if (value instanceof byte[]) {
                 byte[] ary = (byte[])value;
-                format(key, ary);
+                primitiveFormatter.format(key, ary);
             }
             else if (value instanceof char[]) {
                 char[] ary = (char[])value;
-                format(key, ary);
+                primitiveFormatter.format(key, ary);
             }
             else if (value instanceof double[]) {
                 double[] ary = (double[])value;
-                format(key, ary);
+                primitiveFormatter.format(key, ary);
             }
             else if (value instanceof float[]) {
                 float[] ary = (float[])value;
-                format(key, ary);
+                primitiveFormatter.format(key, ary);
             }
             else if (value instanceof int[]) {
                 int[] ary = (int[])value;
-                format(key, ary);
+                primitiveFormatter.format(key, ary);
             }
             else if (value instanceof long[]) {
                 long[] ary = (long[])value;
-                format(key, ary);
+                primitiveFormatter.format(key, ary);
             }
             else if (value instanceof short[]) {
                 short[] ary = (short[])value;
-                format(key, ary);
+                primitiveFormatter.format(key, ary);
             }
         }
         else if (value instanceof Map) {
@@ -92,10 +93,6 @@ public class Formatter {
             String str = objectTypes.toString(value);
             format(key, str);
         }        
-    }
-
-    public void format(String key, String value) {
-        lines.add(key + ": " + value);
     }
 
     public void format(String key, Object[] ary) {
@@ -113,128 +110,8 @@ public class Formatter {
         }
     }
 
-    public void format(String key, boolean[] ary) {        
-        if (ary == null) {
-            formatNull(key);
-        }
-        else if (ary.length == 0) {
-            formatEmpty(key);
-        }
-        else {
-            int max = getLimit(ary.length);
-            for (int ai = 0; ai < max; ++ai) {
-                format(key, ai, ary[ai]);
-            }
-        }
-    }
-
-    public void format(String key, byte[] ary) {        
-        if (ary == null) {
-            formatNull(key);
-        }
-        else if (ary.length == 0) {
-            formatEmpty(key);
-        }
-        else {
-            int max = getLimit(ary.length);
-            for (int ai = 0; ai < max; ++ai) {
-                format(key, ai, ary[ai]);
-            }
-        }
-    }
-
-    public void format(String key, char[] ary) {        
-        if (ary == null) {
-            formatNull(key);
-        }
-        else if (ary.length == 0) {
-            formatEmpty(key);
-        }
-        else {
-            int max = getLimit(ary.length);
-            for (int ai = 0; ai < max; ++ai) {
-                format(key, ai, ary[ai]);
-            }
-        }
-    }
-
-    public void format(String key, double[] ary) {
-        if (ary == null) {
-            formatNull(key);
-        }
-        else if (ary.length == 0) {
-            formatEmpty(key);
-        }
-        else {
-            int max = getLimit(ary.length);
-            for (int ai = 0; ai < max; ++ai) {
-                format(key, ai, ary[ai]);
-            }
-        }
-    }
-
-    public void format(String key, float[] ary) {
-        if (ary == null) {
-            formatNull(key);
-        }
-        else if (ary.length == 0) {
-            formatEmpty(key);
-        }
-        else {
-            int max = getLimit(ary.length);
-            for (int ai = 0; ai < max; ++ai) {
-                format(key, ai, ary[ai]);
-            }
-        }
-    }
-
-    public void format(String key, int[] ary) {
-        if (ary == null) {
-            formatNull(key);
-        }
-        else if (ary.length == 0) {
-            formatEmpty(key);
-        }
-        else {
-            int max = getLimit(ary.length);
-            for (int ai = 0; ai < max; ++ai) {
-                format(key, ai, ary[ai]);
-            }
-        }
-    }
-
-    public void format(String key, long[] ary) {
-        if (ary == null) {
-            formatNull(key);
-        }
-        else if (ary.length == 0) {
-            formatEmpty(key);
-        }
-        else {
-            int max = getLimit(ary.length);
-            for (int ai = 0; ai < max; ++ai) {
-                format(key, ai, ary[ai]);
-            }
-        }
-    }
-
-    public void format(String key, short[] ary) {
-        if (ary == null) {
-            formatNull(key);
-        }
-        else if (ary.length == 0) {
-            formatEmpty(key);
-        }
-        else {
-            int max = getLimit(ary.length);
-            for (int ai = 0; ai < max; ++ai) {
-                format(key, ai, ary[ai]);
-            }
-        }
-    }
-
     public void format(String key, Throwable thr) {
-        lines.add(thr.toString());
+        addLine(thr.toString());
 
         if (this.limit == null || this.limit > 0) {
             StackTraceElement[] stack = thr.getStackTrace();
@@ -276,25 +153,5 @@ public class Formatter {
 
     public void format(String key, Object idx, Object value) {
         format(key + "[" + idx + "]", value);
-    }
-
-    private void addLine(String key, String value) {
-        lines.add(key + ": " + value);
-    }
-
-    private void addLine(Object value) {
-        lines.add(String.valueOf(value));
-    }
-
-    private void formatEmpty(String key) {
-        format(key, "()");
-    }
-
-    private void formatNull(String key) {
-        format(key, "null");
-    }
-
-    private int getLimit(int size) {
-        return this.limit == null ? size : Math.min(size, this.limit);
-    }
+    }    
 }
