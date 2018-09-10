@@ -12,14 +12,23 @@ public class Formatter {
     private ObjectTypes objectTypes = new ObjectTypes();
 
     private final StringArray lines;
-    // private final Integer limit;
+    private final Integer limit;
+
+    public Formatter(StringArray lines, Integer limit) {
+        this.lines = lines;
+        this.limit = limit;
+    }
 
     public Formatter(StringArray lines) {
-        this.lines = lines;
+        this(lines, null);
     }
     
     public Formatter() {
         this(StringArray.empty());
+    }
+    
+    public Formatter(Integer limit) {
+        this(StringArray.empty(), limit);
     }
 
     public StringArray getLines() {
@@ -30,235 +39,8 @@ public class Formatter {
         if (value == null) {
             lines.add(key + ": " + null);
         }
-        else {
-            String str = objectTypes.toString(value);
-            format(key, str);
-        }        
-    }
-
-    public void format(String key, String value) {
-        lines.add(key + ": " + value);
-    }
-
-    public void format(String key, Object[] ary) {
-        format(key, ary, null);
-    }
-
-    public void format(String key, Object[] ary, Integer limit) {        
-        if (ary == null) {
-            addLine(key, null);
-        }
-        else if (ary.length == 0) {
-            addEmptyLine(key);
-        }
-        else {
-            int max = limit == null ? ary.length : Math.min(ary.length, limit);
-            for (int ai = 0; ai < max; ++ai) {
-                addLine(key, ai, ary[ai]);
-            }
-        }
-    }
-
-    public void format(String key, boolean[] ary) {        
-        format(key, ary, null);
-    }
-    
-    public void format(String key, boolean[] ary, Integer limit) {
-        if (ary == null) {
-            addLine(key, null);
-        }
-        else if (ary.length == 0) {
-            addEmptyLine(key);
-        }
-        else {
-            int max = limit == null ? ary.length : Math.min(ary.length, limit);
-            for (int ai = 0; ai < max; ++ai) {
-                addLine(key, ai, ary[ai]);
-            }
-        }
-    }
-
-    public void format(String key, byte[] ary) {        
-        format(key, ary, null);
-    }
-
-    public void format(String key, byte[] ary, Integer limit) {        
-        if (ary == null) {
-            addLine(key, null);
-        }
-        else if (ary.length == 0) {
-            addEmptyLine(key);
-        }
-        else {
-            for (int ai = 0; ai < ary.length; ++ai) {
-                addLine(key, ai, ary[ai]);
-            }
-        }
-    }
-
-    public void format(String key, char[] ary) {        
-        format(key, ary, null);
-    }
-
-    public void format(String key, char[] ary, Integer limit) {
-        if (ary == null) {
-            addLine(key, null);
-        }
-        else if (ary.length == 0) {
-            addEmptyLine(key);
-        }
-        else {
-            for (int ai = 0; ai < ary.length; ++ai) {
-                addLine(key, ai, ary[ai]);
-            }
-        }
-    }
-
-    public void format(String key, double[] ary) {
-        format(key, ary, null);
-    }
-
-    public void format(String key, double[] ary, Integer limit) {
-        if (ary == null) {
-            addLine(key, null);
-        }
-        else if (ary.length == 0) {
-            addEmptyLine(key);
-        }
-        else {
-            for (int ai = 0; ai < ary.length; ++ai) {
-                addLine(key, ai, ary[ai]);
-            }
-        }
-    }
-
-    public void format(String key, float[] ary) {
-        format(key, ary, null);
-    }
-
-    public void format(String key, float[] ary, Integer limit) {
-        if (ary == null) {
-            addLine(key, null);
-        }
-        else if (ary.length == 0) {
-            addEmptyLine(key);
-        }
-        else {
-            for (int ai = 0; ai < ary.length; ++ai) {
-                addLine(key, ai, ary[ai]);
-            }
-        }
-    }
-
-    public void format(String key, int[] ary) {
-        format(key, ary, null);
-    }
-
-    public void format(String key, int[] ary, Integer limit) {
-        if (ary == null) {
-            addLine(key, null);
-        }
-        else if (ary.length == 0) {
-            addEmptyLine(key);
-        }
-        else {
-            for (int ai = 0; ai < ary.length; ++ai) {
-                addLine(key, ai, ary[ai]);
-            }
-        }
-    }
-
-    public void format(String key, long[] ary) {
-        format(key, ary, null);
-    }
-
-    public void format(String key, long[] ary, Integer limit) {
-        if (ary == null) {
-            addLine(key, null);
-        }
-        else if (ary.length == 0) {
-            addEmptyLine(key);
-        }
-        else {
-            for (int ai = 0; ai < ary.length; ++ai) {
-                addLine(key, ai, ary[ai]);
-            }
-        }
-    }
-
-    public void format(String key, short[] ary) {
-        format(key, ary, null);
-    }
-
-    public void format(String key, short[] ary, Integer limit) {
-        if (ary == null) {
-            addLine(key, null);
-        }
-        else if (ary.length == 0) {
-            addEmptyLine(key);
-        }
-        else {
-            for (int ai = 0; ai < ary.length; ++ai) {
-                addLine(key, ai, ary[ai]);
-            }
-        }
-    }
-
-    public void format(String key, Throwable thr) {
-        format(key, thr, null);
-    }
-
-    public void format(String key, Throwable thr, Integer numFrames) {
-        lines.add(thr.toString());
-
-        if (numFrames == null || numFrames > 0) {
-            StackTraceElement[] stack = thr.getStackTrace();
-            format(key, stack, numFrames);
-        }        
-    }
-
-    public <K, V> void format(String key, Map<K, V> map) {
-        format(key, map, null);
-    }
-
-    public <K, V> void format(String key, Map<K, V> map, Integer limit) {
-        if (map.isEmpty()) {
-            addEmptyLine(key);
-        }
-        else {
-            for (Map.Entry<K, V> it : map.entrySet()) {
-                addLine(key, it.getKey(), it.getValue());
-            }
-        }
-    }
-
-    public <T> void format(String key, Iterable<T> iterable) {
-        format(key, iterable, null);
-    }
-        
-    public <T> void format(String key, Iterable<T> iterable, Integer limit) {
-        Iterator<T> iterator = iterable.iterator();
-        if (iterator.hasNext()) {
-            for (int idx = 0; iterator.hasNext(); ++idx) {
-                T obj = iterator.next();
-                addLine(key, idx, obj);
-            }
-        }
-        else {
-            addEmptyLine(key);
-        }        
-    }
-
-    private void addLine(String key, Object idx, Object value) {
-        addLine(key + "[" + idx + "]", value);
-    }
-
-    private void addLine(String key, Object value) {
-        if (value == null) {
-            lines.add(key + ": " + null);
-        }
         else if (value instanceof String) {
-            addLine(key, (String)value);
+            format(key, (String)value);
         }
         else if (value.getClass().isArray()) {
             if (value instanceof Object[]) {
@@ -298,13 +80,202 @@ public class Formatter {
                 format(key, ary);
             }
         }
+        else if (value instanceof Map) {
+            Map<?, ?> map = (Map<?, ?>)value;
+            format(key, map);
+        }
         else if (value instanceof Iterable) {
             Iterable<?> itb = (Iterable<?>)value;
             format(key, itb);
         }
         else {
-            lines.add(key + ": " + value);
+            String str = objectTypes.toString(value);
+            format(key, str);
+        }        
+    }
+
+    public void format(String key, String value) {
+        lines.add(key + ": " + value);
+    }
+
+    public void format(String key, Object[] ary) {
+        if (ary == null) {
+            formatNull(key);
         }
+        else if (ary.length == 0) {
+            formatEmpty(key);
+        }
+        else {
+            int max = getLimit(ary.length);
+            for (int ai = 0; ai < max; ++ai) {
+                format(key, ai, ary[ai]);
+            }
+        }
+    }
+
+    public void format(String key, boolean[] ary) {        
+        if (ary == null) {
+            formatNull(key);
+        }
+        else if (ary.length == 0) {
+            formatEmpty(key);
+        }
+        else {
+            int max = getLimit(ary.length);
+            for (int ai = 0; ai < max; ++ai) {
+                format(key, ai, ary[ai]);
+            }
+        }
+    }
+
+    public void format(String key, byte[] ary) {        
+        if (ary == null) {
+            formatNull(key);
+        }
+        else if (ary.length == 0) {
+            formatEmpty(key);
+        }
+        else {
+            int max = getLimit(ary.length);
+            for (int ai = 0; ai < max; ++ai) {
+                format(key, ai, ary[ai]);
+            }
+        }
+    }
+
+    public void format(String key, char[] ary) {        
+        if (ary == null) {
+            formatNull(key);
+        }
+        else if (ary.length == 0) {
+            formatEmpty(key);
+        }
+        else {
+            int max = getLimit(ary.length);
+            for (int ai = 0; ai < max; ++ai) {
+                format(key, ai, ary[ai]);
+            }
+        }
+    }
+
+    public void format(String key, double[] ary) {
+        if (ary == null) {
+            formatNull(key);
+        }
+        else if (ary.length == 0) {
+            formatEmpty(key);
+        }
+        else {
+            int max = getLimit(ary.length);
+            for (int ai = 0; ai < max; ++ai) {
+                format(key, ai, ary[ai]);
+            }
+        }
+    }
+
+    public void format(String key, float[] ary) {
+        if (ary == null) {
+            formatNull(key);
+        }
+        else if (ary.length == 0) {
+            formatEmpty(key);
+        }
+        else {
+            int max = getLimit(ary.length);
+            for (int ai = 0; ai < max; ++ai) {
+                format(key, ai, ary[ai]);
+            }
+        }
+    }
+
+    public void format(String key, int[] ary) {
+        if (ary == null) {
+            formatNull(key);
+        }
+        else if (ary.length == 0) {
+            formatEmpty(key);
+        }
+        else {
+            int max = getLimit(ary.length);
+            for (int ai = 0; ai < max; ++ai) {
+                format(key, ai, ary[ai]);
+            }
+        }
+    }
+
+    public void format(String key, long[] ary) {
+        if (ary == null) {
+            formatNull(key);
+        }
+        else if (ary.length == 0) {
+            formatEmpty(key);
+        }
+        else {
+            int max = getLimit(ary.length);
+            for (int ai = 0; ai < max; ++ai) {
+                format(key, ai, ary[ai]);
+            }
+        }
+    }
+
+    public void format(String key, short[] ary) {
+        if (ary == null) {
+            formatNull(key);
+        }
+        else if (ary.length == 0) {
+            formatEmpty(key);
+        }
+        else {
+            int max = getLimit(ary.length);
+            for (int ai = 0; ai < max; ++ai) {
+                format(key, ai, ary[ai]);
+            }
+        }
+    }
+
+    public void format(String key, Throwable thr) {
+        lines.add(thr.toString());
+
+        if (this.limit == null || this.limit > 0) {
+            StackTraceElement[] stack = thr.getStackTrace();
+            format(key, stack);
+        }        
+    }
+
+    public <K, V> void format(String key, Map<K, V> map) {
+        if (map.isEmpty()) {
+            formatEmpty(key);
+        }
+        else {
+            int idx = 0;
+            for (Map.Entry<K, V> it : map.entrySet()) {
+                if (this.limit != null && idx >= this.limit) {
+                    break;
+                }
+                format(key, it.getKey(), it.getValue());
+                ++idx;
+            }
+        }
+    }
+
+    public <T> void format(String key, Iterable<T> iterable) {
+        Iterator<T> iterator = iterable.iterator();
+        if (iterator.hasNext()) {            
+            for (int idx = 0; iterator.hasNext(); ++idx) {
+                if (this.limit != null && idx >= this.limit) {
+                    break;
+                }
+                T obj = iterator.next();
+                format(key, idx, obj);
+            }
+        }
+        else {
+            formatEmpty(key);
+        }        
+    }
+
+    public void format(String key, Object idx, Object value) {
+        format(key + "[" + idx + "]", value);
     }
 
     private void addLine(String key, String value) {
@@ -315,7 +286,15 @@ public class Formatter {
         lines.add(String.valueOf(value));
     }
 
-    private void addEmptyLine(String key) {
-        addLine(key, "()");
+    private void formatEmpty(String key) {
+        format(key, "()");
+    }
+
+    private void formatNull(String key) {
+        format(key, "null");
+    }
+
+    private int getLimit(int size) {
+        return this.limit == null ? size : Math.min(size, this.limit);
     }
 }

@@ -49,7 +49,7 @@ public class FormatterTest extends Parameterized {
     @Test @Parameters @TestCaseName("{method}(...) #{index} [{params}]")
     public void fromObjectArrayWithLimit(StringArray expected, String key, Object[] ary, Integer limit) {
         StringArray result = StringArray.empty();
-        new Formatter(result).format(key, ary, limit);
+        new Formatter(result, limit).format(key, ary);
         assertThat(result, equalTo(expected));
     }
     
@@ -81,7 +81,7 @@ public class FormatterTest extends Parameterized {
     @Test @Parameters @TestCaseName("{method}(...) #{index} [{params}]")
     public void fromExceptionWithLimit(StringArray expected, String key, Throwable thr, Integer numFrames) {
         StringArray result = StringArray.empty();
-        new Formatter(result).format(key, thr, numFrames);
+        new Formatter(result, numFrames).format(key, thr);
         assertThat(result, equalTo(expected));
     }
     
@@ -97,17 +97,66 @@ public class FormatterTest extends Parameterized {
     }
     
     @Test @Parameters @TestCaseName("{method}(...) #{index} [{params}]")
-    public <K, V> void fromMap(StringArray expected, String key, Map<K, V> map) {
+    public <K, V> void fromMapWithoutLimit(StringArray expected, String key, Map<K, V> map) {
         StringArray result = StringArray.empty();
         new Formatter(result).format(key, map);
         assertThat(result, equalTo(expected));
     }
     
-    private List<Object[]> parametersForFromMap() {
+    private List<Object[]> parametersForFromMapWithoutLimit() {
         return paramsList(params(StringArray.of("abc: ()"), "abc", Hash.empty()),
                           params(StringArray.of("abc[x]: 1"), "abc", Hash.of("x", "1")),
                           params(StringArray.of("abc[x]: 1", "abc[y]: 2"), "abc", Hash.of("x", "1", "y", "2")));
     }
+    
+    @Test @Parameters @TestCaseName("{method}(...) #{index} [{params}]")
+    public <K, V> void fromMapWithLimit(StringArray expected, String key, Map<K, V> map, Integer limit) {
+        StringArray result = StringArray.empty();
+        new Formatter(result, limit).format(key, map);
+        assertThat(result, equalTo(expected));
+    }
+    
+    private List<Object[]> parametersForFromMapWithLimit() {
+        return paramsList(params(StringArray.of("abc: ()"), "abc", Hash.empty(), 0),
+                          params(StringArray.empty(), "abc", Hash.of("x", "1"), 0),
+                          params(StringArray.of("abc[x]: 1"), "abc", Hash.of("x", "1"), 1),
+                          params(StringArray.of("abc[x]: 1"), "abc", Hash.of("x", "1", "y", "2"), 1),
+                          params(StringArray.of("abc[x]: 1", "abc[y]: 2"), "abc", Hash.of("x", "1", "y", "2"), 2));
+    }
+
+    @Test @Parameters @TestCaseName("{method}(...) #{index} [{params}]")
+    public <T> void fromIterableWithoutLimit(StringArray expected, String key, Iterable<T> iterable) {
+        StringArray result = StringArray.empty();
+        new Formatter(result).format(key, iterable);
+        assertThat(result, equalTo(expected));
+    }
+    
+    private List<Object[]> parametersForFromIterableWithoutLimit() {
+        List<Object[]> pl = paramsList();
+
+        pl.add(params(StringArray.of("abc[0]: ghi"),  "abc", StringArray.of("ghi")));
+        pl.add(params(StringArray.of("abc[0]: ghi", "abc[1]: jkl"),  "abc", StringArray.of("ghi", "jkl")));
+        
+        return pl;
+    }    
+
+    @Test @Parameters @TestCaseName("{method}(...) #{index} [{params}]")
+    public <T> void fromIterableWithLimit(StringArray expected, String key, Iterable<T> iterable, Integer limit) {
+        StringArray result = StringArray.empty();
+        new Formatter(result, limit).format(key, iterable);
+        assertThat(result, equalTo(expected));
+    }
+    
+    private List<Object[]> parametersForFromIterableWithLimit() {
+        List<Object[]> pl = paramsList();
+
+        pl.add(params(StringArray.of("abc[0]: ghi"),  "abc", StringArray.of("ghi"), 1));
+        pl.add(params(StringArray.empty(),  "abc", StringArray.of("ghi"), 0));
+        pl.add(params(StringArray.of("abc[0]: ghi", "abc[1]: jkl"),  "abc", StringArray.of("ghi", "jkl"), 2));
+        pl.add(params(StringArray.of("abc[0]: ghi"),  "abc", StringArray.of("ghi", "jkl"), 1));
+        
+        return pl;
+    }    
     
     @Test @Parameters @TestCaseName("{method}(...) #{index} [{params}]")
     public void fromBooleanArray(StringArray expected, String key, boolean[] ary) {
@@ -259,20 +308,36 @@ public class FormatterTest extends Parameterized {
         
         return pl;
     }
+
+    @Test @Parameters @TestCaseName("{method}(...) #{index} [{params}]")
+    public void fromNestedMap(StringArray expected, String key, Object[] ary) {
+        StringArray result = StringArray.empty();
+        new Formatter(result).format(key, ary);
+        assertThat(result, equalTo(expected));
+    }
     
-    // @Test @Parameters @TestCaseName("{method}(...) #{index} [{params}]")
-    // public void fromObjectArrayAsObject(StringArray expected, String key, Object ary) {
-    //     StringArray result = StringArray.empty();
-    //     new Formatter(result).format(key, ary);
-    //     assertThat(result, equalTo(expected));
-    // }
+    private List<Object[]> parametersForFromNestedMap() {
+        List<Object[]> pl = paramsList();
+
+        pl.add(params(StringArray.of("abc[0][one]: 1"),  "abc", new Object[] { Hash.of("one", "1") }));
+        pl.add(params(StringArray.of("abc[0][one]: 1", "abc[0][two]: 2"),  "abc", new Object[] { Hash.of("one", "1", "two", "2") }));
+        
+        return pl;
+    }
+     
+    @Test @Parameters @TestCaseName("{method}(...) #{index} [{params}]")
+    public void fromObjectArrayAsObject(StringArray expected, String key, Object ary) {
+        StringArray result = StringArray.empty();
+        new Formatter(result).format(key, ary);
+        assertThat(result, equalTo(expected));
+    }
     
-    // private List<Object[]> parametersForFromObjectArrayAsObject() {
-    //     return paramsList(params(StringArray.of("abc: ()"), "abc", new String[] { }),
-    //                       params(StringArray.of("abc: null"), "abc", null),
-    //                       params(StringArray.of("abc[0]: d"), "abc", new String[] { "d" }),
-    //                       params(StringArray.of("def[0]: d"), "def", new String[] { "d" }),
-    //                       params(StringArray.of("abc[0]: d", "abc[1]: e"), "abc", new String[] { "d", "e" }),
-    //                       params(StringArray.of("abc[0]: 7", "abc[1]: 11", "abc[2]: 3"), "abc", new Integer[] { 7, 11, 3 }));
-    // }    
+    private List<Object[]> parametersForFromObjectArrayAsObject() {
+        return paramsList(params(StringArray.of("abc: ()"), "abc", new String[] { }),
+                          params(StringArray.of("abc: null"), "abc", null),
+                          params(StringArray.of("abc[0]: d"), "abc", new String[] { "d" }),
+                          params(StringArray.of("def[0]: d"), "def", new String[] { "d" }),
+                          params(StringArray.of("abc[0]: d", "abc[1]: e"), "abc", new String[] { "d", "e" }),
+                          params(StringArray.of("abc[0]: 7", "abc[1]: 11", "abc[2]: 3"), "abc", new Integer[] { 7, 11, 3 }));
+    }    
 }
