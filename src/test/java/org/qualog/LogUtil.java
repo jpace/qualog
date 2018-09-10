@@ -3,6 +3,7 @@ package org.qualog;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import org.junit.Assert;
+import org.qualog.config.ColorConfig;
 import org.qualog.config.Configuration;
 import org.qualog.config.WidthConfig;
 import org.qualog.output.OutputType;
@@ -23,15 +24,10 @@ public class LogUtil {
 
         Log.setOutput(type, level);
 
-        Configuration cfg = Log.getConfiguration();
-        WidthConfig widths = cfg.getWidthConfig();
+        WidthConfig widths = new WidthConfig(fileWidth, lineWidth, classWidth, functionWidth);
+        Configuration cfg = new Configuration(new ColorConfig(), widths, true, true, useColumns, true);
 
-        widths.setFileWidth(fileWidth);
-        widths.setLineWidth(lineWidth);
-        widths.setClassWidth(classWidth);
-        widths.setFunctionWidth(functionWidth);
-
-        cfg.setUseColumns(useColumns);
+        Log.setConfiguration(cfg);
 
         return sw;
     }
@@ -39,7 +35,6 @@ public class LogUtil {
     public static void compare(String expected, String actual) {
         int i = 0;
         while (i < expected.length() && i < actual.length()) {
-            // System.err.println("char[" + i + "]: " + expected.charAt(i) + " <=> " + actual.charAt(i));
             if (expected.charAt(i) != actual.charAt(i)) {
                 System.err.println("mismatch");
                 return;
@@ -55,8 +50,6 @@ public class LogUtil {
     }
 
     public static void assertStringsEqual(String exp, String act) {
-        // System.out.println(act);
-        
         if (!exp.equals(act)) {
             System.err.println("expected output:\n" + exp);
             System.err.println("log output:\n" + act);

@@ -1,7 +1,6 @@
 package org.qualog.config;
 
 import org.qualog.output.ANSIColor;
-import org.qualog.output.ANSIColorList;
 
 import static org.incava.ijdk.lang.ICore.or;
 
