@@ -229,7 +229,7 @@ public class FormatterTest extends Parameterized {
                           params(StringArray.of("abc[0]: 7", "abc[1]: 11", "abc[2]: 3"), "abc", new Integer[] { 7, 11, 3 }));
     }
 
-    @Ignore @Test @Parameters @TestCaseName("{method}(...) #{index} [{params}]")
+    @Test @Parameters @TestCaseName("{method}(...) #{index} [{params}]")
     public void recursion(StringArray expected, String key, Object[] ary) {
         StringArray result = StringArray.empty();
         new Formatter(result).format(key, ary);
@@ -243,7 +243,9 @@ public class FormatterTest extends Parameterized {
         Object[] y = new Object[] { "b", x };
         x[1] = y;
 
-        pl.add(params(StringArray.of("abc[0][one]: 1"),  "abc", x));
+        String hashCode = Integer.toHexString(y.hashCode());
+        
+        pl.add(params(StringArray.of("abc[0]: a", "abc[1][0]: b", "abc[1][1][0]: a", "abc[1][1][1]: (((recursed))) ([Ljava.lang.Object;) #" + hashCode),  "abc", x));
         
         return pl;
     }    

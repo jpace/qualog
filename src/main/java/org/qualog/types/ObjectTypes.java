@@ -41,9 +41,21 @@ public class ObjectTypes {
             return obj.toString();
         }
         else {
+            return toString(obj, obj.toString());
+        }
+    }    
+
+    public String toString(Object obj, String msg) {
+        if (obj == null) {
+            return "null";
+        }
+        else if (isUndecorated(obj)) {
+            return obj.toString();
+        }
+        else {
             String clsName = obj.getClass().getName();
             String hashStr = Integer.toHexString(obj.hashCode());
-            StringBuilder sb = new StringBuilder(obj.toString());
+            StringBuilder sb = new StringBuilder(msg);
             sb.append(" (").append(clsName).append(')').append(" #").append(hashStr);
         
             return sb.toString();

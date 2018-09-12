@@ -43,56 +43,83 @@ public class Formatter extends BaseFormatter {
         else if (value instanceof String) {
             format(key, (String)value);
         }
-        else if (value.getClass().isArray()) {
-            if (value instanceof Object[]) {
-                Object[] ary = (Object[])value;
-                format(key, ary);
-            }
-            else if (value instanceof boolean[]) {
-                boolean[] ary = (boolean[])value;
-                primitiveFormatter.format(key, ary);
-            }
-            else if (value instanceof byte[]) {
-                byte[] ary = (byte[])value;
-                primitiveFormatter.format(key, ary);
-            }
-            else if (value instanceof char[]) {
-                char[] ary = (char[])value;
-                primitiveFormatter.format(key, ary);
-            }
-            else if (value instanceof double[]) {
-                double[] ary = (double[])value;
-                primitiveFormatter.format(key, ary);
-            }
-            else if (value instanceof float[]) {
-                float[] ary = (float[])value;
-                primitiveFormatter.format(key, ary);
-            }
-            else if (value instanceof int[]) {
-                int[] ary = (int[])value;
-                primitiveFormatter.format(key, ary);
-            }
-            else if (value instanceof long[]) {
-                long[] ary = (long[])value;
-                primitiveFormatter.format(key, ary);
-            }
-            else if (value instanceof short[]) {
-                short[] ary = (short[])value;
-                primitiveFormatter.format(key, ary);
-            }
-        }
-        else if (value instanceof Map) {
-            Map<?, ?> map = (Map<?, ?>)value;
-            format(key, map);
-        }
-        else if (value instanceof Iterable) {
-            Iterable<?> itb = (Iterable<?>)value;
-            format(key, itb);
-        }
         else {
-            String str = objectTypes.toString(value);
-            format(key, str);
-        }        
+            for (Object it : this.objects) {
+                // by identity, not equality:
+                if (it == value) {
+                    format(key, objectTypes.toString(value, "(((recursed)))"));
+                    return;
+                }
+            }
+            this.objects.append(value);
+            if (value.getClass().isArray()) {
+                if (value instanceof Object[]) {
+                    Object[] ary = (Object[])value;
+                    format(key, ary);
+                }
+                else {
+                    formatPrimitiveArray(key, value);
+                }
+            }
+            else if (value instanceof Map) {
+                Map<?, ?> map = (Map<?, ?>)value;
+                format(key, map);
+            }
+            else if (value instanceof Iterable) {
+                Iterable<?> itb = (Iterable<?>)value;
+                format(key, itb);
+            }
+            else {
+                String str = objectTypes.toString(value);
+                format(key, str);
+            }
+            this.objects.takeLast();
+        }
+    }
+
+    public void formatPrimitiveArray(String key, Object value) {
+        // frequency in the android sdk, so that's the evaluation order:
+        // 4456 byte
+        // 2558 int
+        // 820 char
+        // 816 float
+        // 346 long
+        // 171 boolean
+        // 144 short
+        // 99 double
+
+        if (value instanceof byte[]) {
+            byte[] ary = (byte[])value;
+            primitiveFormatter.format(key, ary);
+        }
+        else if (value instanceof int[]) {
+            int[] ary = (int[])value;
+            primitiveFormatter.format(key, ary);
+        }
+        else if (value instanceof char[]) {
+            char[] ary = (char[])value;
+            primitiveFormatter.format(key, ary);
+        }
+        else if (value instanceof float[]) {
+            float[] ary = (float[])value;
+            primitiveFormatter.format(key, ary);
+        }
+        else if (value instanceof long[]) {
+            long[] ary = (long[])value;
+            primitiveFormatter.format(key, ary);
+        }
+        else if (value instanceof boolean[]) {
+            boolean[] ary = (boolean[])value;
+            primitiveFormatter.format(key, ary);
+        }
+        else if (value instanceof short[]) {
+            short[] ary = (short[])value;
+            primitiveFormatter.format(key, ary);
+        }
+        else if (value instanceof double[]) {
+            double[] ary = (double[])value;
+            primitiveFormatter.format(key, ary);
+        }
     }
 
     public void format(String key, Object[] ary) {
@@ -111,12 +138,10 @@ public class Formatter extends BaseFormatter {
     }
 
     public void format(String key, Throwable thr) {
-        addLine(thr.toString());
+        format(thr.toString());
 
-        if (this.limit == null || this.limit > 0) {
-            StackTraceElement[] stack = thr.getStackTrace();
-            format(key, stack);
-        }        
+        StackTraceElement[] stack = thr.getStackTrace();
+        format(key, stack);
     }
 
     public <K, V> void format(String key, Map<K, V> map) {

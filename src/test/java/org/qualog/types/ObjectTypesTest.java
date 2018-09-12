@@ -24,4 +24,17 @@ public class ObjectTypesTest extends Parameterized {
                           params("null", null),
                           params("xyz (java.lang.StringBuilder) #" + hashCode, sb));
     }
+
+    @Test @Parameters @TestCaseName("{method}(...) #{index} [{params}]")
+    public <T> void toStringTestWithString(String expected, Object obj, String msg) {
+        String result = new ObjectTypes().toString(obj, msg);
+        assertThat(result, equalTo(expected));
+    }
+    
+    private List<Object[]> parametersForToStringTestWithString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("xyz");
+        String hashCode = Integer.toHexString(sb.hashCode());
+        return paramsList(params("stu (java.lang.StringBuilder) #" + hashCode, sb, "stu"));
+    }    
 }

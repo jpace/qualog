@@ -201,5 +201,9 @@ public class PrimitiveFormatter extends BaseFormatter {
 
     public void format(String key, Object idx, short x) {
         format(key, idx, String.valueOf(x));
+    }
+
+    public void format(String key, Object idx, String value) {
+        format(key + "[" + idx + "]", value);
     }    
 }
