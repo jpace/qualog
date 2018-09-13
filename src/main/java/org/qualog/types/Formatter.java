@@ -9,19 +9,19 @@ import java.util.Set;
 /**
  * Generates lists of lines for various object types.
  */
-public class Formatter extends BaseFormatter {
+public class Formatter extends ContainerFormatter {
     private ObjectTypes objectTypes = new ObjectTypes();
 
     private final Integer limit;
     private final Array<Object> objects;
-    private final PrimitiveFormatter primitiveFormatter;
+    private final PrimitiveArrayFormatter primitiveArrays;
 
     public Formatter(StringArray lines, Integer limit) {
         super(lines, limit);
         
         this.limit = limit;
         this.objects = Array.empty();
-        this.primitiveFormatter = new PrimitiveFormatter(lines, limit);
+        this.primitiveArrays = new PrimitiveArrayFormatter(lines, limit);
     }
 
     public Formatter(StringArray lines) {
@@ -38,7 +38,7 @@ public class Formatter extends BaseFormatter {
     
     public void format(String key, Object value) {
         if (value == null) {
-            format(key, "null");
+            formatNull(key);
         }
         else if (value instanceof String) {
             format(key, (String)value);
@@ -47,7 +47,7 @@ public class Formatter extends BaseFormatter {
             for (Object it : this.objects) {
                 // by identity, not equality:
                 if (it == value) {
-                    format(key, objectTypes.toString(value, "(((recursed)))"));
+                    formatRecursed(key, value);
                     return;
                 }
             }
@@ -90,35 +90,35 @@ public class Formatter extends BaseFormatter {
 
         if (value instanceof byte[]) {
             byte[] ary = (byte[])value;
-            primitiveFormatter.format(key, ary);
+            primitiveArrays.format(key, ary);
         }
         else if (value instanceof int[]) {
             int[] ary = (int[])value;
-            primitiveFormatter.format(key, ary);
+            primitiveArrays.format(key, ary);
         }
         else if (value instanceof char[]) {
             char[] ary = (char[])value;
-            primitiveFormatter.format(key, ary);
+            primitiveArrays.format(key, ary);
         }
         else if (value instanceof float[]) {
             float[] ary = (float[])value;
-            primitiveFormatter.format(key, ary);
+            primitiveArrays.format(key, ary);
         }
         else if (value instanceof long[]) {
             long[] ary = (long[])value;
-            primitiveFormatter.format(key, ary);
+            primitiveArrays.format(key, ary);
         }
         else if (value instanceof boolean[]) {
             boolean[] ary = (boolean[])value;
-            primitiveFormatter.format(key, ary);
+            primitiveArrays.format(key, ary);
         }
         else if (value instanceof short[]) {
             short[] ary = (short[])value;
-            primitiveFormatter.format(key, ary);
+            primitiveArrays.format(key, ary);
         }
         else if (value instanceof double[]) {
             double[] ary = (double[])value;
-            primitiveFormatter.format(key, ary);
+            primitiveArrays.format(key, ary);
         }
     }
 
@@ -162,13 +162,15 @@ public class Formatter extends BaseFormatter {
 
     public <T> void format(String key, Iterable<T> iterable) {
         Iterator<T> iterator = iterable.iterator();
-        if (iterator.hasNext()) {            
-            for (int idx = 0; iterator.hasNext(); ++idx) {
+        if (iterator.hasNext()) {
+            int idx = 0;
+            while (iterator.hasNext()) {
                 if (this.limit != null && idx >= this.limit) {
                     break;
                 }
                 T obj = iterator.next();
                 format(key, idx, obj);
+                ++idx;
             }
         }
         else {
@@ -178,5 +180,9 @@ public class Formatter extends BaseFormatter {
 
     public void format(String key, Object idx, Object value) {
         format(key + "[" + idx + "]", value);
-    }    
+    }
+
+    public void formatRecursed(String key, Object value) {
+        format(key, objectTypes.toString(value, "(((recursed)))"));
+    }
 }

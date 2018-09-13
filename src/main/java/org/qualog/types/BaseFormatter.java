@@ -8,19 +8,13 @@ import org.incava.ijdk.collect.StringArray;
  */
 public class BaseFormatter {
     private final StringArray lines;
-    private final Integer limit;
-
-    public BaseFormatter(StringArray lines, Integer limit) {
-        this.lines = lines;
-        this.limit = limit;
-    }
 
     public BaseFormatter(StringArray lines) {
-        this(lines, null);
-    }    
+        this.lines = lines;
+    }
     
-    public BaseFormatter(Integer limit) {
-        this(StringArray.empty(), limit);
+    public BaseFormatter() {
+        this(StringArray.empty());
     }    
 
     public StringArray getLines() {
@@ -35,15 +29,7 @@ public class BaseFormatter {
         lines.add(msg == null ? "null" : msg);
     }
 
-    public void formatEmpty(String key) {
-        format(key, "()");
-    }
-
     public void formatNull(String key) {
         format(key, "null");
-    }
-
-    public int getLimit(int size) {
-        return this.limit == null ? size : Math.min(size, this.limit);
-    }
+    }    
 }
