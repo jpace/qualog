@@ -33,4 +33,38 @@ public class ContainerFormatter extends BaseFormatter {
     public int getLimit(int size) {
         return this.limit == null ? size : Math.min(size, this.limit);
     }
+
+    public boolean withinLimit(int idx) {
+        return this.limit == null || idx < this.limit;
+    }
+
+    public boolean checkNull(String key, Object obj) {
+        if (obj == null) {
+            formatNull(key);
+            return false;
+        }
+        else {
+            return true;
+        }
+    }
+
+    public boolean checkEmpty(String key, int length) {
+        if (length == 0) {
+            formatEmpty(key);
+            return false;
+        }
+        else {
+            return true;
+        }
+    }    
+
+    public boolean checkEmpty(String key, boolean condition) {
+        if (condition) {
+            formatEmpty(key);
+            return false;
+        }
+        else {
+            return true;
+        }
+    }    
 }

@@ -12,14 +12,12 @@ import java.util.Set;
 public class Formatter extends ContainerFormatter {
     private ObjectTypes objectTypes = new ObjectTypes();
 
-    private final Integer limit;
     private final Array<Object> objects;
     private final PrimitiveArrayFormatter primitiveArrays;
 
     public Formatter(StringArray lines, Integer limit) {
         super(lines, limit);
         
-        this.limit = limit;
         this.objects = Array.empty();
         this.primitiveArrays = new PrimitiveArrayFormatter(lines, limit);
     }
@@ -123,13 +121,7 @@ public class Formatter extends ContainerFormatter {
     }
 
     public void format(String key, Object[] ary) {
-        if (ary == null) {
-            formatNull(key);
-        }
-        else if (ary.length == 0) {
-            formatEmpty(key);
-        }
-        else {
+        if (checkNull(key, ary) && checkEmpty(key, ary.length)) {
             int max = getLimit(ary.length);
             for (int ai = 0; ai < max; ++ai) {
                 format(key, ai, ary[ai]);
@@ -145,13 +137,10 @@ public class Formatter extends ContainerFormatter {
     }
 
     public <K, V> void format(String key, Map<K, V> map) {
-        if (map.isEmpty()) {
-            formatEmpty(key);
-        }
-        else {
+        if (checkNull(key, map) && checkEmpty(key, map.isEmpty())) {
             int idx = 0;
             for (Map.Entry<K, V> it : map.entrySet()) {
-                if (this.limit != null && idx >= this.limit) {
+                if (!withinLimit(idx)) {
                     break;
                 }
                 format(key, it.getKey(), it.getValue());
@@ -161,20 +150,16 @@ public class Formatter extends ContainerFormatter {
     }
 
     public <T> void format(String key, Iterable<T> iterable) {
-        Iterator<T> iterator = iterable.iterator();
-        if (iterator.hasNext()) {
-            int idx = 0;
-            while (iterator.hasNext()) {
-                if (this.limit != null && idx >= this.limit) {
-                    break;
+        if (checkNull(key, iterable)) {
+            Iterator<T> iterator = iterable.iterator();
+            if (checkEmpty(key, !iterator.hasNext())) {
+                int idx = 0;
+                while (iterator.hasNext() && withinLimit(idx)) {
+                    T obj = iterator.next();
+                    format(key, idx, obj);
+                    ++idx;
                 }
-                T obj = iterator.next();
-                format(key, idx, obj);
-                ++idx;
             }
-        }
-        else {
-            formatEmpty(key);
         }        
     }
 

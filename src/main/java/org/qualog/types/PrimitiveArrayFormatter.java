@@ -98,24 +98,4 @@ public class PrimitiveArrayFormatter extends ContainerFormatter {
             }
         }
     }
-
-    private boolean checkNull(String key, Object obj) {
-        if (obj == null) {
-            formatNull(key);
-            return false;
-        }
-        else {
-            return true;
-        }
-    }
-
-    private boolean checkEmpty(String key, int length) {
-        if (length == 0) {
-            formatEmpty(key);
-            return false;
-        }
-        else {
-            return true;
-        }
-    }
 }

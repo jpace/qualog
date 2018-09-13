@@ -40,6 +40,7 @@ public class FormatterTest extends Parameterized {
     private List<Object[]> parametersForFromObjectArrayWithLimit() {
         return paramsList(params(StringArray.of("abc: ()"), "abc", new String[] { }, 1),
                           params(StringArray.of("abc[0]: d"), "abc", new String[] { "d" }, 1),
+                          params(StringArray.of("abc: null"), "abc", (Object[])null, 1),
                           params(StringArray.empty(), "def", new String[] { "d" }, 0),
                           params(StringArray.of("abc[0]: d", "abc[1]: e"), "abc", new String[] { "d", "e" }, 2),
                           params(StringArray.of("abc[0]: d", "abc[1]: e"), "abc", new String[] { "d", "e" }, null),
@@ -105,6 +106,7 @@ public class FormatterTest extends Parameterized {
     
     private List<Object[]> parametersForFromMapWithLimit() {
         return paramsList(params(StringArray.of("abc: ()"), "abc", Hash.empty(), 0),
+                          params(StringArray.of("abc: null"), "abc", null, 0),
                           params(StringArray.empty(), "abc", Hash.of("x", "1"), 0),
                           params(StringArray.of("abc[x]: 1"), "abc", Hash.of("x", "1"), 1),
                           params(StringArray.of("abc[x]: 1"), "abc", Hash.of("x", "1", "y", "2"), 1),
@@ -135,6 +137,7 @@ public class FormatterTest extends Parameterized {
         List<Object[]> pl = paramsList();
 
         pl.add(params(StringArray.of("abc[0]: ghi"),  "abc", StringArray.of("ghi"), 1));
+        pl.add(params(StringArray.of("abc: null"),  "abc", null, 1));
         pl.add(params(StringArray.empty(),  "abc", StringArray.of("ghi"), 0));
         pl.add(params(StringArray.of("abc[0]: ghi", "abc[1]: jkl"),  "abc", StringArray.of("ghi", "jkl"), 2));
         pl.add(params(StringArray.of("abc[0]: ghi"),  "abc", StringArray.of("ghi", "jkl"), 1));

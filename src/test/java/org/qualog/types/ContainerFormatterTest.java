@@ -49,4 +49,45 @@ public class ContainerFormatterTest extends Parameterized {
                           params(1, 1, 1),
                           params(1, 2, 1));
     }
+
+    @Test @Parameters @TestCaseName("{method}(...) #{index} [{params}]")
+    public <T> void withinLimit(boolean expected, ContainerFormatter fmtr, int idx) {
+        boolean result = fmtr.withinLimit(idx);
+        assertThat(result, equalTo(expected));
+    }
+    
+    private List<Object[]> parametersForWithinLimit() {
+        ContainerFormatter x = new ContainerFormatter();
+        ContainerFormatter y = new ContainerFormatter(3);
+        
+        return paramsList(params(true, x, 0),
+                          params(true, x, 4),
+                          params(true, y, 0),
+                          params(true, y, 2),
+                          params(false, y, 3));
+    }    
+
+    @Test @Parameters @TestCaseName("{method}(...) #{index} [{params}]")
+    public <T> void checkNull(boolean expected, String key, Object value) {
+        StringArray lines = StringArray.empty();
+        boolean result = new ContainerFormatter(lines).checkNull(key, value);
+        assertThat(result, equalTo(expected));
+    }
+    
+    private List<Object[]> parametersForCheckNull() {
+        return paramsList(params(false, "abc", null),
+                          params(true, "abc", "x"));
+    }    
+
+    @Test @Parameters @TestCaseName("{method}(...) #{index} [{params}]")
+    public <T> void checkEmpty(boolean expected, String key, int length) {
+        StringArray lines = StringArray.empty();
+        boolean result = new ContainerFormatter(lines).checkEmpty(key, length);
+        assertThat(result, equalTo(expected));
+    }
+    
+    private List<Object[]> parametersForCheckEmpty() {
+        return paramsList(params(false, "abc", 0),
+                          params(true, "abc", 1));
+    }    
 }
