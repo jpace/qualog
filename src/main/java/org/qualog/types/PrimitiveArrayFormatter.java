@@ -17,14 +17,51 @@ public class PrimitiveArrayFormatter extends ContainerFormatter {
 
     public PrimitiveArrayFormatter(StringArray lines) {
         this(lines, null);
-    }    
-    
-    public PrimitiveArrayFormatter(Integer limit) {
-        this(StringArray.empty(), limit);
-    }    
-    
-    public PrimitiveArrayFormatter() {
-        this(StringArray.empty(), null);
+    }
+
+    public void formatArray(String key, Object value) {
+        // frequency in the android sdk, so that's the evaluation order:
+        // 4456 byte
+        // 2558 int
+        // 820 char
+        // 816 float
+        // 346 long
+        // 171 boolean
+        // 144 short
+        // 99 double
+
+        if (value instanceof byte[]) {
+            byte[] ary = (byte[])value;
+            format(key, ary);
+        }
+        else if (value instanceof int[]) {
+            int[] ary = (int[])value;
+            format(key, ary);
+        }
+        else if (value instanceof char[]) {
+            char[] ary = (char[])value;
+            format(key, ary);
+        }
+        else if (value instanceof float[]) {
+            float[] ary = (float[])value;
+            format(key, ary);
+        }
+        else if (value instanceof long[]) {
+            long[] ary = (long[])value;
+            format(key, ary);
+        }
+        else if (value instanceof boolean[]) {
+            boolean[] ary = (boolean[])value;
+            format(key, ary);
+        }
+        else if (value instanceof short[]) {
+            short[] ary = (short[])value;
+            format(key, ary);
+        }
+        else if (value instanceof double[]) {
+            double[] ary = (double[])value;
+            format(key, ary);
+        }
     }    
     
     public void format(String key, boolean[] ary) {

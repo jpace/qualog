@@ -10,11 +10,11 @@ import org.junit.Test;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 
-public class BaseFormatterTest extends Parameterized {
+public class StringFormatterTest extends Parameterized {
     @Test @Parameters @TestCaseName("{method}(...) #{index} [{params}]")
-    public <T> void fromKeyValue(StringArray expected, String key, String obj) {
+    public <T> void fromKeyValue(StringArray expected, String key, String value) {
         StringArray result = StringArray.empty();
-        new Formatter(result).format(key, obj);
+        new StringFormatter(result).format(key, value);
         assertThat(result, equalTo(expected));
     }
     
@@ -26,7 +26,7 @@ public class BaseFormatterTest extends Parameterized {
     @Test @Parameters @TestCaseName("{method}(...) #{index} [{params}]")
     public <T> void fromMsg(StringArray expected, String msg) {
         StringArray result = StringArray.empty();
-        new Formatter(result).format(msg);
+        new StringFormatter(result).format(msg);
         assertThat(result, equalTo(expected));
     }
     
@@ -39,7 +39,7 @@ public class BaseFormatterTest extends Parameterized {
     @Test @Parameters @TestCaseName("{method}(...) #{index} [{params}]")
     public <T> void formatNull(StringArray expected, String key) {
         StringArray result = StringArray.empty();
-        new ContainerFormatter(result).formatNull(key);
+        new StringFormatter(result).formatNull(key);
         assertThat(result, equalTo(expected));
     }
     

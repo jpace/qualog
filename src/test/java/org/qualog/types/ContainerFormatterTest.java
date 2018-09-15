@@ -26,7 +26,7 @@ public class ContainerFormatterTest extends Parameterized {
     
     @Test @Parameters @TestCaseName("{method}(...) #{index} [{params}]")
     public <T> void getLimitDefault(int expected, int size) {
-        int result = new ContainerFormatter().getLimit(size);
+        int result = new ContainerFormatter(StringArray.empty()).getLimit(size);
         assertThat(result, equalTo(expected));
     }
     
@@ -38,7 +38,7 @@ public class ContainerFormatterTest extends Parameterized {
     
     @Test @Parameters @TestCaseName("{method}(...) #{index} [{params}]")
     public <T> void getLimitSpecified(int expected, int limit, int size) {
-        int result = new ContainerFormatter(limit).getLimit(size);
+        int result = new ContainerFormatter(StringArray.empty(), limit).getLimit(size);
         assertThat(result, equalTo(expected));
     }
     
@@ -57,13 +57,13 @@ public class ContainerFormatterTest extends Parameterized {
     }
     
     private List<Object[]> parametersForWithinLimit() {
-        ContainerFormatter x = new ContainerFormatter();
-        ContainerFormatter y = new ContainerFormatter(3);
+        ContainerFormatter x = new ContainerFormatter(StringArray.empty());
+        ContainerFormatter y = new ContainerFormatter(StringArray.empty(), 3);
         
-        return paramsList(params(true, x, 0),
-                          params(true, x, 4),
-                          params(true, y, 0),
-                          params(true, y, 2),
+        return paramsList(params(true,  x, 0), 
+                          params(true,  x, 4), 
+                          params(true,  y, 0), 
+                          params(true,  y, 2), 
                           params(false, y, 3));
     }    
 
@@ -75,8 +75,8 @@ public class ContainerFormatterTest extends Parameterized {
     }
     
     private List<Object[]> parametersForCheckNull() {
-        return paramsList(params(false, "abc", null),
-                          params(true, "abc", "x"));
+        return paramsList(params(false, "abc", null), 
+                          params(true,  "abc", "x"));
     }    
 
     @Test @Parameters @TestCaseName("{method}(...) #{index} [{params}]")
@@ -87,7 +87,7 @@ public class ContainerFormatterTest extends Parameterized {
     }
     
     private List<Object[]> parametersForCheckEmpty() {
-        return paramsList(params(false, "abc", 0),
-                          params(true, "abc", 1));
+        return paramsList(params(false, "abc", 0), 
+                          params(true,  "abc", 1));
     }    
 }

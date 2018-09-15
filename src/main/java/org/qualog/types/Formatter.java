@@ -35,20 +35,13 @@ public class Formatter extends ContainerFormatter {
     }
     
     public void format(String key, Object value) {
-        if (value == null) {
-            formatNull(key);
+        if (!checkNull(key, value)) {
+            // nothing
         }
         else if (value instanceof String) {
             format(key, (String)value);
         }
-        else {
-            for (Object it : this.objects) {
-                // by identity, not equality:
-                if (it == value) {
-                    formatRecursed(key, value);
-                    return;
-                }
-            }
+        else if (checkRecursion(key, value)) {
             this.objects.append(value);
             if (value.getClass().isArray()) {
                 if (value instanceof Object[]) {
@@ -56,7 +49,7 @@ public class Formatter extends ContainerFormatter {
                     format(key, ary);
                 }
                 else {
-                    formatPrimitiveArray(key, value);
+                    primitiveArrays.formatArray(key, value);
                 }
             }
             else if (value instanceof Map) {
@@ -72,51 +65,6 @@ public class Formatter extends ContainerFormatter {
                 format(key, str);
             }
             this.objects.takeLast();
-        }
-    }
-
-    public void formatPrimitiveArray(String key, Object value) {
-        // frequency in the android sdk, so that's the evaluation order:
-        // 4456 byte
-        // 2558 int
-        // 820 char
-        // 816 float
-        // 346 long
-        // 171 boolean
-        // 144 short
-        // 99 double
-
-        if (value instanceof byte[]) {
-            byte[] ary = (byte[])value;
-            primitiveArrays.format(key, ary);
-        }
-        else if (value instanceof int[]) {
-            int[] ary = (int[])value;
-            primitiveArrays.format(key, ary);
-        }
-        else if (value instanceof char[]) {
-            char[] ary = (char[])value;
-            primitiveArrays.format(key, ary);
-        }
-        else if (value instanceof float[]) {
-            float[] ary = (float[])value;
-            primitiveArrays.format(key, ary);
-        }
-        else if (value instanceof long[]) {
-            long[] ary = (long[])value;
-            primitiveArrays.format(key, ary);
-        }
-        else if (value instanceof boolean[]) {
-            boolean[] ary = (boolean[])value;
-            primitiveArrays.format(key, ary);
-        }
-        else if (value instanceof short[]) {
-            short[] ary = (short[])value;
-            primitiveArrays.format(key, ary);
-        }
-        else if (value instanceof double[]) {
-            double[] ary = (double[])value;
-            primitiveArrays.format(key, ary);
         }
     }
 
@@ -169,5 +117,17 @@ public class Formatter extends ContainerFormatter {
 
     public void formatRecursed(String key, Object value) {
         format(key, objectTypes.toString(value, "(((recursed)))"));
+    }
+
+    public boolean checkRecursion(String key, Object value) {
+        for (Object it : this.objects) {
+            // by identity, not equality:
+            if (it == value) {
+                formatRecursed(key, value);
+                return false;
+            }
+        }
+        
+        return true;
     }
 }

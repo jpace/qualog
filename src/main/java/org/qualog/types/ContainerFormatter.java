@@ -3,14 +3,14 @@ package org.qualog.types;
 import org.incava.ijdk.collect.StringArray;
 
 /**
- * Generates lists of lines for containers.
+ * Generates lists of lines for containers (fixed-size arrays and collections).
  */
-public class ContainerFormatter extends BaseFormatter {
+public class ContainerFormatter {
     private final Integer limit;
+    private final StringFormatter strings;
     
     public ContainerFormatter(StringArray lines, Integer limit) {
-        super(lines);
-
+        this.strings = new StringFormatter(lines);
         this.limit = limit;
     }
 
@@ -18,16 +18,16 @@ public class ContainerFormatter extends BaseFormatter {
         this(lines, null);
     }    
     
-    public ContainerFormatter(Integer limit) {
-        this(StringArray.empty(), limit);
-    }
-
-    public ContainerFormatter() {
-        this(StringArray.empty(), null);
-    }
-
     public void formatEmpty(String key) {
-        format(key, "()");
+        strings.format(key, "()");
+    }
+    
+    public void format(String key, String value) {
+        strings.format(key, value);
+    }
+    
+    public void format(String msg) {
+        strings.format(msg);
     }
 
     public int getLimit(int size) {
@@ -40,7 +40,7 @@ public class ContainerFormatter extends BaseFormatter {
 
     public boolean checkNull(String key, Object obj) {
         if (obj == null) {
-            formatNull(key);
+            strings.formatNull(key);
             return false;
         }
         else {
@@ -49,13 +49,7 @@ public class ContainerFormatter extends BaseFormatter {
     }
 
     public boolean checkEmpty(String key, int length) {
-        if (length == 0) {
-            formatEmpty(key);
-            return false;
-        }
-        else {
-            return true;
-        }
+        return checkEmpty(key, length == 0);
     }    
 
     public boolean checkEmpty(String key, boolean condition) {

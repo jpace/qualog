@@ -6,13 +6,16 @@ import org.incava.ijdk.collect.StringArray;
  * Generates lists of lines for primitives and arrays of primitives (which do not expand
  * recursively).
  */
-public class PrimitiveFormatter extends BaseFormatter {
+public class PrimitiveFormatter {
+    private final StringFormatter strings;
+    
     public PrimitiveFormatter(StringArray lines) {
-        super(lines);
+        strings = new StringFormatter(lines);
     }
     
-    public PrimitiveFormatter() {
-    }    
+    public void format(String key, String value) {
+        strings.format(key, value);
+    }
     
     public void format(String key, boolean x) {
         format(key, String.valueOf(x));
