@@ -29,7 +29,7 @@ public class ContainerFormatter {
     public void format(String msg) {
         strings.format(msg);
     }
-
+    
     public int getLimit(int size) {
         return this.limit == null ? size : Math.min(size, this.limit);
     }
