@@ -35,22 +35,19 @@ public class Formatter extends ContainerFormatter {
     }
     
     public void format(String key, Object value) {
-        if (!checkNull(key, value)) {
+        if (checkNull(key, value)) {
             // nothing
         }
         else if (value instanceof String) {
             format(key, (String)value);
         }
         else if (checkRecursion(key, value)) {
+            // nothing
+        }
+        else {
             this.objects.append(value);
             if (value.getClass().isArray()) {
-                if (value instanceof Object[]) {
-                    Object[] ary = (Object[])value;
-                    format(key, ary);
-                }
-                else {
-                    primitiveArrays.formatArray(key, value);
-                }
+                formatArray(key, value);
             }
             else if (value instanceof Map) {
                 Map<?, ?> map = (Map<?, ?>)value;
@@ -68,8 +65,18 @@ public class Formatter extends ContainerFormatter {
         }
     }
 
+    public void formatArray(String key, Object value) {
+        if (value instanceof Object[]) {
+            Object[] ary = (Object[])value;
+            format(key, ary);
+        }
+        else {
+            primitiveArrays.formatArray(key, value);
+        }
+    }
+
     public void format(String key, Object[] ary) {
-        if (checkNull(key, ary) && checkEmpty(key, ary.length)) {
+        if (!checkNull(key, ary) && !checkEmpty(key, ary.length)) {
             int max = getLimit(ary.length);
             for (int ai = 0; ai < max; ++ai) {
                 format(key, ai, ary[ai]);
@@ -85,7 +92,7 @@ public class Formatter extends ContainerFormatter {
     }
 
     public <K, V> void format(String key, Map<K, V> map) {
-        if (checkNull(key, map) && checkEmpty(key, map.isEmpty())) {
+        if (!checkNull(key, map) && !checkEmpty(key, map.isEmpty())) {
             int idx = 0;
             for (Map.Entry<K, V> it : map.entrySet()) {
                 if (!withinLimit(idx)) {
@@ -98,9 +105,9 @@ public class Formatter extends ContainerFormatter {
     }
 
     public <T> void format(String key, Iterable<T> iterable) {
-        if (checkNull(key, iterable)) {
+        if (!checkNull(key, iterable)) {
             Iterator<T> iterator = iterable.iterator();
-            if (checkEmpty(key, !iterator.hasNext())) {
+            if (!checkEmpty(key, !iterator.hasNext())) {
                 int idx = 0;
                 while (iterator.hasNext() && withinLimit(idx)) {
                     T obj = iterator.next();
@@ -124,10 +131,10 @@ public class Formatter extends ContainerFormatter {
             // by identity, not equality:
             if (it == value) {
                 formatRecursed(key, value);
-                return false;
+                return true;
             }
         }
         
-        return true;
+        return false;
     }
 }

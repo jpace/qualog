@@ -41,10 +41,10 @@ public class ContainerFormatter {
     public boolean checkNull(String key, Object obj) {
         if (obj == null) {
             strings.formatNull(key);
-            return false;
+            return true;
         }
         else {
-            return true;
+            return false;
         }
     }
 
@@ -55,10 +55,10 @@ public class ContainerFormatter {
     public boolean checkEmpty(String key, boolean condition) {
         if (condition) {
             formatEmpty(key);
-            return false;
+            return true;
         }
         else {
-            return true;
+            return false;
         }
     }    
 }

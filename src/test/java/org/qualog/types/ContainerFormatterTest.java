@@ -75,19 +75,31 @@ public class ContainerFormatterTest extends Parameterized {
     }
     
     private List<Object[]> parametersForCheckNull() {
-        return paramsList(params(false, "abc", null), 
-                          params(true,  "abc", "x"));
+        return paramsList(params(true,  "abc", null), 
+                          params(false, "abc", "x"));
     }    
 
     @Test @Parameters @TestCaseName("{method}(...) #{index} [{params}]")
-    public <T> void checkEmpty(boolean expected, String key, int length) {
+    public <T> void checkEmptyInt(boolean expected, String key, int length) {
         StringArray lines = StringArray.empty();
         boolean result = new ContainerFormatter(lines).checkEmpty(key, length);
         assertThat(result, equalTo(expected));
     }
     
-    private List<Object[]> parametersForCheckEmpty() {
-        return paramsList(params(false, "abc", 0), 
-                          params(true,  "abc", 1));
+    private List<Object[]> parametersForCheckEmptyInt() {
+        return paramsList(params(true,  "abc", 0), 
+                          params(false, "abc", 1));
+    }    
+
+    @Test @Parameters @TestCaseName("{method}(...) #{index} [{params}]")
+    public <T> void checkEmptyBoolean(boolean expected, String key, boolean condition) {
+        StringArray lines = StringArray.empty();
+        boolean result = new ContainerFormatter(lines).checkEmpty(key, condition);
+        assertThat(result, equalTo(expected));
+    }
+    
+    private List<Object[]> parametersForCheckEmptyBoolean() {
+        return paramsList(params(true,  "abc", true), 
+                          params(false, "abc", false));
     }    
 }

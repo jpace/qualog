@@ -65,7 +65,7 @@ public class PrimitiveArrayFormatter extends ContainerFormatter {
     }    
     
     public void format(String key, boolean[] ary) {
-        if (checkNull(key, ary) && checkEmpty(key, ary.length)) {
+        if (!checkNull(key, ary) && !checkEmpty(key, ary.length)) {
             int max = getLimit(ary.length);
             for (int ai = 0; ai < max; ++ai) {
                 primitives.format(key, ai, ary[ai]);
@@ -74,7 +74,7 @@ public class PrimitiveArrayFormatter extends ContainerFormatter {
     }
 
     public void format(String key, byte[] ary) {        
-        if (checkNull(key, ary) && checkEmpty(key, ary.length)) {
+        if (!checkNull(key, ary) && !checkEmpty(key, ary.length)) {
             int max = getLimit(ary.length);
             for (int ai = 0; ai < max; ++ai) {
                 primitives.format(key, ai, ary[ai]);
@@ -83,7 +83,7 @@ public class PrimitiveArrayFormatter extends ContainerFormatter {
     }
 
     public void format(String key, char[] ary) {        
-        if (checkNull(key, ary) && checkEmpty(key, ary.length)) {
+        if (!checkNull(key, ary) && !checkEmpty(key, ary.length)) {
             int max = getLimit(ary.length);
             for (int ai = 0; ai < max; ++ai) {
                 primitives.format(key, ai, ary[ai]);
@@ -92,7 +92,7 @@ public class PrimitiveArrayFormatter extends ContainerFormatter {
     }
 
     public void format(String key, double[] ary) {
-        if (checkNull(key, ary) && checkEmpty(key, ary.length)) {
+        if (!checkNull(key, ary) && !checkEmpty(key, ary.length)) {
             int max = getLimit(ary.length);
             for (int ai = 0; ai < max; ++ai) {
                 primitives.format(key, ai, ary[ai]);
@@ -101,7 +101,7 @@ public class PrimitiveArrayFormatter extends ContainerFormatter {
     }
 
     public void format(String key, float[] ary) {
-        if (checkNull(key, ary) && checkEmpty(key, ary.length)) {
+        if (!checkNull(key, ary) && !checkEmpty(key, ary.length)) {
             int max = getLimit(ary.length);
             for (int ai = 0; ai < max; ++ai) {
                 primitives.format(key, ai, ary[ai]);
@@ -110,7 +110,7 @@ public class PrimitiveArrayFormatter extends ContainerFormatter {
     }
 
     public void format(String key, int[] ary) {
-        if (checkNull(key, ary) && checkEmpty(key, ary.length)) {
+        if (!checkNull(key, ary) && !checkEmpty(key, ary.length)) {
             int max = getLimit(ary.length);
             for (int ai = 0; ai < max; ++ai) {
                 primitives.format(key, ai, ary[ai]);
@@ -119,7 +119,7 @@ public class PrimitiveArrayFormatter extends ContainerFormatter {
     }
 
     public void format(String key, long[] ary) {
-        if (checkNull(key, ary) && checkEmpty(key, ary.length)) {
+        if (!checkNull(key, ary) && !checkEmpty(key, ary.length)) {
             int max = getLimit(ary.length);
             for (int ai = 0; ai < max; ++ai) {
                 primitives.format(key, ai, ary[ai]);
@@ -128,7 +128,7 @@ public class PrimitiveArrayFormatter extends ContainerFormatter {
     }
 
     public void format(String key, short[] ary) {
-        if (checkNull(key, ary) && checkEmpty(key, ary.length)) {
+        if (!checkNull(key, ary) && !checkEmpty(key, ary.length)) {
             int max = getLimit(ary.length);
             for (int ai = 0; ai < max; ++ai) {
                 primitives.format(key, ai, ary[ai]);
