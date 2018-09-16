@@ -48,4 +48,27 @@ public class StringFormatterTest extends Parameterized {
                           params(StringArray.of("def: null"), "def"),
                           params(StringArray.of("null: null"), null));
     }    
+
+    @Test @Parameters @TestCaseName("{method}(...) #{index} [{params}]")
+    public <T> void withFormat(StringArray expected, String format, String key, String value) {
+        StringArray result = StringArray.empty();
+        new StringFormatter(format, result).format(key, value);
+        assertThat(result, equalTo(expected));
+    }
+    
+    private List<Object[]> parametersForWithFormat() {
+        return paramsList(params(StringArray.of("abc: def"), "%s: %s", "abc", "def"),
+                          params(StringArray.of("<<abc>> {{def}}"), "<<%s>> {{%s}}", "abc", "def"));
+    }    
+
+    @Test @Parameters @TestCaseName("{method}(...) #{index} [{params}]")
+    public <T> void withNullFormat(StringArray expected, String key, String value) {
+        StringArray result = StringArray.empty();
+        new StringFormatter(null, result).format(key, value);
+        assertThat(result, equalTo(expected));
+    }
+    
+    private List<Object[]> parametersForWithNullFormat() {
+        return paramsList(params(StringArray.of("abc: def"), "abc", "def"));
+    }    
 }

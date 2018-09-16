@@ -9,8 +9,12 @@ import org.incava.ijdk.collect.StringArray;
 public class PrimitiveFormatter {
     private final StringFormatter strings;
     
+    public PrimitiveFormatter(String format, StringArray lines) {
+        strings = new StringFormatter(format, lines);
+    }
+    
     public PrimitiveFormatter(StringArray lines) {
-        strings = new StringFormatter(lines);
+        this(StringFormatter.DEFAULT_FORMAT, lines);
     }
     
     public void format(String key, String value) {

@@ -105,5 +105,17 @@ public class PrimitiveFormatterTest extends Parameterized {
     private List<Object[]> parametersForFromShort() {
         return paramsList(params(StringArray.of("abc: 1"), "abc", (short)1),
                           params(StringArray.of("abc: 2"), "abc", (short)2));
+    }
+
+    @Test @Parameters @TestCaseName("{method}(...) #{index} [{params}]")
+    public <T> void withFormat(StringArray expected, String format, String key, String value) {
+        StringArray result = StringArray.empty();
+        new PrimitiveFormatter(format, result).format(key, value);
+        assertThat(result, equalTo(expected));
+    }
+    
+    private List<Object[]> parametersForWithFormat() {
+        return paramsList(params(StringArray.of("abc: def"), "%s: %s", "abc", "def"),
+                          params(StringArray.of("<<abc>> {{def}}"), "<<%s>> {{%s}}", "abc", "def"));
     }    
 }

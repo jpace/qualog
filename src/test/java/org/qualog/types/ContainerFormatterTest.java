@@ -101,5 +101,17 @@ public class ContainerFormatterTest extends Parameterized {
     private List<Object[]> parametersForCheckEmptyBoolean() {
         return paramsList(params(true,  "abc", true), 
                           params(false, "abc", false));
+    }
+
+    @Test @Parameters @TestCaseName("{method}(...) #{index} [{params}]")
+    public <T> void withFormat(StringArray expected, String format, String key, String value) {
+        StringArray result = StringArray.empty();
+        new ContainerFormatter(format, result).format(key, value);
+        assertThat(result, equalTo(expected));
+    }
+    
+    private List<Object[]> parametersForWithFormat() {
+        return paramsList(params(StringArray.of("abc: def"), "%s: %s", "abc", "def"),
+                          params(StringArray.of("<<abc>> {{def}}"), "<<%s>> {{%s}}", "abc", "def"));
     }    
 }

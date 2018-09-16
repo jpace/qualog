@@ -8,11 +8,19 @@ import org.incava.ijdk.collect.StringArray;
 public class ContainerFormatter {
     private final Integer limit;
     private final StringFormatter strings;
+
+    public ContainerFormatter(String format, StringArray lines, Integer limit) {
+        this.strings = new StringFormatter(format, lines);
+        this.limit = limit;
+    }    
     
     public ContainerFormatter(StringArray lines, Integer limit) {
-        this.strings = new StringFormatter(lines);
-        this.limit = limit;
+        this(StringFormatter.DEFAULT_FORMAT, lines, limit);
     }
+
+    public ContainerFormatter(String format, StringArray lines) {
+        this(format, lines, null);
+    }    
 
     public ContainerFormatter(StringArray lines) {
         this(lines, null);

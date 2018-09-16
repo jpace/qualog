@@ -9,16 +9,24 @@ import org.incava.ijdk.collect.StringArray;
 public class PrimitiveArrayFormatter extends ContainerFormatter {
     private PrimitiveFormatter primitives;
     
-    public PrimitiveArrayFormatter(StringArray lines, Integer limit) {
+    public PrimitiveArrayFormatter(String format, StringArray lines, Integer limit) {
         super(lines, limit);
         
-        this.primitives = new PrimitiveFormatter(lines);
+        this.primitives = new PrimitiveFormatter(format, lines);
     }
+
+    public PrimitiveArrayFormatter(String format, StringArray lines) {
+        this(format, lines, null);
+    }
+
+    public PrimitiveArrayFormatter(StringArray lines, Integer limit) {
+        this(StringFormatter.DEFAULT_FORMAT, lines, limit);
+    }    
 
     public PrimitiveArrayFormatter(StringArray lines) {
-        this(lines, null);
-    }
-
+        this(StringFormatter.DEFAULT_FORMAT, lines, null);
+    }    
+    
     public void formatArray(String key, Object value) {
         // frequency in the android sdk, so that's the evaluation order:
         // 4456 byte
