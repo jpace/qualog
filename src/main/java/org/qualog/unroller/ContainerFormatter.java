@@ -15,7 +15,7 @@ public class ContainerFormatter {
     }    
 
     public ContainerFormatter(String format, StringArray lines, Integer limit) {
-        this.strings = new StringFormatter(format, lines);
+        this.strings = new StringArrayWriter(format, lines);
         this.limit = limit;
     }    
     

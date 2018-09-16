@@ -11,64 +11,88 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 
 public class StringFormatterTest extends Parameterized {
+    public class TestStringFormatter extends StringFormatter {
+        private String line;
+
+        public TestStringFormatter() {
+        }
+
+        public TestStringFormatter(String format) {
+            super(format);
+        }
+
+        public void write(String line) {
+            this.line = line;
+        }
+
+        public String getLine() {
+            return line;
+        }
+    }
+    
     @Test @Parameters @TestCaseName("{method}(...) #{index} [{params}]")
-    public <T> void fromKeyValue(StringArray expected, String key, String value) {
-        StringArray result = StringArray.empty();
-        new StringFormatter(result).format(key, value);
+    public <T> void fromKeyValue(String expected, String key, String value) {
+        TestStringFormatter tsf = new TestStringFormatter();
+        tsf.format(key, value);
+        String result = tsf.getLine();
         assertThat(result, equalTo(expected));
     }
     
     private List<Object[]> parametersForFromKeyValue() {
-        return paramsList(params(StringArray.of("abc: def"), "abc", "def"),
-                          params(StringArray.of("abc: null"), "abc", null));
+        return paramsList(params("abc: def", "abc", "def"),
+                          params("abc: null", "abc", null));
     }
     
     @Test @Parameters @TestCaseName("{method}(...) #{index} [{params}]")
-    public <T> void fromMsg(StringArray expected, String msg) {
-        StringArray result = StringArray.empty();
-        new StringFormatter(result).format(msg);
+    public <T> void fromMsg(String expected, String msg) {
+        TestStringFormatter tsf = new TestStringFormatter();
+        tsf.format(msg);
+        String result = tsf.getLine();
         assertThat(result, equalTo(expected));
     }
     
     private List<Object[]> parametersForFromMsg() {
-        return paramsList(params(StringArray.of("abc"), "abc"),
-                          params(StringArray.of("def"), "def"),
-                          params(StringArray.of("null"), null));
+        return paramsList(params("abc", "abc"),
+                          params("def", "def"),
+                          params("null", null));
     }
 
     @Test @Parameters @TestCaseName("{method}(...) #{index} [{params}]")
-    public <T> void formatNull(StringArray expected, String key) {
-        StringArray result = StringArray.empty();
-        new StringFormatter(result).formatNull(key);
+    public <T> void formatNull(String expected, String key) {
+        TestStringFormatter tsf = new TestStringFormatter();
+        tsf.formatNull(key);
+        String result = tsf.getLine();
         assertThat(result, equalTo(expected));
     }
     
     private List<Object[]> parametersForFormatNull() {
-        return paramsList(params(StringArray.of("abc: null"), "abc"),
-                          params(StringArray.of("def: null"), "def"),
-                          params(StringArray.of("null: null"), null));
+        return paramsList(params("abc: null", "abc"),
+                          params("def: null", "def"),
+                          params("null: null", null));
     }    
 
     @Test @Parameters @TestCaseName("{method}(...) #{index} [{params}]")
-    public <T> void withFormat(StringArray expected, String format, String key, String value) {
-        StringArray result = StringArray.empty();
-        new StringFormatter(format, result).format(key, value);
+    public <T> void withFormat(String expected, String format, String key, String value) {
+        TestStringFormatter tsf = new TestStringFormatter(format);
+        tsf.format(key, value);
+        String result = tsf.getLine();
         assertThat(result, equalTo(expected));
     }
     
     private List<Object[]> parametersForWithFormat() {
-        return paramsList(params(StringArray.of("abc: def"), "%s: %s", "abc", "def"),
-                          params(StringArray.of("<<abc>> {{def}}"), "<<%s>> {{%s}}", "abc", "def"));
+        return paramsList(params("abc: def", "%s: %s", "abc", "def"),
+                          params("<<abc>> {{def}}", "<<%s>> {{%s}}", "abc", "def"));
     }    
 
     @Test @Parameters @TestCaseName("{method}(...) #{index} [{params}]")
-    public <T> void withNullFormat(StringArray expected, String key, String value) {
-        StringArray result = StringArray.empty();
-        new StringFormatter(null, result).format(key, value);
+    public <T> void withNullFormat(String expected, String key, String value) {
+        TestStringFormatter tsf = new TestStringFormatter(null);
+        tsf.format(key, value);
+        String result = tsf.getLine();
         assertThat(result, equalTo(expected));
     }
     
     private List<Object[]> parametersForWithNullFormat() {
-        return paramsList(params(StringArray.of("abc: def"), "abc", "def"));
+        return paramsList(params("abc: def", "abc", "def"));
     }    
 }

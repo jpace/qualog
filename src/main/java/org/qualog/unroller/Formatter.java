@@ -3,7 +3,7 @@ package org.qualog.unroller;
 import org.incava.ijdk.collect.StringArray;
 
 /**
- * Generates lists of lines for various object unroller.
+ * Generates lists of lines for various object types.
  */
 public class Formatter {
     private final ObjectFormatter objects;

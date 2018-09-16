@@ -6,7 +6,7 @@ import java.util.Iterator;
 import java.util.Map;
 
 /**
- * Generates lists of lines for various object unroller.
+ * Generates lists of lines for various object types.
  */
 public class ObjectFormatter extends ContainerFormatter {
     private ObjectTypes objectTypes = new ObjectTypes();
@@ -22,7 +22,7 @@ public class ObjectFormatter extends ContainerFormatter {
     }
 
     public ObjectFormatter(StringArray lines, Integer limit) {
-        this(new StringFormatter(lines), limit);
+        this(new StringArrayWriter(lines), limit);
     }
 
     public ObjectFormatter(StringArray lines) {

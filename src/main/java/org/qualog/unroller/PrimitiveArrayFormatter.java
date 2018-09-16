@@ -20,7 +20,7 @@ public class PrimitiveArrayFormatter extends ContainerFormatter {
     }
     
     public PrimitiveArrayFormatter(String format, StringArray lines, Integer limit) {
-        this(new StringFormatter(format, lines), limit);
+        this(new StringArrayWriter(format, lines), limit);
     }
 
     public PrimitiveArrayFormatter(String format, StringArray lines) {
