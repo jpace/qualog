@@ -14,11 +14,15 @@ public class ObjectFormatter extends ContainerFormatter {
     private final Array<Object> objects;
     private final PrimitiveArrayFormatter primitiveArrays;
 
-    public ObjectFormatter(StringArray lines, Integer limit) {
-        super(lines, limit);
+    public ObjectFormatter(StringFormatter strings, Integer limit) {
+        super(strings, limit);
         
         this.objects = Array.empty();
-        this.primitiveArrays = new PrimitiveArrayFormatter(lines, limit);
+        this.primitiveArrays = new PrimitiveArrayFormatter(strings, limit);
+    }
+
+    public ObjectFormatter(StringArray lines, Integer limit) {
+        this(new StringFormatter(lines), limit);
     }
 
     public ObjectFormatter(StringArray lines) {

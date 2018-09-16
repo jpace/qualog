@@ -9,6 +9,11 @@ public class ContainerFormatter {
     private final Integer limit;
     private final StringFormatter strings;
 
+    public ContainerFormatter(StringFormatter strings, Integer limit) {
+        this.strings = strings;
+        this.limit = limit;
+    }    
+
     public ContainerFormatter(String format, StringArray lines, Integer limit) {
         this.strings = new StringFormatter(format, lines);
         this.limit = limit;

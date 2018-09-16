@@ -17,6 +17,10 @@ public class PrimitiveFormatter {
         this(StringFormatter.DEFAULT_FORMAT, lines);
     }
     
+    public PrimitiveFormatter(StringFormatter strings) {
+        this.strings = strings;
+    }
+    
     public void format(String key, String value) {
         strings.format(key, value);
     }

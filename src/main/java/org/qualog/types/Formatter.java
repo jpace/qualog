@@ -8,6 +8,14 @@ import org.incava.ijdk.collect.StringArray;
 public class Formatter {
     private final ObjectFormatter objects;
 
+    public Formatter(StringFormatter strings, Integer limit) {
+        objects = new ObjectFormatter(strings, limit);
+    }
+
+    public Formatter(StringFormatter strings) {
+        this(strings, null);
+    }
+
     public Formatter(StringArray lines, Integer limit) {
         objects = new ObjectFormatter(lines, limit);
     }

@@ -7,12 +7,20 @@ import org.incava.ijdk.collect.StringArray;
  * recursively).
  */
 public class PrimitiveArrayFormatter extends ContainerFormatter {
-    private PrimitiveFormatter primitives;
+    private PrimitiveFormatter primitives;    
+    
+    public PrimitiveArrayFormatter(StringFormatter strings, Integer limit) {
+        super(strings, limit);
+        
+        this.primitives = new PrimitiveFormatter(strings);
+    }
+    
+    public PrimitiveArrayFormatter(StringFormatter strings) {
+        this(strings, null);
+    }
     
     public PrimitiveArrayFormatter(String format, StringArray lines, Integer limit) {
-        super(lines, limit);
-        
-        this.primitives = new PrimitiveFormatter(format, lines);
+        this(new StringFormatter(format, lines), limit);
     }
 
     public PrimitiveArrayFormatter(String format, StringArray lines) {
@@ -21,11 +29,11 @@ public class PrimitiveArrayFormatter extends ContainerFormatter {
 
     public PrimitiveArrayFormatter(StringArray lines, Integer limit) {
         this(StringFormatter.DEFAULT_FORMAT, lines, limit);
-    }    
+    }
 
     public PrimitiveArrayFormatter(StringArray lines) {
         this(StringFormatter.DEFAULT_FORMAT, lines, null);
-    }    
+    }
     
     public void formatArray(String key, Object value) {
         // frequency in the android sdk, so that's the evaluation order:
