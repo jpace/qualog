@@ -1,4 +1,4 @@
-package org.qualog.types;
+package org.qualog.unroller;
 
 public class ExampleException {
     public static Throwable createNestedException(String msg) {

@@ -4,6 +4,7 @@ import org.incava.ijdk.collect.StringArray;
 import org.qualog.Level;
 import org.qualog.output.ItemColors;
 import org.qualog.output.Writer;
+import org.qualog.unroller.Formatter;
 
 /**
  * Wraps C-style arrays for output.

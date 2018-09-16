@@ -1,4 +1,4 @@
-package org.qualog.types;
+package org.qualog.unroller;
 
 import org.incava.ijdk.collect.Array;
 import org.incava.ijdk.collect.StringArray;
@@ -6,7 +6,7 @@ import java.util.Iterator;
 import java.util.Map;
 
 /**
- * Generates lists of lines for various object types.
+ * Generates lists of lines for various object unroller.
  */
 public class ObjectFormatter extends ContainerFormatter {
     private ObjectTypes objectTypes = new ObjectTypes();

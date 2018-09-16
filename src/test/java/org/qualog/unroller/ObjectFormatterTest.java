@@ -1,4 +1,4 @@
-package org.qualog.types;
+package org.qualog.unroller;
 
 import java.util.Enumeration;
 import java.util.Iterator;
@@ -76,10 +76,10 @@ public class ObjectFormatterTest extends Parameterized {
         
         return paramsList(params(StringArray.of("java.lang.Exception: abc"), "def", t, 0),
                           params(StringArray.of("java.lang.Exception: abc",
-                                                "def[0]: org.qualog.types.ExampleException.createException(ExampleException.java:9)"), "def", t, 1),
+                                                "def[0]: org.qualog.unroller.ExampleException.createException(ExampleException.java:9)"), "def", t, 1),
                           params(StringArray.of("java.lang.Exception: abc",
-                                                "def[0]: org.qualog.types.ExampleException.createException(ExampleException.java:9)",
-                                                "def[1]: org.qualog.types.ExampleException.createNestedException(ExampleException.java:5)"), "def", t, 2));
+                                                "def[0]: org.qualog.unroller.ExampleException.createException(ExampleException.java:9)",
+                                                "def[1]: org.qualog.unroller.ExampleException.createNestedException(ExampleException.java:5)"), "def", t, 2));
     }
     
     @Ignore @Test @Parameters @TestCaseName("{method}(...) #{index} [{params}]")
@@ -93,8 +93,8 @@ public class ObjectFormatterTest extends Parameterized {
         Throwable t = ExampleException.createNestedException("abc");
         
         return paramsList(params(StringArray.of("java.lang.Exception: abc",
-                                                "def[0]: org.qualog.types.ExampleException.createException(ExampleException.java:9)",
-                                                "def[1]: org.qualog.types.ExampleException.createNestedException(ExampleException.java:5)"), "def", t));
+                                                "def[0]: org.qualog.unroller.ExampleException.createException(ExampleException.java:9)",
+                                                "def[1]: org.qualog.unroller.ExampleException.createNestedException(ExampleException.java:5)"), "def", t));
     }
     
     @Test @Parameters @TestCaseName("{method}(...) #{index} [{params}]")

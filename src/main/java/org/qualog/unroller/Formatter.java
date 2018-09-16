@@ -1,9 +1,9 @@
-package org.qualog.types;
+package org.qualog.unroller;
 
 import org.incava.ijdk.collect.StringArray;
 
 /**
- * Generates lists of lines for various object types.
+ * Generates lists of lines for various object unroller.
  */
 public class Formatter {
     private final ObjectFormatter objects;
