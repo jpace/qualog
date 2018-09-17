@@ -3,7 +3,7 @@ package org.qualog.unroller;
 import org.incava.ijdk.collect.StringArray;
 
 /**
- * Generates lines;
+ * Generates one line, using the specified or default format.
  */
 public abstract class StringFormatter {
     public static final String DEFAULT_FORMAT = "%s: %s";
@@ -18,13 +18,16 @@ public abstract class StringFormatter {
         this.format = format == null ? DEFAULT_FORMAT : format;
     }
     
-    public void format(String key, String value) {
+    public String format(String key, String value) {
         String line = String.format(this.format, key, value);
         write(line);
+        return line;
     }
     
-    public void format(String msg) {
-        write(msg == null ? "null" : msg);
+    public String format(String msg) {
+        String line = msg == null ? "null" : msg;
+        write(line);
+        return line;
     }
 
     public void formatNull(String key) {
