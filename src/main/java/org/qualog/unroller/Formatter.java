@@ -8,20 +8,12 @@ import org.incava.ijdk.collect.StringArray;
 public class Formatter {
     private final ObjectFormatter objects;
 
-    public Formatter(StringFormatter strings, Integer limit) {
+    public Formatter(StringGenerator strings, Integer limit) {
         objects = new ObjectFormatter(strings, limit);
     }
 
-    public Formatter(StringFormatter strings) {
+    public Formatter(StringGenerator strings) {
         this(strings, null);
-    }
-
-    public Formatter(StringArray lines, Integer limit) {
-        objects = new ObjectFormatter(lines, limit);
-    }
-
-    public Formatter(StringArray lines) {
-        this(lines, null);
     }
     
     public void format(String key, Object value) {

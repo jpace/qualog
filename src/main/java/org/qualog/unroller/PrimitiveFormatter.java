@@ -7,22 +7,14 @@ import org.incava.ijdk.collect.StringArray;
  * recursively).
  */
 public class PrimitiveFormatter {
-    private final StringFormatter strings;
+    private final StringGenerator strings;
     
-    public PrimitiveFormatter(String format, StringArray lines) {
-        this.strings = new StringArrayWriter(format, lines);
-    }
-    
-    public PrimitiveFormatter(StringFormatter strings) {
+    public PrimitiveFormatter(StringGenerator strings) {
         this.strings = strings;
     }
     
-    public PrimitiveFormatter(StringArray lines) {
-        this(StringFormatter.DEFAULT_FORMAT, lines);
-    }
-    
     public void format(String key, String value) {
-        strings.format(key, value);
+        strings.generate(key, value);
     }
     
     public void format(String key, boolean x) {

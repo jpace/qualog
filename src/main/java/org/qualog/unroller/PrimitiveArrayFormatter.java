@@ -9,30 +9,14 @@ import org.incava.ijdk.collect.StringArray;
 public class PrimitiveArrayFormatter extends ContainerFormatter {
     private PrimitiveFormatter primitives;    
     
-    public PrimitiveArrayFormatter(StringFormatter strings, Integer limit) {
+    public PrimitiveArrayFormatter(StringGenerator strings, Integer limit) {
         super(strings, limit);
         
         this.primitives = new PrimitiveFormatter(strings);
     }
     
-    public PrimitiveArrayFormatter(StringFormatter strings) {
+    public PrimitiveArrayFormatter(StringGenerator strings) {
         this(strings, null);
-    }
-    
-    public PrimitiveArrayFormatter(String format, StringArray lines, Integer limit) {
-        this(new StringArrayWriter(format, lines), limit);
-    }
-
-    public PrimitiveArrayFormatter(String format, StringArray lines) {
-        this(format, lines, null);
-    }
-
-    public PrimitiveArrayFormatter(StringArray lines, Integer limit) {
-        this(StringFormatter.DEFAULT_FORMAT, lines, limit);
-    }
-
-    public PrimitiveArrayFormatter(StringArray lines) {
-        this(StringFormatter.DEFAULT_FORMAT, lines, null);
     }
     
     public void formatArray(String key, Object value) {

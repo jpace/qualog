@@ -3,18 +3,18 @@ package org.qualog.unroller;
 import java.util.List;
 import junitparams.Parameters;
 import junitparams.naming.TestCaseName;
-import org.incava.attest.Parameterized;
 import org.incava.ijdk.collect.StringArray;
 import org.junit.Test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 
-public class PrimitiveArrayFormatterTest extends Parameterized {
+public class PrimitiveArrayFormatterTest extends GeneratorTestCase {
     @Test @Parameters @TestCaseName("{method}(...) #{index} [{params}]")
     public void fromBooleanArray(StringArray expected, String key, boolean[] ary) {
         StringArray result = StringArray.empty();
-        new PrimitiveArrayFormatter(result).format(key, ary);
+        StringGenerator sg = createGenerator(result);
+        new PrimitiveArrayFormatter(sg).format(key, ary);
         assertThat(result, equalTo(expected));
     }
     
@@ -28,7 +28,8 @@ public class PrimitiveArrayFormatterTest extends Parameterized {
     @Test @Parameters @TestCaseName("{method}(...) #{index} [{params}]")
     public void fromByteArray(StringArray expected, String key, byte[] ary) {
         StringArray result = StringArray.empty();
-        new PrimitiveArrayFormatter(result).format(key, ary);
+        StringGenerator sg = createGenerator(result);
+        new PrimitiveArrayFormatter(sg).format(key, ary);
         assertThat(result, equalTo(expected));
     }
     
@@ -42,7 +43,8 @@ public class PrimitiveArrayFormatterTest extends Parameterized {
     @Test @Parameters @TestCaseName("{method}(...) #{index} [{params}]")
     public void fromCharArray(StringArray expected, String key, char[] ary) {
         StringArray result = StringArray.empty();
-        new PrimitiveArrayFormatter(result).format(key, ary);
+        StringGenerator sg = createGenerator(result);
+        new PrimitiveArrayFormatter(sg).format(key, ary);
         assertThat(result, equalTo(expected));
     }
     
@@ -56,7 +58,8 @@ public class PrimitiveArrayFormatterTest extends Parameterized {
     @Test @Parameters @TestCaseName("{method}(...) #{index} [{params}]")
     public void fromDoubleArray(StringArray expected, String key, double[] ary) {
         StringArray result = StringArray.empty();
-        new PrimitiveArrayFormatter(result).format(key, ary);
+        StringGenerator sg = createGenerator(result);
+        new PrimitiveArrayFormatter(sg).format(key, ary);
         assertThat(result, equalTo(expected));
     }
     
@@ -70,7 +73,8 @@ public class PrimitiveArrayFormatterTest extends Parameterized {
     @Test @Parameters @TestCaseName("{method}(...) #{index} [{params}]")
     public void fromFloatArray(StringArray expected, String key, float[] ary) {
         StringArray result = StringArray.empty();
-        new PrimitiveArrayFormatter(result).format(key, ary);
+        StringGenerator sg = createGenerator(result);
+        new PrimitiveArrayFormatter(sg).format(key, ary);
         assertThat(result, equalTo(expected));
     }
     
@@ -84,7 +88,8 @@ public class PrimitiveArrayFormatterTest extends Parameterized {
     @Test @Parameters @TestCaseName("{method}(...) #{index} [{params}]")
     public void fromIntArray(StringArray expected, String key, int[] ary) {
         StringArray result = StringArray.empty();
-        new PrimitiveArrayFormatter(result).format(key, ary);
+        StringGenerator sg = createGenerator(result);
+        new PrimitiveArrayFormatter(sg).format(key, ary);
         assertThat(result, equalTo(expected));
     }
     
@@ -98,7 +103,8 @@ public class PrimitiveArrayFormatterTest extends Parameterized {
     @Test @Parameters @TestCaseName("{method}(...) #{index} [{params}]")
     public void fromLongArray(StringArray expected, String key, long[] ary) {
         StringArray result = StringArray.empty();
-        new PrimitiveArrayFormatter(result).format(key, ary);
+        StringGenerator sg = createGenerator(result);
+        new PrimitiveArrayFormatter(sg).format(key, ary);
         assertThat(result, equalTo(expected));
     }
     
@@ -112,7 +118,8 @@ public class PrimitiveArrayFormatterTest extends Parameterized {
     @Test @Parameters @TestCaseName("{method}(...) #{index} [{params}]")
     public void fromShortArray(StringArray expected, String key, short[] ary) {
         StringArray result = StringArray.empty();
-        new PrimitiveArrayFormatter(result).format(key, ary);
+        StringGenerator sg = createGenerator(result);
+        new PrimitiveArrayFormatter(sg).format(key, ary);
         assertThat(result, equalTo(expected));
     }
     
@@ -126,7 +133,8 @@ public class PrimitiveArrayFormatterTest extends Parameterized {
     @Test @Parameters @TestCaseName("{method}(...) #{index} [{params}]")
     public <T> void withFormat(StringArray expected, String format, String key, int[] ary) {
         StringArray result = StringArray.empty();
-        new PrimitiveArrayFormatter(format, result).format(key, ary);
+        StringGenerator sg = createGenerator(format, result);
+        new PrimitiveArrayFormatter(sg).format(key, ary);
         assertThat(result, equalTo(expected));
     }
     

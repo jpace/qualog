@@ -10,11 +10,12 @@ import org.junit.Test;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 
-public class ContainerFormatterTest extends Parameterized {
+public class ContainerFormatterTest extends GeneratorTestCase {
     @Test @Parameters @TestCaseName("{method}(...) #{index} [{params}]")
     public <T> void fromEmpty(StringArray expected, String key) {
         StringArray result = StringArray.empty();
-        new ContainerFormatter(result).formatEmpty(key);
+        StringGenerator sg = createGenerator(result);
+        new ContainerFormatter(sg).formatEmpty(key);
         assertThat(result, equalTo(expected));
     }
     
@@ -26,7 +27,7 @@ public class ContainerFormatterTest extends Parameterized {
     
     @Test @Parameters @TestCaseName("{method}(...) #{index} [{params}]")
     public <T> void getLimitDefault(int expected, int size) {
-        int result = new ContainerFormatter(StringArray.empty()).getLimit(size);
+        int result = new ContainerFormatter(null).getLimit(size);
         assertThat(result, equalTo(expected));
     }
     
@@ -38,7 +39,7 @@ public class ContainerFormatterTest extends Parameterized {
     
     @Test @Parameters @TestCaseName("{method}(...) #{index} [{params}]")
     public <T> void getLimitSpecified(int expected, int limit, int size) {
-        int result = new ContainerFormatter(StringArray.empty(), limit).getLimit(size);
+        int result = new ContainerFormatter(null, limit).getLimit(size);
         assertThat(result, equalTo(expected));
     }
     
@@ -57,8 +58,8 @@ public class ContainerFormatterTest extends Parameterized {
     }
     
     private List<Object[]> parametersForWithinLimit() {
-        ContainerFormatter x = new ContainerFormatter(StringArray.empty());
-        ContainerFormatter y = new ContainerFormatter(StringArray.empty(), 3);
+        ContainerFormatter x = new ContainerFormatter(null);
+        ContainerFormatter y = new ContainerFormatter(null, 3);
         
         return paramsList(params(true,  x, 0), 
                           params(true,  x, 4), 
@@ -70,7 +71,8 @@ public class ContainerFormatterTest extends Parameterized {
     @Test @Parameters @TestCaseName("{method}(...) #{index} [{params}]")
     public <T> void checkNull(boolean expected, String key, Object value) {
         StringArray lines = StringArray.empty();
-        boolean result = new ContainerFormatter(lines).checkNull(key, value);
+        StringGenerator sg = createGenerator(lines);
+        boolean result = new ContainerFormatter(sg).checkNull(key, value);
         assertThat(result, equalTo(expected));
     }
     
@@ -82,7 +84,8 @@ public class ContainerFormatterTest extends Parameterized {
     @Test @Parameters @TestCaseName("{method}(...) #{index} [{params}]")
     public <T> void checkEmptyInt(boolean expected, String key, int length) {
         StringArray lines = StringArray.empty();
-        boolean result = new ContainerFormatter(lines).checkEmpty(key, length);
+        StringGenerator sg = createGenerator(lines);
+        boolean result = new ContainerFormatter(sg).checkEmpty(key, length);
         assertThat(result, equalTo(expected));
     }
     
@@ -94,7 +97,8 @@ public class ContainerFormatterTest extends Parameterized {
     @Test @Parameters @TestCaseName("{method}(...) #{index} [{params}]")
     public <T> void checkEmptyBoolean(boolean expected, String key, boolean condition) {
         StringArray lines = StringArray.empty();
-        boolean result = new ContainerFormatter(lines).checkEmpty(key, condition);
+        StringGenerator sg = createGenerator(lines);
+        boolean result = new ContainerFormatter(sg).checkEmpty(key, condition);
         assertThat(result, equalTo(expected));
     }
     
@@ -106,7 +110,8 @@ public class ContainerFormatterTest extends Parameterized {
     @Test @Parameters @TestCaseName("{method}(...) #{index} [{params}]")
     public <T> void withFormat(StringArray expected, String format, String key, String value) {
         StringArray result = StringArray.empty();
-        new ContainerFormatter(format, result).format(key, value);
+        StringGenerator sg = createGenerator(format, result);
+        new ContainerFormatter(sg).format(key, value);
         assertThat(result, equalTo(expected));
     }
     

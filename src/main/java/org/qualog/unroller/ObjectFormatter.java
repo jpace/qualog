@@ -14,19 +14,15 @@ public class ObjectFormatter extends ContainerFormatter {
     private final Array<Object> objects;
     private final PrimitiveArrayFormatter primitiveArrays;
 
-    public ObjectFormatter(StringFormatter strings, Integer limit) {
+    public ObjectFormatter(StringGenerator strings, Integer limit) {
         super(strings, limit);
         
         this.objects = Array.empty();
         this.primitiveArrays = new PrimitiveArrayFormatter(strings, limit);
     }
 
-    public ObjectFormatter(StringArray lines, Integer limit) {
-        this(new StringArrayWriter(lines), limit);
-    }
-
-    public ObjectFormatter(StringArray lines) {
-        this(lines, null);
+    public ObjectFormatter(StringGenerator strings) {
+        this(strings, null);
     }
     
     public void format(String key, Object value) {

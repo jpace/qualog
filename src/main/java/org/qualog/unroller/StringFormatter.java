@@ -5,7 +5,7 @@ import org.incava.ijdk.collect.StringArray;
 /**
  * Generates one line, using the specified or default format.
  */
-public abstract class StringFormatter {
+public class StringFormatter {
     public static final String DEFAULT_FORMAT = "%s: %s";
     
     private final String format;
@@ -19,20 +19,14 @@ public abstract class StringFormatter {
     }
     
     public String format(String key, String value) {
-        String line = String.format(this.format, key, value);
-        write(line);
-        return line;
+        return String.format(this.format, key, value);
     }
     
     public String format(String msg) {
-        String line = msg == null ? "null" : msg;
-        write(line);
-        return line;
+        return msg == null ? "null" : msg;
     }
 
-    public void formatNull(String key) {
-        format(key, "null");
+    public String formatNull(String key) {
+        return format(key, "null");
     }
-
-    public abstract void write(String line);
 }

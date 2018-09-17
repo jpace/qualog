@@ -3,18 +3,18 @@ package org.qualog.unroller;
 import java.util.List;
 import junitparams.Parameters;
 import junitparams.naming.TestCaseName;
-import org.incava.attest.Parameterized;
 import org.incava.ijdk.collect.StringArray;
 import org.junit.Test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 
-public class PrimitiveFormatterTest extends Parameterized {
+public class PrimitiveFormatterTest extends GeneratorTestCase {
     @Test @Parameters @TestCaseName("{method}(...) #{index} [{params}]")
     public void fromBoolean(StringArray expected, String key, boolean x) {
         StringArray result = StringArray.empty();
-        new PrimitiveFormatter(result).format(key, x);
+        StringGenerator sg = createGenerator(result);
+        new PrimitiveFormatter(sg).format(key, x);
         assertThat(result, equalTo(expected));
     }
     
@@ -26,7 +26,8 @@ public class PrimitiveFormatterTest extends Parameterized {
     @Test @Parameters @TestCaseName("{method}(...) #{index} [{params}]")
     public void fromByte(StringArray expected, String key, byte x) {
         StringArray result = StringArray.empty();
-        new PrimitiveFormatter(result).format(key, x);
+        StringGenerator sg = createGenerator(result);
+        new PrimitiveFormatter(sg).format(key, x);
         assertThat(result, equalTo(expected));
     }
     
@@ -38,7 +39,8 @@ public class PrimitiveFormatterTest extends Parameterized {
     @Test @Parameters @TestCaseName("{method}(...) #{index} [{params}]")
     public void fromChar(StringArray expected, String key, char x) {
         StringArray result = StringArray.empty();
-        new PrimitiveFormatter(result).format(key, x);
+        StringGenerator sg = createGenerator(result);
+        new PrimitiveFormatter(sg).format(key, x);
         assertThat(result, equalTo(expected));
     }
     
@@ -50,7 +52,8 @@ public class PrimitiveFormatterTest extends Parameterized {
     @Test @Parameters @TestCaseName("{method}(...) #{index} [{params}]")
     public void fromDouble(StringArray expected, String key, double x) {
         StringArray result = StringArray.empty();
-        new PrimitiveFormatter(result).format(key, x);
+        StringGenerator sg = createGenerator(result);
+        new PrimitiveFormatter(sg).format(key, x);
         assertThat(result, equalTo(expected));
     }
     
@@ -62,7 +65,8 @@ public class PrimitiveFormatterTest extends Parameterized {
     @Test @Parameters @TestCaseName("{method}(...) #{index} [{params}]")
     public void fromFloat(StringArray expected, String key, float x) {
         StringArray result = StringArray.empty();
-        new PrimitiveFormatter(result).format(key, x);
+        StringGenerator sg = createGenerator(result);
+        new PrimitiveFormatter(sg).format(key, x);
         assertThat(result, equalTo(expected));
     }
     
@@ -74,7 +78,8 @@ public class PrimitiveFormatterTest extends Parameterized {
     @Test @Parameters @TestCaseName("{method}(...) #{index} [{params}]")
     public void fromInt(StringArray expected, String key, int x) {
         StringArray result = StringArray.empty();
-        new PrimitiveFormatter(result).format(key, x);
+        StringGenerator sg = createGenerator(result);
+        new PrimitiveFormatter(sg).format(key, x);
         assertThat(result, equalTo(expected));
     }
     
@@ -86,7 +91,8 @@ public class PrimitiveFormatterTest extends Parameterized {
     @Test @Parameters @TestCaseName("{method}(...) #{index} [{params}]")
     public void fromLong(StringArray expected, String key, long x) {
         StringArray result = StringArray.empty();
-        new PrimitiveFormatter(result).format(key, x);
+        StringGenerator sg = createGenerator(result);
+        new PrimitiveFormatter(sg).format(key, x);
         assertThat(result, equalTo(expected));
     }
     
@@ -98,7 +104,8 @@ public class PrimitiveFormatterTest extends Parameterized {
     @Test @Parameters @TestCaseName("{method}(...) #{index} [{params}]")
     public void fromShort(StringArray expected, String key, short x) {
         StringArray result = StringArray.empty();
-        new PrimitiveFormatter(result).format(key, x);
+        StringGenerator sg = createGenerator(result);
+        new PrimitiveFormatter(sg).format(key, x);
         assertThat(result, equalTo(expected));
     }
     
@@ -110,7 +117,8 @@ public class PrimitiveFormatterTest extends Parameterized {
     @Test @Parameters @TestCaseName("{method}(...) #{index} [{params}]")
     public <T> void withFormat(StringArray expected, String format, String key, String value) {
         StringArray result = StringArray.empty();
-        new PrimitiveFormatter(format, result).format(key, value);
+        StringGenerator sg = createGenerator(format, result);
+        new PrimitiveFormatter(sg).format(key, value);
         assertThat(result, equalTo(expected));
     }
     

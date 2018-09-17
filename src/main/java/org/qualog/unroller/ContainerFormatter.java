@@ -7,40 +7,27 @@ import org.incava.ijdk.collect.StringArray;
  */
 public class ContainerFormatter {
     private final Integer limit;
-    private final StringFormatter strings;
+    private final StringGenerator strings;
 
-    public ContainerFormatter(StringFormatter strings, Integer limit) {
+    public ContainerFormatter(StringGenerator strings, Integer limit) {
         this.strings = strings;
         this.limit = limit;
     }    
 
-    public ContainerFormatter(String format, StringArray lines, Integer limit) {
-        this.strings = new StringArrayWriter(format, lines);
-        this.limit = limit;
-    }    
-    
-    public ContainerFormatter(StringArray lines, Integer limit) {
-        this(StringFormatter.DEFAULT_FORMAT, lines, limit);
-    }
-
-    public ContainerFormatter(String format, StringArray lines) {
-        this(format, lines, null);
-    }    
-
-    public ContainerFormatter(StringArray lines) {
-        this(lines, null);
+    public ContainerFormatter(StringGenerator strings) {
+        this(strings, null);
     }    
     
     public void formatEmpty(String key) {
-        strings.format(key, "()");
+        strings.generate(key, "()");
     }
     
     public void format(String key, String value) {
-        strings.format(key, value);
+        strings.generate(key, value);
     }
     
     public void format(String msg) {
-        strings.format(msg);
+        strings.generate(msg);
     }
     
     public int getLimit(int size) {
@@ -53,7 +40,7 @@ public class ContainerFormatter {
 
     public boolean checkNull(String key, Object obj) {
         if (obj == null) {
-            strings.formatNull(key);
+            format(key, "null");
             return true;
         }
         else {

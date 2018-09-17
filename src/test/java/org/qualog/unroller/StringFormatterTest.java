@@ -12,9 +12,8 @@ import static org.hamcrest.Matchers.equalTo;
 public class StringFormatterTest extends Parameterized {
     @Test @Parameters @TestCaseName("{method}(...) #{index} [{params}]")
     public <T> void fromKeyValue(String expected, String key, String value) {
-        LineStringFormatter lsf = new LineStringFormatter();
-        lsf.format(key, value);
-        String result = lsf.getLine();
+        StringFormatter sf = new StringFormatter();
+        String result = sf.format(key, value);
         assertThat(result, equalTo(expected));
     }
     
@@ -25,9 +24,8 @@ public class StringFormatterTest extends Parameterized {
     
     @Test @Parameters @TestCaseName("{method}(...) #{index} [{params}]")
     public <T> void fromMsg(String expected, String msg) {
-        LineStringFormatter lsf = new LineStringFormatter();
-        lsf.format(msg);
-        String result = lsf.getLine();
+        StringFormatter sf = new StringFormatter();
+        String result = sf.format(msg);
         assertThat(result, equalTo(expected));
     }
     
@@ -39,9 +37,8 @@ public class StringFormatterTest extends Parameterized {
 
     @Test @Parameters @TestCaseName("{method}(...) #{index} [{params}]")
     public <T> void formatNull(String expected, String key) {
-        LineStringFormatter lsf = new LineStringFormatter();
-        lsf.formatNull(key);
-        String result = lsf.getLine();
+        StringFormatter sf = new StringFormatter();
+        String result = sf.formatNull(key);
         assertThat(result, equalTo(expected));
     }
     
@@ -53,9 +50,8 @@ public class StringFormatterTest extends Parameterized {
 
     @Test @Parameters @TestCaseName("{method}(...) #{index} [{params}]")
     public <T> void withFormat(String expected, String format, String key, String value) {
-        LineStringFormatter lsf = new LineStringFormatter(format);
-        lsf.format(key, value);
-        String result = lsf.getLine();
+        StringFormatter sf = new StringFormatter(format);
+        String result = sf.format(key, value);
         assertThat(result, equalTo(expected));
     }
     
@@ -66,9 +62,8 @@ public class StringFormatterTest extends Parameterized {
 
     @Test @Parameters @TestCaseName("{method}(...) #{index} [{params}]")
     public <T> void withNullFormat(String expected, String key, String value) {
-        LineStringFormatter lsf = new LineStringFormatter(null);
-        lsf.format(key, value);
-        String result = lsf.getLine();
+        StringFormatter sf = new StringFormatter(null);
+        String result = sf.format(key, value);
         assertThat(result, equalTo(expected));
     }
     

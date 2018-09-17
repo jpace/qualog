@@ -17,11 +17,12 @@ import org.junit.Test;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 
-public class ObjectFormatterTest extends Parameterized {
+public class ObjectFormatterTest extends GeneratorTestCase {
     @Test @Parameters @TestCaseName("{method}(...) #{index} [{params}]")
     public <T> void fromObject(StringArray expected, String key, Object obj) {
         StringArray result = StringArray.empty();
-        new ObjectFormatter(result).format(key, obj);
+        StringGenerator sg = createGenerator(result);
+        new ObjectFormatter(sg).format(key, obj);
         assertThat(result, equalTo(expected));
     }
     
@@ -33,7 +34,8 @@ public class ObjectFormatterTest extends Parameterized {
     @Test @Parameters @TestCaseName("{method}(...) #{index} [{params}]")
     public void fromObjectArrayWithLimit(StringArray expected, String key, Object[] ary, Integer limit) {
         StringArray result = StringArray.empty();
-        new ObjectFormatter(result, limit).format(key, ary);
+        StringGenerator sg = createGenerator(result);
+        new ObjectFormatter(sg, limit).format(key, ary);
         assertThat(result, equalTo(expected));
     }
     
@@ -51,7 +53,8 @@ public class ObjectFormatterTest extends Parameterized {
     @Test @Parameters @TestCaseName("{method}(...) #{index} [{params}]")
     public void fromObjectArrayWithoutLimit(StringArray expected, String key, Object[] ary) {
         StringArray result = StringArray.empty();
-        new ObjectFormatter(result).format(key, ary);
+        StringGenerator sg = createGenerator(result);
+        new ObjectFormatter(sg).format(key, ary);
         assertThat(result, equalTo(expected));
     }
     
@@ -67,7 +70,8 @@ public class ObjectFormatterTest extends Parameterized {
     @Test @Parameters @TestCaseName("{method}(...) #{index} [{params}]")
     public void fromExceptionWithLimit(StringArray expected, String key, Throwable thr, Integer numFrames) {
         StringArray result = StringArray.empty();
-        new ObjectFormatter(result, numFrames).format(key, thr);
+        StringGenerator sg = createGenerator(result);
+        new ObjectFormatter(sg, numFrames).format(key, thr);
         assertThat(result, equalTo(expected));
     }
     
@@ -85,7 +89,8 @@ public class ObjectFormatterTest extends Parameterized {
     @Ignore @Test @Parameters @TestCaseName("{method}(...) #{index} [{params}]")
     public void fromExceptionWithoutLimit(StringArray expected, String key, Throwable thr) {
         StringArray result = StringArray.empty();
-        new ObjectFormatter(result).format(key, thr);
+        StringGenerator sg = createGenerator(result);
+        new ObjectFormatter(sg).format(key, thr);
         assertThat(result, equalTo(expected));
     }
     
@@ -100,7 +105,8 @@ public class ObjectFormatterTest extends Parameterized {
     @Test @Parameters @TestCaseName("{method}(...) #{index} [{params}]")
     public <K, V> void fromMapWithLimit(StringArray expected, String key, Map<K, V> map, Integer limit) {
         StringArray result = StringArray.empty();
-        new ObjectFormatter(result, limit).format(key, map);
+        StringGenerator sg = createGenerator(result);
+        new ObjectFormatter(sg, limit).format(key, map);
         assertThat(result, equalTo(expected));
     }
     
@@ -116,7 +122,8 @@ public class ObjectFormatterTest extends Parameterized {
     @Test @Parameters @TestCaseName("{method}(...) #{index} [{params}]")
     public <K, V> void fromMapWithoutLimit(StringArray expected, String key, Map<K, V> map) {
         StringArray result = StringArray.empty();
-        new ObjectFormatter(result).format(key, map);
+        StringGenerator sg = createGenerator(result);
+        new ObjectFormatter(sg).format(key, map);
         assertThat(result, equalTo(expected));
     }
     
@@ -129,7 +136,8 @@ public class ObjectFormatterTest extends Parameterized {
     @Test @Parameters @TestCaseName("{method}(...) #{index} [{params}]")
     public <T> void fromIterableWithLimit(StringArray expected, String key, Iterable<T> iterable, Integer limit) {
         StringArray result = StringArray.empty();
-        new ObjectFormatter(result, limit).format(key, iterable);
+        StringGenerator sg = createGenerator(result);
+        new ObjectFormatter(sg, limit).format(key, iterable);
         assertThat(result, equalTo(expected));
     }
     
@@ -148,7 +156,8 @@ public class ObjectFormatterTest extends Parameterized {
     @Test @Parameters @TestCaseName("{method}(...) #{index} [{params}]")
     public <T> void fromIterableWithoutLimit(StringArray expected, String key, Iterable<T> iterable) {
         StringArray result = StringArray.empty();
-        new ObjectFormatter(result).format(key, iterable);
+        StringGenerator sg = createGenerator(result);
+        new ObjectFormatter(sg).format(key, iterable);
         assertThat(result, equalTo(expected));
     }
     
@@ -164,7 +173,8 @@ public class ObjectFormatterTest extends Parameterized {
     @Test @Parameters @TestCaseName("{method}(...) #{index} [{params}]")
     public void fromNestedObjectArray(StringArray expected, String key, Object[] ary) {
         StringArray result = StringArray.empty();
-        new ObjectFormatter(result).format(key, ary);
+        StringGenerator sg = createGenerator(result);
+        new ObjectFormatter(sg).format(key, ary);
         assertThat(result, equalTo(expected));
     }
     
@@ -187,7 +197,8 @@ public class ObjectFormatterTest extends Parameterized {
     @Test @Parameters @TestCaseName("{method}(...) #{index} [{params}]")
     public void fromNestedIterable(StringArray expected, String key, Object[] ary) {
         StringArray result = StringArray.empty();
-        new ObjectFormatter(result).format(key, ary);
+        StringGenerator sg = createGenerator(result);
+        new ObjectFormatter(sg).format(key, ary);
         assertThat(result, equalTo(expected));
     }
     
@@ -203,7 +214,8 @@ public class ObjectFormatterTest extends Parameterized {
     @Test @Parameters @TestCaseName("{method}(...) #{index} [{params}]")
     public void fromNestedMap(StringArray expected, String key, Object[] ary) {
         StringArray result = StringArray.empty();
-        new ObjectFormatter(result).format(key, ary);
+        StringGenerator sg = createGenerator(result);
+        new ObjectFormatter(sg).format(key, ary);
         assertThat(result, equalTo(expected));
     }
     
@@ -219,7 +231,8 @@ public class ObjectFormatterTest extends Parameterized {
     @Test @Parameters @TestCaseName("{method}(...) #{index} [{params}]")
     public void fromObjectArrayAsObject(StringArray expected, String key, Object ary) {
         StringArray result = StringArray.empty();
-        new ObjectFormatter(result).format(key, ary);
+        StringGenerator sg = createGenerator(result);
+        new ObjectFormatter(sg).format(key, ary);
         assertThat(result, equalTo(expected));
     }
     
@@ -235,8 +248,9 @@ public class ObjectFormatterTest extends Parameterized {
     @Test @Parameters @TestCaseName("{method}(...) #{index} [{params}]")
     public void recursion(StringArray expected, String key, Object ary) {
         StringArray result = StringArray.empty();
+        StringGenerator sg = createGenerator(result);
         // this calls format(Object), not format(Object[]):
-        new ObjectFormatter(result).format(key, ary);
+        new ObjectFormatter(sg).format(key, ary);
         assertThat(result, equalTo(expected));
     }
     

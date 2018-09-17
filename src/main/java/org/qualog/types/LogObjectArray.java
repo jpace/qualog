@@ -5,6 +5,9 @@ import org.qualog.Level;
 import org.qualog.output.ItemColors;
 import org.qualog.output.Writer;
 import org.qualog.unroller.Formatter;
+import org.qualog.unroller.StringArrayWriter;
+import org.qualog.unroller.StringFormatter;
+import org.qualog.unroller.StringGenerator;
 
 /**
  * Wraps C-style arrays for output.
@@ -42,7 +45,8 @@ public class LogObjectArray extends LogElement {
 
     public StringArray lines() {
         StringArray lines = StringArray.empty();
-        new Formatter(lines).format(getName(), ary);
+        StringGenerator sg = new StringGenerator(new StringFormatter(StringFormatter.DEFAULT_FORMAT), new StringArrayWriter(lines));
+        new Formatter(sg).format(getName(), ary);
         return lines;
     }   
 }

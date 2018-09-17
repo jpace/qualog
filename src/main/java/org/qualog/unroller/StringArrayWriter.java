@@ -5,16 +5,10 @@ import org.incava.ijdk.collect.StringArray;
 /**
  * Adds output strings to a StringArray.
  */
-public class StringArrayWriter extends StringFormatter {
+public class StringArrayWriter implements StringWriter {
     private final StringArray lines;
 
     public StringArrayWriter(StringArray lines) {
-        this(null, lines);
-    }
-
-    public StringArrayWriter(String format, StringArray lines) {
-        super(format);
-
         this.lines = lines;
     }
 
