@@ -5,14 +5,14 @@ import org.incava.ijdk.collect.StringArray;
 /**
  * Generates lists of lines for various object types.
  */
-public class Formatter {
-    private final ObjectFormatter objects;
+public class Generator {
+    private final ObjectGenerator objects;
 
-    public Formatter(StringGenerator strings, Integer limit) {
-        objects = new ObjectFormatter(strings, limit);
+    public Generator(StringGenerator strings, Integer limit) {
+        objects = new ObjectGenerator(strings, limit);
     }
 
-    public Formatter(StringGenerator strings) {
+    public Generator(StringGenerator strings) {
         this(strings, null);
     }
     

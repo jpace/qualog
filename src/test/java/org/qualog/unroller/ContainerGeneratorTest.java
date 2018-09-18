@@ -10,12 +10,12 @@ import org.junit.Test;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 
-public class ContainerFormatterTest extends GeneratorTestCase {
+public class ContainerGeneratorTest extends GeneratorTestCase {
     @Test @Parameters @TestCaseName("{method}(...) #{index} [{params}]")
     public <T> void fromEmpty(StringArray expected, String key) {
         StringArray result = StringArray.empty();
         StringGenerator sg = createGenerator(result);
-        new ContainerFormatter(sg).formatEmpty(key);
+        new ContainerGenerator(sg).formatEmpty(key);
         assertThat(result, equalTo(expected));
     }
     
@@ -27,7 +27,7 @@ public class ContainerFormatterTest extends GeneratorTestCase {
     
     @Test @Parameters @TestCaseName("{method}(...) #{index} [{params}]")
     public <T> void getLimitDefault(int expected, int size) {
-        int result = new ContainerFormatter(null).getLimit(size);
+        int result = new ContainerGenerator(null).getLimit(size);
         assertThat(result, equalTo(expected));
     }
     
@@ -39,7 +39,7 @@ public class ContainerFormatterTest extends GeneratorTestCase {
     
     @Test @Parameters @TestCaseName("{method}(...) #{index} [{params}]")
     public <T> void getLimitSpecified(int expected, int limit, int size) {
-        int result = new ContainerFormatter(null, limit).getLimit(size);
+        int result = new ContainerGenerator(null, limit).getLimit(size);
         assertThat(result, equalTo(expected));
     }
     
@@ -52,14 +52,14 @@ public class ContainerFormatterTest extends GeneratorTestCase {
     }
 
     @Test @Parameters @TestCaseName("{method}(...) #{index} [{params}]")
-    public <T> void withinLimit(boolean expected, ContainerFormatter fmtr, int idx) {
+    public <T> void withinLimit(boolean expected, ContainerGenerator fmtr, int idx) {
         boolean result = fmtr.withinLimit(idx);
         assertThat(result, equalTo(expected));
     }
     
     private List<Object[]> parametersForWithinLimit() {
-        ContainerFormatter x = new ContainerFormatter(null);
-        ContainerFormatter y = new ContainerFormatter(null, 3);
+        ContainerGenerator x = new ContainerGenerator(null);
+        ContainerGenerator y = new ContainerGenerator(null, 3);
         
         return paramsList(params(true,  x, 0), 
                           params(true,  x, 4), 
@@ -72,7 +72,7 @@ public class ContainerFormatterTest extends GeneratorTestCase {
     public <T> void checkNull(boolean expected, String key, Object value) {
         StringArray lines = StringArray.empty();
         StringGenerator sg = createGenerator(lines);
-        boolean result = new ContainerFormatter(sg).checkNull(key, value);
+        boolean result = new ContainerGenerator(sg).checkNull(key, value);
         assertThat(result, equalTo(expected));
     }
     
@@ -85,7 +85,7 @@ public class ContainerFormatterTest extends GeneratorTestCase {
     public <T> void checkEmptyInt(boolean expected, String key, int length) {
         StringArray lines = StringArray.empty();
         StringGenerator sg = createGenerator(lines);
-        boolean result = new ContainerFormatter(sg).checkEmpty(key, length);
+        boolean result = new ContainerGenerator(sg).checkEmpty(key, length);
         assertThat(result, equalTo(expected));
     }
     
@@ -98,7 +98,7 @@ public class ContainerFormatterTest extends GeneratorTestCase {
     public <T> void checkEmptyBoolean(boolean expected, String key, boolean condition) {
         StringArray lines = StringArray.empty();
         StringGenerator sg = createGenerator(lines);
-        boolean result = new ContainerFormatter(sg).checkEmpty(key, condition);
+        boolean result = new ContainerGenerator(sg).checkEmpty(key, condition);
         assertThat(result, equalTo(expected));
     }
     
@@ -111,7 +111,7 @@ public class ContainerFormatterTest extends GeneratorTestCase {
     public <T> void withFormat(StringArray expected, String format, String key, String value) {
         StringArray result = StringArray.empty();
         StringGenerator sg = createGenerator(format, result);
-        new ContainerFormatter(sg).format(key, value);
+        new ContainerGenerator(sg).format(key, value);
         assertThat(result, equalTo(expected));
     }
     

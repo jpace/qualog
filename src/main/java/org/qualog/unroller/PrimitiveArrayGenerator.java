@@ -6,16 +6,16 @@ import org.incava.ijdk.collect.StringArray;
  * Generates lists of lines for arrays of primitives (which, not being Objects, do not expand
  * recursively).
  */
-public class PrimitiveArrayFormatter extends ContainerFormatter {
-    private PrimitiveFormatter primitives;    
+public class PrimitiveArrayGenerator extends ContainerGenerator {
+    private PrimitiveGenerator primitives;    
     
-    public PrimitiveArrayFormatter(StringGenerator strings, Integer limit) {
+    public PrimitiveArrayGenerator(StringGenerator strings, Integer limit) {
         super(strings, limit);
         
-        this.primitives = new PrimitiveFormatter(strings);
+        this.primitives = new PrimitiveGenerator(strings);
     }
     
-    public PrimitiveArrayFormatter(StringGenerator strings) {
+    public PrimitiveArrayGenerator(StringGenerator strings) {
         this(strings, null);
     }
     

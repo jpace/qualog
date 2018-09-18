@@ -4,7 +4,7 @@ import org.incava.ijdk.collect.StringArray;
 import org.qualog.Level;
 import org.qualog.output.ItemColors;
 import org.qualog.output.Writer;
-import org.qualog.unroller.Formatter;
+import org.qualog.unroller.Generator;
 import org.qualog.unroller.StringArrayWriter;
 import org.qualog.unroller.StringFormatter;
 import org.qualog.unroller.StringGenerator;
@@ -46,7 +46,7 @@ public class LogObjectArray extends LogElement {
     public StringArray lines() {
         StringArray lines = StringArray.empty();
         StringGenerator sg = new StringGenerator(new StringFormatter(StringFormatter.DEFAULT_FORMAT), new StringArrayWriter(lines));
-        new Formatter(sg).format(getName(), ary);
+        new Generator(sg).format(getName(), ary);
         return lines;
     }   
 }

@@ -6,10 +6,10 @@ import org.incava.ijdk.collect.StringArray;
  * Generates lists of lines for primitives and arrays of primitives (which do not expand
  * recursively).
  */
-public class PrimitiveFormatter {
+public class PrimitiveGenerator {
     private final StringGenerator strings;
     
-    public PrimitiveFormatter(StringGenerator strings) {
+    public PrimitiveGenerator(StringGenerator strings) {
         this.strings = strings;
     }
     

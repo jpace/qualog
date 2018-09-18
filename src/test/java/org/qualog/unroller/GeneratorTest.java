@@ -9,12 +9,12 @@ import org.junit.Test;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 
-public class FormatterTest extends GeneratorTestCase {
+public class GeneratorTest extends GeneratorTestCase {
     @Test @Parameters @TestCaseName("{method}(...) #{index} [{params}]")
     public <T> void format(StringArray expected, String key, Object obj) {
         StringArray result = StringArray.empty();
         StringGenerator sg = createGenerator(result);
-        new Formatter(sg).format(key, obj);
+        new Generator(sg).format(key, obj);
         assertThat(result, equalTo(expected));
     }
     

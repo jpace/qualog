@@ -9,12 +9,12 @@ import org.junit.Test;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 
-public class PrimitiveArrayFormatterTest extends GeneratorTestCase {
+public class PrimitiveArrayGeneratorTest extends GeneratorTestCase {
     @Test @Parameters @TestCaseName("{method}(...) #{index} [{params}]")
     public void fromBooleanArray(StringArray expected, String key, boolean[] ary) {
         StringArray result = StringArray.empty();
         StringGenerator sg = createGenerator(result);
-        new PrimitiveArrayFormatter(sg).format(key, ary);
+        new PrimitiveArrayGenerator(sg).format(key, ary);
         assertThat(result, equalTo(expected));
     }
     
@@ -29,7 +29,7 @@ public class PrimitiveArrayFormatterTest extends GeneratorTestCase {
     public void fromByteArray(StringArray expected, String key, byte[] ary) {
         StringArray result = StringArray.empty();
         StringGenerator sg = createGenerator(result);
-        new PrimitiveArrayFormatter(sg).format(key, ary);
+        new PrimitiveArrayGenerator(sg).format(key, ary);
         assertThat(result, equalTo(expected));
     }
     
@@ -44,7 +44,7 @@ public class PrimitiveArrayFormatterTest extends GeneratorTestCase {
     public void fromCharArray(StringArray expected, String key, char[] ary) {
         StringArray result = StringArray.empty();
         StringGenerator sg = createGenerator(result);
-        new PrimitiveArrayFormatter(sg).format(key, ary);
+        new PrimitiveArrayGenerator(sg).format(key, ary);
         assertThat(result, equalTo(expected));
     }
     
@@ -59,7 +59,7 @@ public class PrimitiveArrayFormatterTest extends GeneratorTestCase {
     public void fromDoubleArray(StringArray expected, String key, double[] ary) {
         StringArray result = StringArray.empty();
         StringGenerator sg = createGenerator(result);
-        new PrimitiveArrayFormatter(sg).format(key, ary);
+        new PrimitiveArrayGenerator(sg).format(key, ary);
         assertThat(result, equalTo(expected));
     }
     
@@ -74,7 +74,7 @@ public class PrimitiveArrayFormatterTest extends GeneratorTestCase {
     public void fromFloatArray(StringArray expected, String key, float[] ary) {
         StringArray result = StringArray.empty();
         StringGenerator sg = createGenerator(result);
-        new PrimitiveArrayFormatter(sg).format(key, ary);
+        new PrimitiveArrayGenerator(sg).format(key, ary);
         assertThat(result, equalTo(expected));
     }
     
@@ -89,7 +89,7 @@ public class PrimitiveArrayFormatterTest extends GeneratorTestCase {
     public void fromIntArray(StringArray expected, String key, int[] ary) {
         StringArray result = StringArray.empty();
         StringGenerator sg = createGenerator(result);
-        new PrimitiveArrayFormatter(sg).format(key, ary);
+        new PrimitiveArrayGenerator(sg).format(key, ary);
         assertThat(result, equalTo(expected));
     }
     
@@ -104,7 +104,7 @@ public class PrimitiveArrayFormatterTest extends GeneratorTestCase {
     public void fromLongArray(StringArray expected, String key, long[] ary) {
         StringArray result = StringArray.empty();
         StringGenerator sg = createGenerator(result);
-        new PrimitiveArrayFormatter(sg).format(key, ary);
+        new PrimitiveArrayGenerator(sg).format(key, ary);
         assertThat(result, equalTo(expected));
     }
     
@@ -119,7 +119,7 @@ public class PrimitiveArrayFormatterTest extends GeneratorTestCase {
     public void fromShortArray(StringArray expected, String key, short[] ary) {
         StringArray result = StringArray.empty();
         StringGenerator sg = createGenerator(result);
-        new PrimitiveArrayFormatter(sg).format(key, ary);
+        new PrimitiveArrayGenerator(sg).format(key, ary);
         assertThat(result, equalTo(expected));
     }
     
@@ -134,7 +134,7 @@ public class PrimitiveArrayFormatterTest extends GeneratorTestCase {
     public <T> void withFormat(StringArray expected, String format, String key, int[] ary) {
         StringArray result = StringArray.empty();
         StringGenerator sg = createGenerator(format, result);
-        new PrimitiveArrayFormatter(sg).format(key, ary);
+        new PrimitiveArrayGenerator(sg).format(key, ary);
         assertThat(result, equalTo(expected));
     }
     

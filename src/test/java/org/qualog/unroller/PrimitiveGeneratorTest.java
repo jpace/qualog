@@ -9,12 +9,12 @@ import org.junit.Test;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 
-public class PrimitiveFormatterTest extends GeneratorTestCase {
+public class PrimitiveGeneratorTest extends GeneratorTestCase {
     @Test @Parameters @TestCaseName("{method}(...) #{index} [{params}]")
     public void fromBoolean(StringArray expected, String key, boolean x) {
         StringArray result = StringArray.empty();
         StringGenerator sg = createGenerator(result);
-        new PrimitiveFormatter(sg).format(key, x);
+        new PrimitiveGenerator(sg).format(key, x);
         assertThat(result, equalTo(expected));
     }
     
@@ -27,7 +27,7 @@ public class PrimitiveFormatterTest extends GeneratorTestCase {
     public void fromByte(StringArray expected, String key, byte x) {
         StringArray result = StringArray.empty();
         StringGenerator sg = createGenerator(result);
-        new PrimitiveFormatter(sg).format(key, x);
+        new PrimitiveGenerator(sg).format(key, x);
         assertThat(result, equalTo(expected));
     }
     
@@ -40,7 +40,7 @@ public class PrimitiveFormatterTest extends GeneratorTestCase {
     public void fromChar(StringArray expected, String key, char x) {
         StringArray result = StringArray.empty();
         StringGenerator sg = createGenerator(result);
-        new PrimitiveFormatter(sg).format(key, x);
+        new PrimitiveGenerator(sg).format(key, x);
         assertThat(result, equalTo(expected));
     }
     
@@ -53,7 +53,7 @@ public class PrimitiveFormatterTest extends GeneratorTestCase {
     public void fromDouble(StringArray expected, String key, double x) {
         StringArray result = StringArray.empty();
         StringGenerator sg = createGenerator(result);
-        new PrimitiveFormatter(sg).format(key, x);
+        new PrimitiveGenerator(sg).format(key, x);
         assertThat(result, equalTo(expected));
     }
     
@@ -66,7 +66,7 @@ public class PrimitiveFormatterTest extends GeneratorTestCase {
     public void fromFloat(StringArray expected, String key, float x) {
         StringArray result = StringArray.empty();
         StringGenerator sg = createGenerator(result);
-        new PrimitiveFormatter(sg).format(key, x);
+        new PrimitiveGenerator(sg).format(key, x);
         assertThat(result, equalTo(expected));
     }
     
@@ -79,7 +79,7 @@ public class PrimitiveFormatterTest extends GeneratorTestCase {
     public void fromInt(StringArray expected, String key, int x) {
         StringArray result = StringArray.empty();
         StringGenerator sg = createGenerator(result);
-        new PrimitiveFormatter(sg).format(key, x);
+        new PrimitiveGenerator(sg).format(key, x);
         assertThat(result, equalTo(expected));
     }
     
@@ -92,7 +92,7 @@ public class PrimitiveFormatterTest extends GeneratorTestCase {
     public void fromLong(StringArray expected, String key, long x) {
         StringArray result = StringArray.empty();
         StringGenerator sg = createGenerator(result);
-        new PrimitiveFormatter(sg).format(key, x);
+        new PrimitiveGenerator(sg).format(key, x);
         assertThat(result, equalTo(expected));
     }
     
@@ -105,7 +105,7 @@ public class PrimitiveFormatterTest extends GeneratorTestCase {
     public void fromShort(StringArray expected, String key, short x) {
         StringArray result = StringArray.empty();
         StringGenerator sg = createGenerator(result);
-        new PrimitiveFormatter(sg).format(key, x);
+        new PrimitiveGenerator(sg).format(key, x);
         assertThat(result, equalTo(expected));
     }
     
@@ -118,7 +118,7 @@ public class PrimitiveFormatterTest extends GeneratorTestCase {
     public <T> void withFormat(StringArray expected, String format, String key, String value) {
         StringArray result = StringArray.empty();
         StringGenerator sg = createGenerator(format, result);
-        new PrimitiveFormatter(sg).format(key, value);
+        new PrimitiveGenerator(sg).format(key, value);
         assertThat(result, equalTo(expected));
     }
     

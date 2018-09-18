@@ -5,16 +5,16 @@ import org.incava.ijdk.collect.StringArray;
 /**
  * Generates lists of lines for containers (fixed-size arrays and collections).
  */
-public class ContainerFormatter {
+public class ContainerGenerator {
     private final Integer limit;
     private final StringGenerator strings;
 
-    public ContainerFormatter(StringGenerator strings, Integer limit) {
+    public ContainerGenerator(StringGenerator strings, Integer limit) {
         this.strings = strings;
         this.limit = limit;
     }    
 
-    public ContainerFormatter(StringGenerator strings) {
+    public ContainerGenerator(StringGenerator strings) {
         this(strings, null);
     }    
     

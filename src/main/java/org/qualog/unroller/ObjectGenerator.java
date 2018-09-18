@@ -8,20 +8,20 @@ import java.util.Map;
 /**
  * Generates lists of lines for various object types.
  */
-public class ObjectFormatter extends ContainerFormatter {
+public class ObjectGenerator extends ContainerGenerator {
     private ObjectTypes objectTypes = new ObjectTypes();
 
     private final Array<Object> objects;
-    private final PrimitiveArrayFormatter primitiveArrays;
+    private final PrimitiveArrayGenerator primitiveArrays;
 
-    public ObjectFormatter(StringGenerator strings, Integer limit) {
+    public ObjectGenerator(StringGenerator strings, Integer limit) {
         super(strings, limit);
         
         this.objects = Array.empty();
-        this.primitiveArrays = new PrimitiveArrayFormatter(strings, limit);
+        this.primitiveArrays = new PrimitiveArrayGenerator(strings, limit);
     }
 
-    public ObjectFormatter(StringGenerator strings) {
+    public ObjectGenerator(StringGenerator strings) {
         this(strings, null);
     }
     
