@@ -13,13 +13,17 @@ import static org.incava.attest.Assertions.message;
 import static org.incava.attest.ContextMatcher.withContext;
 
 public class TimestampStringFormatterTest extends Parameterized {
-    @Test @Parameters @TestCaseName("{method}(...) #{index} [{params}]")
-    public <T> void fromKeyValue(String expected, String key, String value) {
+    private void assertMatches(String expected, String result) {
         Pattern pattern = Pattern.compile("\\d{4}\\-\\d{2}\\-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{3}[\\-\\+]\\d{2}:\\d{2} " + expected);
-        TimestampStringFormatter tsf = new TimestampStringFormatter();
-        String result = tsf.format(key, value);
         boolean matches = pattern.matcher(result).matches();
         assertThat(matches, withContext(message("result", result), equalTo(true)));
+    }
+    
+    @Test @Parameters @TestCaseName("{method}(...) #{index} [{params}]")
+    public <T> void fromKeyValue(String expected, String key, String value) {
+        TimestampStringFormatter tsf = new TimestampStringFormatter();
+        String result = tsf.format(key, value);
+        assertMatches(expected, result);
     }
     
     private List<Object[]> parametersForFromKeyValue() {
@@ -29,11 +33,9 @@ public class TimestampStringFormatterTest extends Parameterized {
 
     @Test @Parameters @TestCaseName("{method}(...) #{index} [{params}]")
     public <T> void fromMessage(String expected, String msg) {
-        Pattern pattern = Pattern.compile("\\d{4}\\-\\d{2}\\-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{3}[\\-\\+]\\d{2}:\\d{2} " + expected);
         TimestampStringFormatter tsf = new TimestampStringFormatter();
         String result = tsf.format(msg);
-        boolean matches = pattern.matcher(result).matches();
-        assertThat(matches, withContext(message("result", result, "pattern", pattern), equalTo(true)));
+        assertMatches(expected, result);
     }
     
     private List<Object[]> parametersForFromMessage() {
