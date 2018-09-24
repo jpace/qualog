@@ -1,27 +1,29 @@
 package org.qualog.unroller;
 
-public class ContextStringFormatter extends StringFormatter {
-    public static final String DEFAULT_LINE_FORMAT = "%s %s: %s";
+public class ContextStringFormatter implements StringFormatter {
+    public static final String DEFAULT_FORMAT = "%s - %s";
 
     private final String contextID;
     private final String lineFormat;
+    private final StringFormatter strFormat;
 
     public ContextStringFormatter(String contextID) {
-        this(DEFAULT_FORMAT, contextID);
+        this(contextID, DEFAULT_FORMAT, new MessageFormatter());
     }
 
-    public ContextStringFormatter(String msgFormat, String contextID) {
-        super(msgFormat);
-
-        this.lineFormat = "%s - " + msgFormat;
-        this.contextID = contextID;        
+    public ContextStringFormatter(String contextID, String lineFormat, StringFormatter strFormat) {
+        this.contextID = contextID;
+        this.lineFormat = lineFormat;
+        this.strFormat = strFormat;
     }
     
     public String format(String key, String value) {
-        return String.format(this.lineFormat, this.contextID, key, value);
+        String msgStr = strFormat.format(key, value);
+        return String.format(this.lineFormat, contextID, msgStr);
     }
     
     public String format(String msg) {
-        return this.contextID + " - " + msg;
-    }
+        String msgStr = strFormat.format(msg);
+        return String.format(this.lineFormat, contextID, msgStr);
+    }    
 }
