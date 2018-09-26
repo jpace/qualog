@@ -2,6 +2,7 @@ package org.qualog.unroller;
 
 import org.incava.attest.Parameterized;
 import org.incava.ijdk.collect.StringArray;
+import org.qualog.format.MessageFormatter;
 
 public class GeneratorTestCase extends Parameterized {
     public StringGenerator createGenerator(String keyValueFormat, StringArray lines) {

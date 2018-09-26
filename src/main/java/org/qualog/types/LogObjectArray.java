@@ -2,10 +2,10 @@ package org.qualog.types;
 
 import org.incava.ijdk.collect.StringArray;
 import org.qualog.Level;
+import org.qualog.format.MessageFormatter;
 import org.qualog.output.ItemColors;
 import org.qualog.output.Writer;
 import org.qualog.unroller.Generator;
-import org.qualog.unroller.MessageFormatter;
 import org.qualog.unroller.StringArrayWriter;
 import org.qualog.unroller.StringGenerator;
 

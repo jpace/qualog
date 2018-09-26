@@ -1,9 +1,10 @@
-package org.qualog.unroller;
+package org.qualog.format;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import org.incava.ijdk.lang.ICore;
+import org.qualog.unroller.StringFormatter;
 
 public class TimestampStringFormatter implements StringFormatter {
     public static final String DEFAULT_DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ss.SSSXXX";
