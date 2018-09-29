@@ -23,6 +23,9 @@ public class LogWriter {
     }
 
     public boolean log(String key, Object value) {
+        //$$$ get the top-most frame
+        //$$$ format the location (whence)
+        //$$$ generate
         generator.format(key, value);
         return true;
     }
