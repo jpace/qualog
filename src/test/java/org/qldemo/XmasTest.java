@@ -1,4 +1,4 @@
-package org.incava.ijdk.example;
+package org.qldemo;
 
 import java.util.List;
 import junit.framework.TestCase;
@@ -15,21 +15,18 @@ public class XmasTest extends TestCase {
     }
 
     public void testDisplay() {
-        // uncomment the below section for ASCII gaudiness
-        /*
-        tr.Ace.setVerbose(true);
-        Configuration cfg = tr.Ace.getConfiguration();
-        WidthConfig wc = cfg.getWidthConfig();
-        wc.setFileWidth(1);
-        wc.setFunctionWidth(1);
-        wc.setLineWidth(3);
-        wc.setClassWidth(1);
-        */
+        // uncomment the below section for ASCII gaudiness (run under Xterm for supported blink)
+        
+        // tr.Ace.setVerbose(true);
+        // Configuration cfg = tr.Ace.getConfiguration();
+        // WidthConfig wc = cfg.getWidthConfig();
+        // wc.setFileWidth(1);
+        // wc.setFunctionWidth(1);
+        // wc.setLineWidth(3);
+        // wc.setClassWidth(1);
 
-        /*
         // prototyping here ...
-        tr.Ace.setFormat("[%file:1% %line:3%] { %class:1% %function:1% } %message%");
-        */
+        // tr.Ace.setFormat("[%file:1% %line:3%] { %class:1% %function:1% } %message%");
         
         List<String> lines = list("                              $",
                                   "                              :$$",
