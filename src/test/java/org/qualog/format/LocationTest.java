@@ -4,20 +4,24 @@ import java.util.List;
 import junitparams.Parameters;
 import junitparams.naming.TestCaseName;
 import org.incava.attest.Parameterized;
-import org.incava.ijdk.collect.Array;
 import org.junit.Test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
-import static org.incava.attest.Assertions.message;
 
 public class LocationTest extends Parameterized {
-    @Test
-    public void init() {
-        Location loc = new Location("abc", 1, "def", "ghi");
-        assertThat(loc.getFileName(),   equalTo("abc"));
-        assertThat(loc.getLineNumber(), equalTo(1));
-        assertThat(loc.getClassName(),  equalTo("def"));
-        assertThat(loc.getMethodName(), equalTo("ghi"));
+    @Test @Parameters @TestCaseName("{method}(...) #{index} [{params}]")
+    public void init(String expFileName, Integer expLineNumber, String expClassName, String expMethodName, 
+                     String fileName,    Integer lineNumber,    String className,    String methodName) {
+        Location obj = new Location(fileName, lineNumber, className, methodName);
+        assertThat(obj.getFileName(),   equalTo(expFileName));
+        assertThat(obj.getLineNumber(), equalTo(expLineNumber));
+        assertThat(obj.getClassName(),  equalTo(expClassName));
+        assertThat(obj.getMethodName(), equalTo(expMethodName));
+    }
+    
+    private List<Object[]> parametersForInit() {
+        return paramsList(params("abc", 1, "def", "ghi", "abc", 1, "def", "ghi"),
+                          params("xyz", 3, "jkl", "mno", "xyz", 3, "jkl", "mno"));
     }
 }

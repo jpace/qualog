@@ -1,7 +1,5 @@
 package org.qualog.format;
 
-import java.util.*;
-
 public class Location {
     private final String fileName;
     private final Integer lineNumber;

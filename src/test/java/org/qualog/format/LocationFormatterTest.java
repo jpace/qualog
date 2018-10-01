@@ -14,52 +14,30 @@ public class LocationFormatterTest extends Parameterized {
     public void init() {
         LocationFormatter sf = new LocationFormatter();
     }
-    
-    // @Test @Parameters @TestCaseName("{method}(...) #{index} [{params}]")
-    // public <T> void fromKeyValue(String expected, String key, String value) {
-    //     LocationFormatter sf = new LocationFormatter();
-    //     String result = sf.format(key, value);
-    //     assertThat(result, equalTo(expected));
-    // }
-    
-    // private List<Object[]> parametersForFromKeyValue() {
-    //     return paramsList(params("abc: def", "abc", "def"),
-    //                       params("abc: null", "abc", null));
-    // }
-    
-    // @Test @Parameters @TestCaseName("{method}(...) #{index} [{params}]")
-    // public <T> void fromMsg(String expected, String msg) {
-    //     LocationFormatter sf = new LocationFormatter();
-    //     String result = sf.format(msg);
-    //     assertThat(result, equalTo(expected));
-    // }
-    
-    // private List<Object[]> parametersForFromMsg() {
-    //     return paramsList(params("abc", "abc"),
-    //                       params("def", "def"),
-    //                       params("null", null));
-    // }
 
-    // @Test @Parameters @TestCaseName("{method}(...) #{index} [{params}]")
-    // public <T> void withKeyValueFormat(String expected, String keyValueFormat, String key, String value) {
-    //     LocationFormatter sf = new LocationFormatter(keyValueFormat, null);
-    //     String result = sf.format(key, value);
-    //     assertThat(result, equalTo(expected));
-    // }
+    @Test @Parameters @TestCaseName("{method}(...) #{index} [{params}]")
+    public void formatDefault(String expected, Location loc) {
+        LocationFormatter lf = new LocationFormatter();
+        String result = lf.format(loc);
+        assertThat(result, equalTo(expected));
+    }
     
-    // private List<Object[]> parametersForWithKeyValueFormat() {
-    //     return paramsList(params("abc: def", "%s: %s", "abc", "def"),
-    //                       params("<<abc>> {{def}}", "<<%s>> {{%s}}", "abc", "def"));
-    // }
+    private java.util.List<Object[]> parametersForFormatDefault() {
+        return paramsList(params(null, null),
+                          params("[fn1 7] {cn2#mn3}",     new Location("fn1",  7,  "cn2",  "mn3")), 
+                          params("[bc11 37] {de22#fg33}", new Location("bc11", 37, "de22", "fg33")));
+    }
 
-    // @Test @Parameters @TestCaseName("{method}(...) #{index} [{params}]")
-    // public <T> void withNullFormats(String expected, String key, String value) {
-    //     LocationFormatter sf = new LocationFormatter(null, null);
-    //     String result = sf.format(key, value);
-    //     assertThat(result, equalTo(expected));
-    // }
+    @Test @Parameters @TestCaseName("{method}(...) #{index} [{params}]")
+    public void formatSpecified(String expected, Location loc) {
+        LocationFormatter lf = new LocationFormatter("%-10s %5d: %8s.%s");
+        String result = lf.format(loc);
+        assertThat(result, equalTo(expected));
+    }
     
-    // private List<Object[]> parametersForWithNullFormats() {
-    //     return paramsList(params("abc: def", "abc", "def"));
-    // }    
+    private java.util.List<Object[]> parametersForFormatSpecified() {
+        return paramsList(params(null, null),
+                          params("fn1            7:      cn2.mn3",  new Location("fn1",  7,  "cn2",  "mn3")), 
+                          params("bc11          37:     de22.fg33", new Location("bc11", 37, "de22", "fg33")));
+    }
 }

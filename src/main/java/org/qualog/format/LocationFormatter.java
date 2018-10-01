@@ -5,10 +5,10 @@ import org.incava.ijdk.lang.ICore;
 import org.qualog.unroller.StringFormatter;
 
 /**
- * Generates one line, using the specified or default format.
+ * Generates a string for a location, using the specified or default format.
  */
 public class LocationFormatter {
-    public static final String DEFAULT_FORMAT = "%s";
+    public static final String DEFAULT_FORMAT = "[%s %d] {%s#%s}";
     
     private final String format;
 
@@ -21,6 +21,6 @@ public class LocationFormatter {
     }
     
     public String format(Location location) {
-        return null;
+        return location == null ? null : String.format(this.format, location.getFileName(), location.getLineNumber(), location.getClassName(), location.getMethodName());
     }
 }
