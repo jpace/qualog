@@ -6,6 +6,7 @@ import junitparams.naming.TestCaseName;
 import org.incava.attest.Parameterized;
 import org.incava.ijdk.collect.Array;
 import org.incava.ijdk.collect.StringArray;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.qualog.format.MessageFormatter;
 import org.qualog.unroller.StringArrayWriter;
@@ -16,7 +17,7 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.incava.attest.Assertions.message;
 
 public class LogWriterTest extends Parameterized {
-    @Test
+    @Test @Ignore
     public void stack() {
         StringArray lines = StringArray.empty();
         MessageFormatter messageFormatter = new MessageFormatter();
@@ -25,4 +26,16 @@ public class LogWriterTest extends Parameterized {
         lw.stack("k-abc", "v-def");
         assertThat(lines, equalTo(StringArray.of("k-abc: v-def")));
     }
+
+    @Test
+    public void log() {
+        StringArray lines = StringArray.empty();
+        MessageFormatter messageFormatter = new MessageFormatter();
+        StringWriter stringWriter = new StringArrayWriter(lines);
+        LogWriter lw = new LogWriter(messageFormatter, stringWriter);
+        lw.log("k-abc", "v-def");
+        assertThat(lines, equalTo(StringArray.of("k-abc: v-def")));
+    }
+    
 }
+

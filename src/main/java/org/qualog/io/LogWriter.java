@@ -5,6 +5,7 @@ import org.qualog.unroller.Generator;
 import org.qualog.unroller.StringArrayWriter;
 import org.qualog.unroller.StringGenerator;
 import org.qualog.unroller.StringWriter;
+import org.qualog.util.Stack;
 
 public class LogWriter {
     private final Generator generator;
@@ -26,6 +27,12 @@ public class LogWriter {
         //$$$ get the top-most frame
         //$$$ format the location (whence)
         //$$$ generate
+        Stack stack = new Stack();
+        // skip all the org.qualog ones ...
+        for (StackTraceElement it : stack.getElements()) {
+            System.out.println("it: " + it);
+        }
+        
         generator.format(key, value);
         return true;
     }

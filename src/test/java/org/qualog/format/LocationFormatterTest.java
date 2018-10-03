@@ -10,11 +10,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 
 public class LocationFormatterTest extends Parameterized {
-    @Test
-    public void init() {
-        LocationFormatter sf = new LocationFormatter();
-    }
-
     @Test @Parameters @TestCaseName("{method}(...) #{index} [{params}]")
     public void formatDefault(String expected, Location loc) {
         LocationFormatter lf = new LocationFormatter();
