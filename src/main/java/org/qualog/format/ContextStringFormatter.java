@@ -1,7 +1,5 @@
 package org.qualog.format;
 
-import org.qualog.unroller.StringFormatter;
-
 public class ContextStringFormatter implements StringFormatter {
     public static final String DEFAULT_FORMAT = "%s - %s";
 

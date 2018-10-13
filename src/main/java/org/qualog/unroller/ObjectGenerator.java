@@ -9,14 +9,14 @@ import java.util.Map;
  * Generates lists of lines for various object types.
  */
 public class ObjectGenerator extends ContainerGenerator {
-    private ObjectTypes objectTypes = new ObjectTypes();
-
+    private final ObjectTypes objectTypes;
     private final Array<Object> objects;
     private final PrimitiveArrayGenerator primitiveArrays;
 
     public ObjectGenerator(StringGenerator strings, Integer limit) {
         super(strings, limit);
-        
+
+        this.objectTypes = new ObjectTypes();
         this.objects = Array.empty();
         this.primitiveArrays = new PrimitiveArrayGenerator(strings, limit);
     }
@@ -42,7 +42,7 @@ public class ObjectGenerator extends ContainerGenerator {
             this.objects.append(value);
             
             if (value.getClass().isArray()) {
-                formatArray(key, value);
+                generateArray(key, value);
             }
             else if (value instanceof Map) {
                 Map<?, ?> map = (Map<?, ?>)value;
@@ -61,17 +61,17 @@ public class ObjectGenerator extends ContainerGenerator {
         }
     }
 
-    public void formatArray(String key, Object value) {
+    public void generateArray(String key, Object value) {
         if (value instanceof Object[]) {
             Object[] ary = (Object[])value;
-            format(key, ary);
+            generate(key, ary);
         }
         else {
-            primitiveArrays.formatArray(key, value);
+            primitiveArrays.generateArray(key, value);
         }
     }
 
-    public void format(String key, Object[] ary) {
+    public void generate(String key, Object[] ary) {
         if (!checkNull(key, ary) && !checkEmpty(key, ary.length)) {
             int max = getLimit(ary.length);
             for (int ai = 0; ai < max; ++ai) {
@@ -118,7 +118,7 @@ public class ObjectGenerator extends ContainerGenerator {
         format(key + "[" + idx + "]", value);
     }
 
-    public void formatRecursed(String key, Object value) {
+    public void generateRecursed(String key, Object value) {
         format(key, objectTypes.toString(value, "(((recursed)))"));
     }
 
@@ -126,7 +126,7 @@ public class ObjectGenerator extends ContainerGenerator {
         for (Object it : this.objects) {
             // by identity, not equality:
             if (it == value) {
-                formatRecursed(key, value);
+                generateRecursed(key, value);
                 return true;
             }
         }

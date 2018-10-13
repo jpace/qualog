@@ -2,7 +2,7 @@ package org.qualog.io;
 
 import org.qualog.util.Stack;
 
-public class Context {
+public class Statement {
     public static final Object NONE = new Object();
     
     private final Stack stack;
@@ -10,14 +10,14 @@ public class Context {
     private final String key;
     private final Object value;
 
-    public Context(Stack stack, String contextID, String key, Object value) {
+    public Statement(Stack stack, String contextID, String key, Object value) {
         this.stack = stack;
         this.contextID = contextID;
         this.key = key;
         this.value = value;
     }
 
-    public Context(Stack stack, String contextID, String key) {
+    public Statement(Stack stack, String contextID, String key) {
         this(stack, contextID, key, NONE);
     }
 

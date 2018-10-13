@@ -2,7 +2,6 @@ package org.qualog.format;
 
 import org.incava.ijdk.collect.StringArray;
 import org.incava.ijdk.lang.ICore;
-import org.qualog.unroller.StringFormatter;
 
 /**
  * Generates a string for a location, using the specified or default format.

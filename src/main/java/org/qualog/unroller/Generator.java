@@ -1,6 +1,7 @@
 package org.qualog.unroller;
 
 import org.incava.ijdk.collect.StringArray;
+import org.qualog.io.Statement;
 
 /**
  * Generates lists of lines for various object types.
@@ -18,5 +19,9 @@ public class Generator {
     
     public void format(String key, Object value) {
         objects.format(key, value);
+    }
+    
+    public void format(Statement stmt) {
+        objects.format(stmt.getKey(), stmt.getValue());
     }
 }

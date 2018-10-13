@@ -18,7 +18,7 @@ public class ContainerGenerator {
         this(strings, null);
     }    
     
-    public void formatEmpty(String key) {
+    public void generateEmpty(String key) {
         strings.generate(key, "()");
     }
     
@@ -54,7 +54,7 @@ public class ContainerGenerator {
 
     public boolean checkEmpty(String key, boolean condition) {
         if (condition) {
-            formatEmpty(key);
+            generateEmpty(key);
             return true;
         }
         else {

@@ -15,7 +15,7 @@ public class ContainerGeneratorTest extends GeneratorTestCase {
     public <T> void fromEmpty(StringArray expected, String key) {
         StringArray result = StringArray.empty();
         StringGenerator sg = createGenerator(result);
-        new ContainerGenerator(sg).formatEmpty(key);
+        new ContainerGenerator(sg).generateEmpty(key);
         assertThat(result, equalTo(expected));
     }
     

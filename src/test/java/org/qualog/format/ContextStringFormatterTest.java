@@ -5,7 +5,6 @@ import junitparams.Parameters;
 import junitparams.naming.TestCaseName;
 import org.incava.attest.Parameterized;
 import org.junit.Test;
-import org.qualog.unroller.StringFormatter;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
