@@ -20,7 +20,7 @@ public class LogWriter {
     }
 
     public boolean stack(String key, Object value) {
-        generator.format(key, value);
+        generator.generate(key, value);
         return true;
     }
 
@@ -48,7 +48,7 @@ public class LogWriter {
             System.out.println("it: " + it);
         }
 
-        generator.format(stmt);
+        generator.generate(stmt);
         return true;
     }
 }

@@ -46,7 +46,7 @@ public class LogObjectArray extends LogElement {
     public StringArray lines() {
         StringArray lines = StringArray.empty();
         StringGenerator sg = new StringGenerator(new MessageFormatter(), new StringArrayWriter(lines));
-        new Generator(sg).format(getName(), ary);
+        new Generator(sg).generate(getName(), ary);
         return lines;
     }   
 }

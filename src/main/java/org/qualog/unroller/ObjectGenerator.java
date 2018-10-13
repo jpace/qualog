@@ -25,18 +25,18 @@ public class ObjectGenerator extends ContainerGenerator {
         this(strings, null);
     }
     
-    public void format(String key, Object value) {
+    public void generate(String key, Object value) {
         if (checkNull(key, value)) {
             // nothing
         }
         else if (value instanceof String) {
-            format(key, (String)value);
+            generate(key, (String)value);
         }
         else if (checkRecursion(key, value)) {
             // nothing
         }
         else if (value instanceof Throwable) {
-            format(key, (Throwable)value);
+            generate(key, (Throwable)value);
         }
         else {
             this.objects.append(value);
@@ -46,15 +46,15 @@ public class ObjectGenerator extends ContainerGenerator {
             }
             else if (value instanceof Map) {
                 Map<?, ?> map = (Map<?, ?>)value;
-                format(key, map);
+                generate(key, map);
             }
             else if (value instanceof Iterable) {
                 Iterable<?> itb = (Iterable<?>)value;
-                format(key, itb);
+                generate(key, itb);
             }
             else {
                 String str = objectTypes.toString(value);
-                format(key, str);
+                generate(key, str);
             }
             
             this.objects.takeLast();
@@ -75,51 +75,51 @@ public class ObjectGenerator extends ContainerGenerator {
         if (!checkNull(key, ary) && !checkEmpty(key, ary.length)) {
             int max = getLimit(ary.length);
             for (int ai = 0; ai < max; ++ai) {
-                format(key, ai, ary[ai]);
+                generate(key, ai, ary[ai]);
             }
         }
     }
 
-    public void format(String key, Throwable thr) {
-        format(thr.toString());
+    public void generate(String key, Throwable thr) {
+        generate(thr.toString());
 
         StackTraceElement[] stack = thr.getStackTrace();
-        format(key, stack);
+        generate(key, stack);
     }
 
-    public <K, V> void format(String key, Map<K, V> map) {
+    public <K, V> void generate(String key, Map<K, V> map) {
         if (!checkNull(key, map) && !checkEmpty(key, map.isEmpty())) {
             int idx = 0;
             for (Map.Entry<K, V> it : map.entrySet()) {
                 if (!withinLimit(idx)) {
                     break;
                 }
-                format(key, it.getKey(), it.getValue());
+                generate(key, it.getKey(), it.getValue());
                 ++idx;
             }
         }
     }
 
-    public <T> void format(String key, Iterable<T> iterable) {
+    public <T> void generate(String key, Iterable<T> iterable) {
         if (!checkNull(key, iterable)) {
             Iterator<T> iterator = iterable.iterator();
             if (!checkEmpty(key, !iterator.hasNext())) {
                 int idx = 0;
                 while (iterator.hasNext() && withinLimit(idx)) {
                     T obj = iterator.next();
-                    format(key, idx, obj);
+                    generate(key, idx, obj);
                     ++idx;
                 }
             }
         }        
     }
 
-    public void format(String key, Object idx, Object value) {
-        format(key + "[" + idx + "]", value);
+    public void generate(String key, Object idx, Object value) {
+        generate(key + "[" + idx + "]", value);
     }
 
     public void generateRecursed(String key, Object value) {
-        format(key, objectTypes.toString(value, "(((recursed)))"));
+        generate(key, objectTypes.toString(value, "(((recursed)))"));
     }
 
     public boolean checkRecursion(String key, Object value) {

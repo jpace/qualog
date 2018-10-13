@@ -17,11 +17,11 @@ public class Generator {
         this(strings, null);
     }
     
-    public void format(String key, Object value) {
-        objects.format(key, value);
+    public void generate(String key, Object value) {
+        objects.generate(key, value);
     }
     
-    public void format(Statement stmt) {
-        objects.format(stmt.getKey(), stmt.getValue());
+    public void generate(Statement stmt) {
+        objects.generate(stmt.getKey(), stmt.getValue());
     }
 }

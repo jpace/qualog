@@ -11,14 +11,14 @@ import static org.hamcrest.Matchers.equalTo;
 
 public class GeneratorTest extends GeneratorTestCase {
     @Test @Parameters @TestCaseName("{method}(...) #{index} [{params}]")
-    public <T> void format(StringArray expected, String key, Object obj) {
+    public <T> void generate(StringArray expected, String key, Object obj) {
         StringArray result = StringArray.empty();
         StringGenerator sg = createGenerator(result);
-        new Generator(sg).format(key, obj);
+        new Generator(sg).generate(key, obj);
         assertThat(result, equalTo(expected));
     }
     
-    private List<Object[]> parametersForFormat() {
+    private List<Object[]> parametersForGenerate() {
         return paramsList(params(StringArray.of("abc: def"), "abc", "def"),
                           params(StringArray.of("abc: null"), "abc", null));
     }

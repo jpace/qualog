@@ -68,7 +68,7 @@ public class PrimitiveArrayGenerator extends ContainerGenerator {
         if (!checkNull(key, ary) && !checkEmpty(key, ary.length)) {
             int max = getLimit(ary.length);
             for (int ai = 0; ai < max; ++ai) {
-                primitives.format(key, ai, ary[ai]);
+                primitives.generate(key, ai, ary[ai]);
             }
         }
     }
@@ -77,7 +77,7 @@ public class PrimitiveArrayGenerator extends ContainerGenerator {
         if (!checkNull(key, ary) && !checkEmpty(key, ary.length)) {
             int max = getLimit(ary.length);
             for (int ai = 0; ai < max; ++ai) {
-                primitives.format(key, ai, ary[ai]);
+                primitives.generate(key, ai, ary[ai]);
             }
         }
     }
@@ -86,7 +86,7 @@ public class PrimitiveArrayGenerator extends ContainerGenerator {
         if (!checkNull(key, ary) && !checkEmpty(key, ary.length)) {
             int max = getLimit(ary.length);
             for (int ai = 0; ai < max; ++ai) {
-                primitives.format(key, ai, ary[ai]);
+                primitives.generate(key, ai, ary[ai]);
             }
         }
     }
@@ -95,7 +95,7 @@ public class PrimitiveArrayGenerator extends ContainerGenerator {
         if (!checkNull(key, ary) && !checkEmpty(key, ary.length)) {
             int max = getLimit(ary.length);
             for (int ai = 0; ai < max; ++ai) {
-                primitives.format(key, ai, ary[ai]);
+                primitives.generate(key, ai, ary[ai]);
             }
         }
     }
@@ -104,7 +104,7 @@ public class PrimitiveArrayGenerator extends ContainerGenerator {
         if (!checkNull(key, ary) && !checkEmpty(key, ary.length)) {
             int max = getLimit(ary.length);
             for (int ai = 0; ai < max; ++ai) {
-                primitives.format(key, ai, ary[ai]);
+                primitives.generate(key, ai, ary[ai]);
             }
         }
     }
@@ -113,7 +113,7 @@ public class PrimitiveArrayGenerator extends ContainerGenerator {
         if (!checkNull(key, ary) && !checkEmpty(key, ary.length)) {
             int max = getLimit(ary.length);
             for (int ai = 0; ai < max; ++ai) {
-                primitives.format(key, ai, ary[ai]);
+                primitives.generate(key, ai, ary[ai]);
             }
         }
     }
@@ -122,7 +122,7 @@ public class PrimitiveArrayGenerator extends ContainerGenerator {
         if (!checkNull(key, ary) && !checkEmpty(key, ary.length)) {
             int max = getLimit(ary.length);
             for (int ai = 0; ai < max; ++ai) {
-                primitives.format(key, ai, ary[ai]);
+                primitives.generate(key, ai, ary[ai]);
             }
         }
     }
@@ -131,7 +131,7 @@ public class PrimitiveArrayGenerator extends ContainerGenerator {
         if (!checkNull(key, ary) && !checkEmpty(key, ary.length)) {
             int max = getLimit(ary.length);
             for (int ai = 0; ai < max; ++ai) {
-                primitives.format(key, ai, ary[ai]);
+                primitives.generate(key, ai, ary[ai]);
             }
         }
     }

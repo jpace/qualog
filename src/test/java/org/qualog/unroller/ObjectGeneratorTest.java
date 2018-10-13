@@ -22,7 +22,7 @@ public class ObjectGeneratorTest extends GeneratorTestCase {
     public <T> void fromObject(StringArray expected, String key, Object obj) {
         StringArray result = StringArray.empty();
         StringGenerator sg = createGenerator(result);
-        new ObjectGenerator(sg).format(key, obj);
+        new ObjectGenerator(sg).generate(key, obj);
         assertThat(result, equalTo(expected));
     }
     
@@ -35,7 +35,7 @@ public class ObjectGeneratorTest extends GeneratorTestCase {
     public void fromObjectArrayWithLimit(StringArray expected, String key, Object[] ary, Integer limit) {
         StringArray result = StringArray.empty();
         StringGenerator sg = createGenerator(result);
-        new ObjectGenerator(sg, limit).format(key, ary);
+        new ObjectGenerator(sg, limit).generate(key, ary);
         assertThat(result, equalTo(expected));
     }
     
@@ -54,7 +54,7 @@ public class ObjectGeneratorTest extends GeneratorTestCase {
     public void fromObjectArrayWithoutLimit(StringArray expected, String key, Object[] ary) {
         StringArray result = StringArray.empty();
         StringGenerator sg = createGenerator(result);
-        new ObjectGenerator(sg).format(key, ary);
+        new ObjectGenerator(sg).generate(key, ary);
         assertThat(result, equalTo(expected));
     }
     
@@ -71,7 +71,7 @@ public class ObjectGeneratorTest extends GeneratorTestCase {
     public void fromExceptionWithLimit(StringArray expected, String key, Throwable thr, Integer numFrames) {
         StringArray result = StringArray.empty();
         StringGenerator sg = createGenerator(result);
-        new ObjectGenerator(sg, numFrames).format(key, thr);
+        new ObjectGenerator(sg, numFrames).generate(key, thr);
         assertThat(result, equalTo(expected));
     }
     
@@ -90,7 +90,7 @@ public class ObjectGeneratorTest extends GeneratorTestCase {
     public void fromExceptionWithoutLimit(StringArray expected, String key, Throwable thr) {
         StringArray result = StringArray.empty();
         StringGenerator sg = createGenerator(result);
-        new ObjectGenerator(sg).format(key, thr);
+        new ObjectGenerator(sg).generate(key, thr);
         assertThat(result, equalTo(expected));
     }
     
@@ -106,7 +106,7 @@ public class ObjectGeneratorTest extends GeneratorTestCase {
     public <K, V> void fromMapWithLimit(StringArray expected, String key, Map<K, V> map, Integer limit) {
         StringArray result = StringArray.empty();
         StringGenerator sg = createGenerator(result);
-        new ObjectGenerator(sg, limit).format(key, map);
+        new ObjectGenerator(sg, limit).generate(key, map);
         assertThat(result, equalTo(expected));
     }
     
@@ -123,7 +123,7 @@ public class ObjectGeneratorTest extends GeneratorTestCase {
     public <K, V> void fromMapWithoutLimit(StringArray expected, String key, Map<K, V> map) {
         StringArray result = StringArray.empty();
         StringGenerator sg = createGenerator(result);
-        new ObjectGenerator(sg).format(key, map);
+        new ObjectGenerator(sg).generate(key, map);
         assertThat(result, equalTo(expected));
     }
     
@@ -137,7 +137,7 @@ public class ObjectGeneratorTest extends GeneratorTestCase {
     public <T> void fromIterableWithLimit(StringArray expected, String key, Iterable<T> iterable, Integer limit) {
         StringArray result = StringArray.empty();
         StringGenerator sg = createGenerator(result);
-        new ObjectGenerator(sg, limit).format(key, iterable);
+        new ObjectGenerator(sg, limit).generate(key, iterable);
         assertThat(result, equalTo(expected));
     }
     
@@ -157,7 +157,7 @@ public class ObjectGeneratorTest extends GeneratorTestCase {
     public <T> void fromIterableWithoutLimit(StringArray expected, String key, Iterable<T> iterable) {
         StringArray result = StringArray.empty();
         StringGenerator sg = createGenerator(result);
-        new ObjectGenerator(sg).format(key, iterable);
+        new ObjectGenerator(sg).generate(key, iterable);
         assertThat(result, equalTo(expected));
     }
     
@@ -174,7 +174,7 @@ public class ObjectGeneratorTest extends GeneratorTestCase {
     public void fromNestedObjectArray(StringArray expected, String key, Object[] ary) {
         StringArray result = StringArray.empty();
         StringGenerator sg = createGenerator(result);
-        new ObjectGenerator(sg).format(key, ary);
+        new ObjectGenerator(sg).generate(key, ary);
         assertThat(result, equalTo(expected));
     }
     
@@ -198,7 +198,7 @@ public class ObjectGeneratorTest extends GeneratorTestCase {
     public void fromNestedIterable(StringArray expected, String key, Object[] ary) {
         StringArray result = StringArray.empty();
         StringGenerator sg = createGenerator(result);
-        new ObjectGenerator(sg).format(key, ary);
+        new ObjectGenerator(sg).generate(key, ary);
         assertThat(result, equalTo(expected));
     }
     
@@ -215,7 +215,7 @@ public class ObjectGeneratorTest extends GeneratorTestCase {
     public void fromNestedMap(StringArray expected, String key, Object[] ary) {
         StringArray result = StringArray.empty();
         StringGenerator sg = createGenerator(result);
-        new ObjectGenerator(sg).format(key, ary);
+        new ObjectGenerator(sg).generate(key, ary);
         assertThat(result, equalTo(expected));
     }
     
@@ -232,7 +232,7 @@ public class ObjectGeneratorTest extends GeneratorTestCase {
     public void fromObjectArrayAsObject(StringArray expected, String key, Object ary) {
         StringArray result = StringArray.empty();
         StringGenerator sg = createGenerator(result);
-        new ObjectGenerator(sg).format(key, ary);
+        new ObjectGenerator(sg).generate(key, ary);
         assertThat(result, equalTo(expected));
     }
     
@@ -250,7 +250,7 @@ public class ObjectGeneratorTest extends GeneratorTestCase {
         StringArray result = StringArray.empty();
         StringGenerator sg = createGenerator(result);
         // this calls format(Object), not format(Object[]):
-        new ObjectGenerator(sg).format(key, ary);
+        new ObjectGenerator(sg).generate(key, ary);
         assertThat(result, equalTo(expected));
     }
     
