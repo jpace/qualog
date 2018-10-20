@@ -1,7 +1,7 @@
 package org.qualog.unroller;
 
 import org.incava.ijdk.collect.StringArray;
-import org.qualog.io.Statement;
+import org.qualog.writer.Statement;
 
 /**
  * Generates lists of lines for various object types.

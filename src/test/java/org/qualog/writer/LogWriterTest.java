@@ -1,4 +1,4 @@
-package org.qualog.io;
+package org.qualog.writer;
 
 import java.util.List;
 import junitparams.Parameters;
@@ -10,8 +10,6 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.qualog.format.ContextStringFormatter;
 import org.qualog.format.MessageFormatter;
-import org.qualog.unroller.StringArrayWriter;
-import org.qualog.unroller.StringWriter;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;

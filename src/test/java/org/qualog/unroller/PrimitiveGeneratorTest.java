@@ -10,11 +10,15 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 
 public class PrimitiveGeneratorTest extends GeneratorTestCase {
+    private PrimitiveGenerator createPrimitiveGenerator(StringArray result) {
+        StringGenerator sg = createGenerator(result);
+        return new PrimitiveGenerator(sg);
+    }
+    
     @Test @Parameters @TestCaseName("{method}(...) #{index} [{params}]")
     public void fromBoolean(StringArray expected, String key, boolean x) {
         StringArray result = StringArray.empty();
-        StringGenerator sg = createGenerator(result);
-        new PrimitiveGenerator(sg).generate(key, x);
+        createPrimitiveGenerator(result).generate(key, x);
         assertThat(result, equalTo(expected));
     }
     
@@ -26,8 +30,7 @@ public class PrimitiveGeneratorTest extends GeneratorTestCase {
     @Test @Parameters @TestCaseName("{method}(...) #{index} [{params}]")
     public void fromByte(StringArray expected, String key, byte x) {
         StringArray result = StringArray.empty();
-        StringGenerator sg = createGenerator(result);
-        new PrimitiveGenerator(sg).generate(key, x);
+        createPrimitiveGenerator(result).generate(key, x);
         assertThat(result, equalTo(expected));
     }
     
@@ -39,8 +42,7 @@ public class PrimitiveGeneratorTest extends GeneratorTestCase {
     @Test @Parameters @TestCaseName("{method}(...) #{index} [{params}]")
     public void fromChar(StringArray expected, String key, char x) {
         StringArray result = StringArray.empty();
-        StringGenerator sg = createGenerator(result);
-        new PrimitiveGenerator(sg).generate(key, x);
+        createPrimitiveGenerator(result).generate(key, x);
         assertThat(result, equalTo(expected));
     }
     
@@ -52,8 +54,7 @@ public class PrimitiveGeneratorTest extends GeneratorTestCase {
     @Test @Parameters @TestCaseName("{method}(...) #{index} [{params}]")
     public void fromDouble(StringArray expected, String key, double x) {
         StringArray result = StringArray.empty();
-        StringGenerator sg = createGenerator(result);
-        new PrimitiveGenerator(sg).generate(key, x);
+        createPrimitiveGenerator(result).generate(key, x);
         assertThat(result, equalTo(expected));
     }
     
@@ -65,8 +66,7 @@ public class PrimitiveGeneratorTest extends GeneratorTestCase {
     @Test @Parameters @TestCaseName("{method}(...) #{index} [{params}]")
     public void fromFloat(StringArray expected, String key, float x) {
         StringArray result = StringArray.empty();
-        StringGenerator sg = createGenerator(result);
-        new PrimitiveGenerator(sg).generate(key, x);
+        createPrimitiveGenerator(result).generate(key, x);
         assertThat(result, equalTo(expected));
     }
     
@@ -78,8 +78,7 @@ public class PrimitiveGeneratorTest extends GeneratorTestCase {
     @Test @Parameters @TestCaseName("{method}(...) #{index} [{params}]")
     public void fromInt(StringArray expected, String key, int x) {
         StringArray result = StringArray.empty();
-        StringGenerator sg = createGenerator(result);
-        new PrimitiveGenerator(sg).generate(key, x);
+        createPrimitiveGenerator(result).generate(key, x);
         assertThat(result, equalTo(expected));
     }
     
@@ -91,8 +90,7 @@ public class PrimitiveGeneratorTest extends GeneratorTestCase {
     @Test @Parameters @TestCaseName("{method}(...) #{index} [{params}]")
     public void fromLong(StringArray expected, String key, long x) {
         StringArray result = StringArray.empty();
-        StringGenerator sg = createGenerator(result);
-        new PrimitiveGenerator(sg).generate(key, x);
+        createPrimitiveGenerator(result).generate(key, x);
         assertThat(result, equalTo(expected));
     }
     
@@ -104,8 +102,7 @@ public class PrimitiveGeneratorTest extends GeneratorTestCase {
     @Test @Parameters @TestCaseName("{method}(...) #{index} [{params}]")
     public void fromShort(StringArray expected, String key, short x) {
         StringArray result = StringArray.empty();
-        StringGenerator sg = createGenerator(result);
-        new PrimitiveGenerator(sg).generate(key, x);
+        createPrimitiveGenerator(result).generate(key, x);
         assertThat(result, equalTo(expected));
     }
     

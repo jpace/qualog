@@ -6,8 +6,8 @@ import org.qualog.format.MessageFormatter;
 import org.qualog.output.ItemColors;
 import org.qualog.output.Writer;
 import org.qualog.unroller.Generator;
-import org.qualog.unroller.StringArrayWriter;
 import org.qualog.unroller.StringGenerator;
+import org.qualog.writer.StringArrayWriter;
 
 /**
  * Wraps C-style arrays for output.

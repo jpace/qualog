@@ -5,6 +5,7 @@ import junitparams.Parameters;
 import junitparams.naming.TestCaseName;
 import org.incava.attest.Parameterized;
 import org.junit.Test;
+import org.qualog.writer.Statement;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
@@ -56,5 +57,17 @@ public class MessageFormatterTest extends Parameterized {
     
     private List<Object[]> parametersForWithNullFormats() {
         return paramsList(params("abc: def", "abc", "def"));
+    }
+
+    @Test @Parameters @TestCaseName("{method}(...) #{index} [{params}]")
+    public <T> void fromStatement(String expected, Statement stmt) {
+        MessageFormatter sf = new MessageFormatter();
+        String result = sf.format(stmt);
+        assertThat(result, equalTo(expected));
+    }
+    
+    private List<Object[]> parametersForFromStatement() {
+        return paramsList(params("abc: def", new Statement(null, null, "abc", "def")),
+                          params("abc", new Statement(null, null, "abc")));
     }    
 }

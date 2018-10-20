@@ -1,4 +1,4 @@
-package org.qualog.io;
+package org.qualog.writer;
 
 import org.qualog.util.Stack;
 

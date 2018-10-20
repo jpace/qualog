@@ -1,4 +1,4 @@
-package org.qualog.io;
+package org.qualog.writer;
 
 import java.util.List;
 import junitparams.Parameters;

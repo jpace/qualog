@@ -1,4 +1,4 @@
-package org.qualog.unroller;
+package org.qualog.writer;
 
 import org.incava.ijdk.collect.StringArray;
 

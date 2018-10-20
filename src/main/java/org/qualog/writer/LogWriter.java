@@ -1,11 +1,9 @@
-package org.qualog.io;
+package org.qualog.writer;
 
 import org.qualog.format.MessageFormatter;
 import org.qualog.format.StringFormatter;
 import org.qualog.unroller.Generator;
-import org.qualog.unroller.StringArrayWriter;
 import org.qualog.unroller.StringGenerator;
-import org.qualog.unroller.StringWriter;
 import org.qualog.util.Stack;
 
 public class LogWriter {

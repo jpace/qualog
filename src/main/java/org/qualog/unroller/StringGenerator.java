@@ -2,6 +2,7 @@ package org.qualog.unroller;
 
 import org.incava.ijdk.collect.StringArray;
 import org.qualog.format.StringFormatter;
+import org.qualog.writer.StringWriter;
 
 /**
  * Generates one line, using the formatter and writer.
