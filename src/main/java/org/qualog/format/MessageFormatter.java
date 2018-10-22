@@ -1,7 +1,6 @@
 package org.qualog.format;
 
 import org.incava.ijdk.lang.ICore;
-import org.qualog.writer.Statement;
 
 /**
  * Generates one line, using the specified or default format.
@@ -28,9 +27,5 @@ public class MessageFormatter implements StringFormatter {
     
     public String format(String msg) {
         return String.format(this.messageFormat, msg);
-    }
-
-    public String format(Statement stmt) {
-        return stmt.hasValue() ? format(stmt.getKey(), String.valueOf(stmt.getValue())) : format(stmt.getKey());
     }
 }

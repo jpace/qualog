@@ -1,29 +1,19 @@
 package org.qualog.format;
 
-public class ContextStringFormatter implements StringFormatter {
-    public static final String DEFAULT_FORMAT = "%s - %s";
+public class ContextStringFormatter {
+    public static final String DEFAULT_FORMAT = "%s";
 
-    private final String contextID;
-    private final String lineFormat;
-    private final StringFormatter strFormat;
+    private final String format;
 
-    public ContextStringFormatter(String contextID) {
-        this(contextID, DEFAULT_FORMAT, new MessageFormatter());
+    public ContextStringFormatter() {
+        this(DEFAULT_FORMAT);
     }
 
-    public ContextStringFormatter(String contextID, String lineFormat, StringFormatter strFormat) {
-        this.contextID = contextID;
-        this.lineFormat = lineFormat;
-        this.strFormat = strFormat;
+    public ContextStringFormatter(String format) {
+        this.format = format;
     }
     
-    public String format(String key, String value) {
-        String msgStr = strFormat.format(key, value);
-        return String.format(this.lineFormat, contextID, msgStr);
+    public String format(String contextId) {
+        return String.format(format, contextId);
     }
-    
-    public String format(String msg) {
-        String msgStr = strFormat.format(msg);
-        return String.format(this.lineFormat, contextID, msgStr);
-    }    
 }
