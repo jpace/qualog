@@ -18,15 +18,15 @@ public class ContainerGenerator {
         this(strings, null);
     }    
     
-    public void formatEmpty(String key) {
+    public void generateEmpty(String key) {
         strings.generate(key, "()");
     }
     
-    public void format(String key, String value) {
+    public void generate(String key, String value) {
         strings.generate(key, value);
     }
     
-    public void format(String msg) {
+    public void generate(String msg) {
         strings.generate(msg);
     }
     
@@ -40,7 +40,7 @@ public class ContainerGenerator {
 
     public boolean checkNull(String key, Object obj) {
         if (obj == null) {
-            format(key, "null");
+            generate(key, "null");
             return true;
         }
         else {
@@ -54,7 +54,7 @@ public class ContainerGenerator {
 
     public boolean checkEmpty(String key, boolean condition) {
         if (condition) {
-            formatEmpty(key);
+            generateEmpty(key);
             return true;
         }
         else {

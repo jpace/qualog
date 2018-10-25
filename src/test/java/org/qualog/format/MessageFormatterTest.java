@@ -1,4 +1,4 @@
-package org.qualog.unroller;
+package org.qualog.format;
 
 import java.util.List;
 import junitparams.Parameters;
@@ -56,5 +56,5 @@ public class MessageFormatterTest extends Parameterized {
     
     private List<Object[]> parametersForWithNullFormats() {
         return paramsList(params("abc: def", "abc", "def"));
-    }    
+    }
 }

@@ -1,4 +1,4 @@
-package org.qualog.unroller;
+package org.qualog.format;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;

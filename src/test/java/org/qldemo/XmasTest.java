@@ -15,7 +15,7 @@ public class XmasTest extends TestCase {
     }
 
     public void testDisplay() {
-        // uncomment the below section for ASCII gaudiness
+        // uncomment the below section for ASCII gaudiness (run on XTerm for supported blink)
         
         tr.Ace.setVerbose(true);
         Configuration cfg = tr.Ace.getConfiguration();
@@ -25,10 +25,8 @@ public class XmasTest extends TestCase {
         wc.setLineWidth(3);
         wc.setClassWidth(1);
 
-        /*
         // prototyping here ...
-        tr.Ace.setFormat("[%file:1% %line:3%] { %class:1% %function:1% } %message%");
-        */
+        // tr.Ace.setFormat("[%file:1% %line:3%] { %class:1% %function:1% } %message%");
         
         List<String> lines = list("                              $",
                                   "                              :$$",

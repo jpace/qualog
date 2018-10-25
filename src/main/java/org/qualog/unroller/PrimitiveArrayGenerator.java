@@ -19,7 +19,7 @@ public class PrimitiveArrayGenerator extends ContainerGenerator {
         this(strings, null);
     }
     
-    public void formatArray(String key, Object value) {
+    public void generateArray(String key, Object value) {
         // frequency in the android sdk, so that's the evaluation order:
         // 4456 byte
         // 2558 int
@@ -32,106 +32,106 @@ public class PrimitiveArrayGenerator extends ContainerGenerator {
 
         if (value instanceof byte[]) {
             byte[] ary = (byte[])value;
-            format(key, ary);
+            generate(key, ary);
         }
         else if (value instanceof int[]) {
             int[] ary = (int[])value;
-            format(key, ary);
+            generate(key, ary);
         }
         else if (value instanceof char[]) {
             char[] ary = (char[])value;
-            format(key, ary);
+            generate(key, ary);
         }
         else if (value instanceof float[]) {
             float[] ary = (float[])value;
-            format(key, ary);
+            generate(key, ary);
         }
         else if (value instanceof long[]) {
             long[] ary = (long[])value;
-            format(key, ary);
+            generate(key, ary);
         }
         else if (value instanceof boolean[]) {
             boolean[] ary = (boolean[])value;
-            format(key, ary);
+            generate(key, ary);
         }
         else if (value instanceof short[]) {
             short[] ary = (short[])value;
-            format(key, ary);
+            generate(key, ary);
         }
         else if (value instanceof double[]) {
             double[] ary = (double[])value;
-            format(key, ary);
+            generate(key, ary);
         }
     }    
     
-    public void format(String key, boolean[] ary) {
+    public void generate(String key, boolean[] ary) {
         if (!checkNull(key, ary) && !checkEmpty(key, ary.length)) {
             int max = getLimit(ary.length);
             for (int ai = 0; ai < max; ++ai) {
-                primitives.format(key, ai, ary[ai]);
+                primitives.generate(key, ai, ary[ai]);
             }
         }
     }
 
-    public void format(String key, byte[] ary) {        
+    public void generate(String key, byte[] ary) {        
         if (!checkNull(key, ary) && !checkEmpty(key, ary.length)) {
             int max = getLimit(ary.length);
             for (int ai = 0; ai < max; ++ai) {
-                primitives.format(key, ai, ary[ai]);
+                primitives.generate(key, ai, ary[ai]);
             }
         }
     }
 
-    public void format(String key, char[] ary) {        
+    public void generate(String key, char[] ary) {        
         if (!checkNull(key, ary) && !checkEmpty(key, ary.length)) {
             int max = getLimit(ary.length);
             for (int ai = 0; ai < max; ++ai) {
-                primitives.format(key, ai, ary[ai]);
+                primitives.generate(key, ai, ary[ai]);
             }
         }
     }
 
-    public void format(String key, double[] ary) {
+    public void generate(String key, double[] ary) {
         if (!checkNull(key, ary) && !checkEmpty(key, ary.length)) {
             int max = getLimit(ary.length);
             for (int ai = 0; ai < max; ++ai) {
-                primitives.format(key, ai, ary[ai]);
+                primitives.generate(key, ai, ary[ai]);
             }
         }
     }
 
-    public void format(String key, float[] ary) {
+    public void generate(String key, float[] ary) {
         if (!checkNull(key, ary) && !checkEmpty(key, ary.length)) {
             int max = getLimit(ary.length);
             for (int ai = 0; ai < max; ++ai) {
-                primitives.format(key, ai, ary[ai]);
+                primitives.generate(key, ai, ary[ai]);
             }
         }
     }
 
-    public void format(String key, int[] ary) {
+    public void generate(String key, int[] ary) {
         if (!checkNull(key, ary) && !checkEmpty(key, ary.length)) {
             int max = getLimit(ary.length);
             for (int ai = 0; ai < max; ++ai) {
-                primitives.format(key, ai, ary[ai]);
+                primitives.generate(key, ai, ary[ai]);
             }
         }
     }
 
-    public void format(String key, long[] ary) {
+    public void generate(String key, long[] ary) {
         if (!checkNull(key, ary) && !checkEmpty(key, ary.length)) {
             int max = getLimit(ary.length);
             for (int ai = 0; ai < max; ++ai) {
-                primitives.format(key, ai, ary[ai]);
+                primitives.generate(key, ai, ary[ai]);
             }
         }
     }
 
-    public void format(String key, short[] ary) {
+    public void generate(String key, short[] ary) {
         if (!checkNull(key, ary) && !checkEmpty(key, ary.length)) {
             int max = getLimit(ary.length);
             for (int ai = 0; ai < max; ++ai) {
-                primitives.format(key, ai, ary[ai]);
+                primitives.generate(key, ai, ary[ai]);
             }
         }
     }

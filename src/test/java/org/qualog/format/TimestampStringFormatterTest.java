@@ -1,4 +1,4 @@
-package org.qualog.unroller;
+package org.qualog.format;
 
 import java.util.List;
 import java.util.regex.Pattern;

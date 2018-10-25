@@ -15,7 +15,7 @@ public class ContainerGeneratorTest extends GeneratorTestCase {
     public <T> void fromEmpty(StringArray expected, String key) {
         StringArray result = StringArray.empty();
         StringGenerator sg = createGenerator(result);
-        new ContainerGenerator(sg).formatEmpty(key);
+        new ContainerGenerator(sg).generateEmpty(key);
         assertThat(result, equalTo(expected));
     }
     
@@ -111,7 +111,7 @@ public class ContainerGeneratorTest extends GeneratorTestCase {
     public <T> void withFormat(StringArray expected, String format, String key, String value) {
         StringArray result = StringArray.empty();
         StringGenerator sg = createGenerator(format, result);
-        new ContainerGenerator(sg).format(key, value);
+        new ContainerGenerator(sg).generate(key, value);
         assertThat(result, equalTo(expected));
     }
     

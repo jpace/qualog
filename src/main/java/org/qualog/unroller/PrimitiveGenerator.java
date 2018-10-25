@@ -13,75 +13,75 @@ public class PrimitiveGenerator {
         this.strings = strings;
     }
     
-    public void format(String key, String value) {
+    public void generate(String key, String value) {
         strings.generate(key, value);
     }
     
-    public void format(String key, boolean x) {
-        format(key, String.valueOf(x));
+    public void generate(String key, boolean x) {
+        generate(key, String.valueOf(x));
     }
 
-    public void format(String key, byte x) {
-        format(key, String.valueOf(x));
+    public void generate(String key, byte x) {
+        generate(key, String.valueOf(x));
     }
 
-    public void format(String key, char x) {
-        format(key, String.valueOf(x));
+    public void generate(String key, char x) {
+        generate(key, String.valueOf(x));
     }
 
-    public void format(String key, double x) {
-        format(key, String.valueOf(x));
+    public void generate(String key, double x) {
+        generate(key, String.valueOf(x));
     }
  
-    public void format(String key, float x) {
-        format(key, String.valueOf(x));
+    public void generate(String key, float x) {
+        generate(key, String.valueOf(x));
     }
 
-    public void format(String key, int x) {
-        format(key, String.valueOf(x));
+    public void generate(String key, int x) {
+        generate(key, String.valueOf(x));
     }
 
-    public void format(String key, long x) {
-        format(key, String.valueOf(x));
+    public void generate(String key, long x) {
+        generate(key, String.valueOf(x));
     }
 
-    public void format(String key, short x) {
-        format(key, String.valueOf(x));
+    public void generate(String key, short x) {
+        generate(key, String.valueOf(x));
     }    
     
-    public void format(String key, Object idx, boolean x) {
-        format(key, idx, String.valueOf(x));
+    public void generate(String key, Object idx, boolean x) {
+        generate(key, idx, String.valueOf(x));
     }
 
-    public void format(String key, Object idx, byte x) {
-        format(key, idx, String.valueOf(x));
+    public void generate(String key, Object idx, byte x) {
+        generate(key, idx, String.valueOf(x));
     }
 
-    public void format(String key, Object idx, char x) {
-        format(key, idx, String.valueOf(x));
+    public void generate(String key, Object idx, char x) {
+        generate(key, idx, String.valueOf(x));
     }
 
-    public void format(String key, Object idx, double x) {
-        format(key, idx, String.valueOf(x));
+    public void generate(String key, Object idx, double x) {
+        generate(key, idx, String.valueOf(x));
     }
  
-    public void format(String key, Object idx, float x) {
-        format(key, idx, String.valueOf(x));
+    public void generate(String key, Object idx, float x) {
+        generate(key, idx, String.valueOf(x));
     }
 
-    public void format(String key, Object idx, int x) {
-        format(key, idx, String.valueOf(x));
+    public void generate(String key, Object idx, int x) {
+        generate(key, idx, String.valueOf(x));
     }
 
-    public void format(String key, Object idx, long x) {
-        format(key, idx, String.valueOf(x));
+    public void generate(String key, Object idx, long x) {
+        generate(key, idx, String.valueOf(x));
     }
 
-    public void format(String key, Object idx, short x) {
-        format(key, idx, String.valueOf(x));
+    public void generate(String key, Object idx, short x) {
+        generate(key, idx, String.valueOf(x));
     }
 
-    public void format(String key, Object idx, String value) {
-        format(key + "[" + idx + "]", value);
+    public void generate(String key, Object idx, String value) {
+        generate(key + "[" + idx + "]", value);
     }    
 }
