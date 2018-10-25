@@ -1,4 +1,4 @@
-package org.incava.ijdk.example;
+package org.qldemo;
 
 import java.util.List;
 import junit.framework.TestCase;
@@ -16,7 +16,7 @@ public class XmasTest extends TestCase {
 
     public void testDisplay() {
         // uncomment the below section for ASCII gaudiness
-        /*
+        
         tr.Ace.setVerbose(true);
         Configuration cfg = tr.Ace.getConfiguration();
         WidthConfig wc = cfg.getWidthConfig();
@@ -24,7 +24,6 @@ public class XmasTest extends TestCase {
         wc.setFunctionWidth(1);
         wc.setLineWidth(3);
         wc.setClassWidth(1);
-        */
 
         /*
         // prototyping here ...
@@ -113,6 +112,7 @@ public class XmasTest extends TestCase {
                 else {
                     ANSIColor color = Lists.getRandomElement(colors);
                     if (Math.random() < 0.3) {
+                        
                         // blinkenlights! (not on all terminals; XTerm still supports blink)
                         sb.append(ANSIColor.BLINK);
                     }
