@@ -20,6 +20,38 @@ public class LocationFormatter {
     }
     
     public String format(Location location) {
-        return location == null ? null : String.format(this.format, location.getFileName(), location.getLineNumber(), location.getClassName(), location.getMethodName());
+        if (location == null) {
+            return null;
+        }
+        String fileName = location.getFileName().replaceFirst(".java", "");
+        String clsName = location.getClassName();
+        String[] comps = clsName.split("\\.");
+
+        if (comps.length > 1) {
+            StringBuilder sb = new StringBuilder();
+            for (int idx = 0; idx < comps.length - 1; ++idx) {
+                sb.append(comps[idx].substring(0, 1)).append('.');
+            }
+            sb.append(comps[comps.length - 1]);
+            clsName = sb.toString();
+        }
+
+        return location == null ? null : String.format(this.format, fileName, location.getLineNumber(), clsName, location.getMethodName());
+    }
+
+    public String getShortClassName(String clsName) {
+        String[] comps = clsName.split("\\.");
+
+        if (comps.length > 1) {
+            StringBuilder sb = new StringBuilder();
+            for (int idx = 0; idx < comps.length - 1; ++idx) {
+                sb.append(comps[idx].substring(0, 1)).append('.');
+            }
+            sb.append(comps[comps.length - 1]);
+            return sb.toString();
+        }
+        else {
+            return clsName;
+        }
     }
 }

@@ -18,21 +18,38 @@ public class LocationFormatterTest extends Parameterized {
     }
     
     private java.util.List<Object[]> parametersForFormatDefault() {
+        // (String fileName, Integer lineNumber, String className, String methodName)
         return paramsList(params(null, null),
-                          params("[fn1 7] {cn2#mn3}",     new Location("fn1",  7,  "cn2",  "mn3")), 
-                          params("[bc11 37] {de22#fg33}", new Location("bc11", 37, "de22", "fg33")));
+                          params("[FileAbc 7] {ClsAbc#methDef}",     new Location("FileAbc.java",  7,  "ClsAbc",  "methDef")),
+                          params("[FileAbc 7] {ClsAbc#methDef}",     new Location("FileAbc.java",  7,  "ClsAbc",  "methDef")));
     }
 
     @Test @Parameters @TestCaseName("{method}(...) #{index} [{params}]")
-    public void formatSpecified(String expected, Location loc) {
-        LocationFormatter lf = new LocationFormatter("%-10s %5d: %8s.%s");
+    public void formatSpecified(String expected, Location loc, String format) {
+        LocationFormatter lf = new LocationFormatter(format);
         String result = lf.format(loc);
         assertThat(result, equalTo(expected));
     }
     
     private java.util.List<Object[]> parametersForFormatSpecified() {
-        return paramsList(params(null, null),
-                          params("fn1            7:      cn2.mn3",  new Location("fn1",  7,  "cn2",  "mn3")), 
-                          params("bc11          37:     de22.fg33", new Location("bc11", 37, "de22", "fg33")));
+        return paramsList(params(null, null, null),
+                          params("FAbc       #    7:   ClsDef.methGhi",  new Location("FAbc.java",  7,  "ClsDef",  "methGhi"), "%-10.10s #%5d: %8s.%s"),
+                          params("      FAbc;    7,     ClsDef#   methGhi",  new Location("FAbc.java",  7,  "ClsDef",  "methGhi"), "%10.10s; %4d, %10s#%10s"));
     }
+
+    @Test @Parameters @TestCaseName("{method}(...) #{index} [{params}]")
+    public void getShortClassName(String expected, String clsName) {
+        LocationFormatter lf = new LocationFormatter();
+        String result = lf.getShortClassName(clsName);
+        assertThat(result, equalTo(expected));
+    }
+    
+    private java.util.List<Object[]> parametersForGetShortClassName() {
+        // (String fileName, Integer lineNumber, String className, String methodName)
+        return paramsList(params("Abc",     "Abc"),     
+                          params("o.Abc",   "org.Abc"), 
+                          params("o.x.Abc", "org.xyz.Abc"));
+    }
+
+    
 }

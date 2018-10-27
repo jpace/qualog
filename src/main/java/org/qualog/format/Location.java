@@ -12,6 +12,10 @@ public class Location {
         this.className = className;
         this.methodName = methodName;
     }
+        
+    public Location(StackTraceElement frame) {
+        this(frame.getFileName(), frame.getLineNumber(), frame.getClassName(), frame.getMethodName());
+    }
 
     public String getFileName() {
         return fileName;

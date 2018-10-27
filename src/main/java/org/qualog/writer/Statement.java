@@ -1,5 +1,7 @@
 package org.qualog.writer;
 
+import org.incava.ijdk.collect.Iterate;
+import org.incava.ijdk.lang.KeyValue;
 import org.qualog.util.Stack;
 
 public class Statement {
@@ -40,4 +42,14 @@ public class Statement {
     public boolean hasValue() {
         return value != NONE;
     }
+
+    public KeyValue<Integer, StackTraceElement> getWhenceFrame() {
+        for (KeyValue<Integer, StackTraceElement> it : Iterate.eachWithIndex(stack.getElements())) {
+            String clsName = it.value().getClassName();
+            if (!clsName.startsWith("org.qualog") || clsName.endsWith("Test")) {
+                return it;
+            }
+        }        
+        return null;
+    }    
 }

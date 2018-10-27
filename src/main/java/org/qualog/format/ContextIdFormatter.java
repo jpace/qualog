@@ -1,15 +1,15 @@
 package org.qualog.format;
 
-public class ContextStringFormatter {
+public class ContextIdFormatter {
     public static final String DEFAULT_FORMAT = "%s";
 
     private final String format;
 
-    public ContextStringFormatter() {
+    public ContextIdFormatter() {
         this(DEFAULT_FORMAT);
     }
 
-    public ContextStringFormatter(String format) {
+    public ContextIdFormatter(String format) {
         this.format = format;
     }
     

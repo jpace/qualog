@@ -9,7 +9,7 @@ import org.junit.Test;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 
-public class ContextStringFormatterTest extends Parameterized {
+public class ContextIdFormatterTest extends Parameterized {
     // public class CustomFormatter implements StringFormatter {
     //     private final String str;
 
@@ -28,7 +28,7 @@ public class ContextStringFormatterTest extends Parameterized {
     
     // @Test @Parameters @TestCaseName("{method}(...) #{index} [{params}]")
     // public <T> void fromKeyValue(String expected, String contextID, String key, String value) {
-    //     ContextStringFormatter csf = new ContextStringFormatter(contextID);
+    //     ContextIdFormatter csf = new ContextIdFormatter(contextID);
     //     String result = csf.format(key, value);
     //     assertThat(result, equalTo(expected));
     // }
@@ -40,7 +40,7 @@ public class ContextStringFormatterTest extends Parameterized {
 
     // @Test @Parameters @TestCaseName("{method}(...) #{index} [{params}]")
     // public <T> void fromMessage(String expected, String contextID, String msg) {
-    //     ContextStringFormatter csf = new ContextStringFormatter(contextID);
+    //     ContextIdFormatter csf = new ContextIdFormatter(contextID);
     //     String result = csf.format(msg);
     //     assertThat(result, equalTo(expected));
     // }
@@ -52,7 +52,7 @@ public class ContextStringFormatterTest extends Parameterized {
 
     // @Test @Parameters @TestCaseName("{method}(...) #{index} [{params}]")
     // public <T> void withFormatterKeyValue(String expected, String contextID, String str, String key, String value) {
-    //     ContextStringFormatter csf = new ContextStringFormatter(contextID, ContextStringFormatter.DEFAULT_FORMAT, new CustomFormatter(str));
+    //     ContextIdFormatter csf = new ContextIdFormatter(contextID, ContextIdFormatter.DEFAULT_FORMAT, new CustomFormatter(str));
     //     String result = csf.format(key, value);
     //     assertThat(result, equalTo(expected));
     // }
@@ -64,7 +64,7 @@ public class ContextStringFormatterTest extends Parameterized {
 
     // @Test @Parameters @TestCaseName("{method}(...) #{index} [{params}]")
     // public <T> void withFormatterMessage(String expected, String contextID, String str, String msg) {
-    //     ContextStringFormatter csf = new ContextStringFormatter(contextID, ContextStringFormatter.DEFAULT_FORMAT, new CustomFormatter(str));
+    //     ContextIdFormatter csf = new ContextIdFormatter(contextID, ContextIdFormatter.DEFAULT_FORMAT, new CustomFormatter(str));
     //     String result = csf.format(msg);
     //     assertThat(result, equalTo(expected));
     // }

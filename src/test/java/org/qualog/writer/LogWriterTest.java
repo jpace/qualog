@@ -8,7 +8,7 @@ import org.incava.ijdk.collect.Array;
 import org.incava.ijdk.collect.StringArray;
 import org.junit.Ignore;
 import org.junit.Test;
-import org.qualog.format.ContextStringFormatter;
+import org.qualog.format.ContextIdFormatter;
 import org.qualog.format.MessageFormatter;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -16,20 +16,21 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.incava.attest.Assertions.message;
 
 public class LogWriterTest extends Parameterized {
-    // @Test @Ignore
-    // public void stack() {
-    //     StringArray lines = StringArray.empty();
-    //     ContextStringFormatter formatter = new ContextStringFormatter("ctx-xyz");
-    //     StringWriter stringWriter = new StringArrayWriter(lines);
-    //     LogWriter lw = new LogWriter(messageFormatter, stringWriter);
-    //     lw.stack("k-abc", "v-def");
-    //     assertThat(lines, equalTo(StringArray.of("k-abc: v-def")));
-    // }
+    @Test
+    public void stack() {
+        StringArray lines = StringArray.empty();
+        ContextIdFormatter formatter = new ContextIdFormatter("ctx-xyz");
+        StringWriter stringWriter = new StringArrayWriter(lines);
+        LogWriter lw = new LogWriter();
+        lw.stack("k-abc", "v-def");
+        lw.stack("k-ghi", Array.of(new StringBuilder("sbd-1"), new StringBuffer("sbf-2"), "str-3"));
+        // assertThat(lines, equalTo(StringArray.of("k-abc: v-def")));
+    }
 
     @Test
     public void log() {
         StringArray lines = StringArray.empty();
-        ContextStringFormatter formatter = new ContextStringFormatter("ctx-xyz");
+        ContextIdFormatter formatter = new ContextIdFormatter("ctx-xyz");
         // StringWriter stringWriter = new StringArrayWriter(lines);
         LogWriter lw = new LogWriter();
         lw.log("k-abc", "v-def");
