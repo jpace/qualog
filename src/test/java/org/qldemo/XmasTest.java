@@ -15,15 +15,15 @@ public class XmasTest extends TestCase {
     }
 
     public void testDisplay() {
-        // uncomment the below section for ASCII gaudiness (run under Xterm for supported blink)
+        // uncomment the below section for ASCII gaudiness (run on XTerm for supported blink)
         
-        // tr.Ace.setVerbose(true);
-        // Configuration cfg = tr.Ace.getConfiguration();
-        // WidthConfig wc = cfg.getWidthConfig();
-        // wc.setFileWidth(1);
-        // wc.setFunctionWidth(1);
-        // wc.setLineWidth(3);
-        // wc.setClassWidth(1);
+        tr.Ace.setVerbose(true);
+        Configuration cfg = tr.Ace.getConfiguration();
+        WidthConfig wc = cfg.getWidthConfig();
+        wc.setFileWidth(1);
+        wc.setFunctionWidth(1);
+        wc.setLineWidth(3);
+        wc.setClassWidth(1);
 
         // prototyping here ...
         // tr.Ace.setFormat("[%file:1% %line:3%] { %class:1% %function:1% } %message%");
@@ -110,6 +110,7 @@ public class XmasTest extends TestCase {
                 else {
                     ANSIColor color = Lists.getRandomElement(colors);
                     if (Math.random() < 0.3) {
+                        
                         // blinkenlights! (not on all terminals; XTerm still supports blink)
                         sb.append(ANSIColor.BLINK);
                     }
