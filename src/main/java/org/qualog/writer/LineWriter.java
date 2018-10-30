@@ -1,5 +1,6 @@
 package org.qualog.writer;
 
+import java.io.PrintWriter;
 import org.qualog.format.ContextIdFormatter;
 import org.qualog.format.LineFormatter;
 import org.qualog.format.Location;
@@ -8,24 +9,16 @@ import org.qualog.output.StdOut;
 
 public class LineWriter implements StringWriter {
     private final LineFormatter lineFormatter;
+    private final PrintWriter printWriter;
     
     private String contextId;
     private Location location;
-    private StdOut out;
     
-    public LineWriter(String contextId, ContextIdFormatter contextIdFormatter, LocationFormatter locationFormatter) {
-        this(contextId, new LineFormatter(contextIdFormatter, locationFormatter));
-    }
-
-    public LineWriter(String contextId, LineFormatter lineFormatter) {
+    public LineWriter(String contextId, LineFormatter lineFormatter, PrintWriter printWriter) {
         this.contextId = contextId;
         this.location = null;
         this.lineFormatter = lineFormatter;
-        this.out = new StdOut();
-    }
-
-    public LineWriter(String contextId) {
-        this(contextId, new ContextIdFormatter("%-20s"), new LocationFormatter("%-20.20s %5d | %-25.25s %-15.15s"));
+        this.printWriter = printWriter;
     }
 
     public void setLocation(Location location) {
@@ -43,6 +36,6 @@ public class LineWriter implements StringWriter {
     public void write(Location location, String line) {
         Line ln = new Line(contextId, location, line);
         String str = ln.format(this.lineFormatter);
-        this.out.println(str);
+        this.printWriter.println(str);
     }
 }

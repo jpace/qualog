@@ -1,12 +1,11 @@
 package org.qualog.writer;
 
 import org.incava.ijdk.collect.Array;
-import org.incava.ijdk.collect.Iterate;
 import org.incava.ijdk.lang.KeyValue;
-import org.qualog.format.ContextIdFormatter;
+import org.qualog.format.Fields;
+import org.qualog.format.Formats;
 import org.qualog.format.Location;
-import org.qualog.format.LocationFormatter;
-import org.qualog.format.MessageFormatter;
+import org.qualog.output.StdOut;
 import org.qualog.unroller.Generator;
 import org.qualog.unroller.StringGenerator;
 import org.qualog.util.Stack;
@@ -14,21 +13,25 @@ import org.qualog.util.Stack;
 public class LogWriter {
     private final Generator generator;
     private final LineWriter lineWriter;
+    private final StackWriter stackWriter;
+    private final Fields fields;
     
     private Statement previousStatement;
 
     public LogWriter() {
-        this(new ContextIdFormatter("%-20s"), new LocationFormatter("%-20.20s # %5d | %-25.25s . %-15.15s"), new MessageFormatter("%-25.25s : %s", "%s"));
+        this(new Formats());
     }    
 
-    public LogWriter(ContextIdFormatter contextIdFormatter, LocationFormatter locationFormatter, MessageFormatter messageFormatter) {
-        this.lineWriter = new LineWriter("ctx7", contextIdFormatter, locationFormatter);
-        this.generator = new Generator(new StringGenerator(messageFormatter, lineWriter), null);
+    public LogWriter(Formats formats) {
+        this.lineWriter = new LineWriter("", formats.line(), new StdOut());
+        this.generator = new Generator(new StringGenerator(formats.message(), lineWriter), null);
         this.previousStatement = null;
+        this.fields = new Fields();
+        this.stackWriter = new StackWriter(fields);
     }    
 
     public boolean stack(String key, Object value) {
-        return stack(new Statement(new Stack(), "ctx-1", key, value));
+        return stack(new Statement(new Stack(), "", key, value));
     }
 
     public boolean stack(Statement stmt) {
@@ -41,22 +44,8 @@ public class LogWriter {
 
         Integer currentIdx = current.key();
         StackTraceElement currentFrame = current.value();
-
-        Location location = null;
-        if (false && previousStatement != null) {            
-            KeyValue<Integer, StackTraceElement> previous = previousStatement.getWhenceFrame();
-            StackTraceElement prevFrame = previous.value();
-            StackTraceElement currFrame = current.value();
-
-            location = new Location(toText(prevFrame.getFileName(), currFrame.getFileName()),
-                                    currFrame.getLineNumber(),
-                                    toText(prevFrame.getClassName(), currFrame.getClassName()),
-                                    toText(prevFrame.getMethodName(), currFrame.getMethodName()));
-        }
-        else {
-            location = new Location(currentFrame);
-        }
-        previousStatement = stmt;
+        
+        Location location = stackWriter.getLocation(getPreviousElement(), currentFrame);
         
         this.lineWriter.setLocation(location);
         
@@ -64,8 +53,10 @@ public class LogWriter {
 
         for (StackTraceElement frame : elements.get(currentIdx + 1, currentIdx + numFrames)) {
             Location loc = new Location(frame);
-            this.lineWriter.write(loc, null);
+            this.lineWriter.write(loc, this.fields.getStackMessage());
         }
+
+        previousStatement = stmt;
         
         return true;
     }
@@ -80,7 +71,7 @@ public class LogWriter {
         return stack(stmt, 0);
     }
 
-    private String toText(String previous, String current) {
-        return previous.equals(current) ? "\"\"" :current;
+    private StackTraceElement getPreviousElement() {
+        return previousStatement == null ? null : previousStatement.getWhenceFrame().value();
     }
 }
