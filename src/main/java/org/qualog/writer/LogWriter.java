@@ -1,33 +1,23 @@
 package org.qualog.writer;
 
-import org.incava.ijdk.collect.Array;
-import org.incava.ijdk.lang.KeyValue;
 import org.qualog.format.Fields;
 import org.qualog.format.Formats;
-import org.qualog.format.Location;
-import org.qualog.output.StdOut;
 import org.qualog.unroller.Generator;
 import org.qualog.unroller.StringGenerator;
 import org.qualog.util.Stack;
 
 public class LogWriter {
-    private final Generator generator;
-    private final LineWriter lineWriter;
     private final StackWriter stackWriter;
-    private final Fields fields;
     
-    private Statement previousStatement;
+    private StackTraceElement previous;
 
-    public LogWriter() {
-        this(new Formats());
+    public LogWriter(LineWriter lineWriter, Formats formats) {
+        this(new Generator(new StringGenerator(formats.message(), lineWriter), null), lineWriter, new Fields());
     }    
 
-    public LogWriter(Formats formats) {
-        this.lineWriter = new LineWriter("", formats.line(), new StdOut());
-        this.generator = new Generator(new StringGenerator(formats.message(), lineWriter), null);
-        this.previousStatement = null;
-        this.fields = new Fields();
-        this.stackWriter = new StackWriter(fields);
+    public LogWriter(Generator generator, LineWriter lineWriter, Fields fields) {
+        this.previous = null;
+        this.stackWriter = new StackWriter(generator, lineWriter, fields);
     }    
 
     public boolean stack(String key, Object value) {
@@ -39,24 +29,8 @@ public class LogWriter {
     }
 
     public boolean stack(Statement stmt, int numFrames) {
-        Array<StackTraceElement> elements = stmt.getStack().getElements();
-        KeyValue<Integer, StackTraceElement> current = stmt.getWhenceFrame();
-
-        Integer currentIdx = current.key();
-        StackTraceElement currentFrame = current.value();
-        
-        Location location = stackWriter.getLocation(getPreviousElement(), currentFrame);
-        
-        this.lineWriter.setLocation(location);
-        
-        generator.generate(stmt);
-
-        for (StackTraceElement frame : elements.get(currentIdx + 1, currentIdx + numFrames)) {
-            Location loc = new Location(frame);
-            this.lineWriter.write(loc, this.fields.getStackMessage());
-        }
-
-        previousStatement = stmt;
+        stackWriter.write(stmt, numFrames, previous);
+        previous = stmt.getWhenceFrame().value();
         
         return true;
     }
@@ -69,9 +43,5 @@ public class LogWriter {
 
     public boolean log(Statement stmt) {
         return stack(stmt, 0);
-    }
-
-    private StackTraceElement getPreviousElement() {
-        return previousStatement == null ? null : previousStatement.getWhenceFrame().value();
     }
 }

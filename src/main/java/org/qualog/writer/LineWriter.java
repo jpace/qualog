@@ -1,11 +1,8 @@
 package org.qualog.writer;
 
 import java.io.PrintWriter;
-import org.qualog.format.ContextIdFormatter;
 import org.qualog.format.LineFormatter;
 import org.qualog.format.Location;
-import org.qualog.format.LocationFormatter;
-import org.qualog.output.StdOut;
 
 public class LineWriter implements StringWriter {
     private final LineFormatter lineFormatter;
