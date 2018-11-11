@@ -21,6 +21,11 @@ public class Generator {
     }
     
     public void generate(Statement stmt) {
-        objects.generate(stmt.getKey(), stmt.getValue());
+        if (stmt.hasValue()) {
+            objects.generate(stmt.getKey(), stmt.getValue());
+        }
+        else {
+            objects.generate(stmt.getKey());
+        }
     }
 }

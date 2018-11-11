@@ -7,6 +7,8 @@ import org.qualog.unroller.StringGenerator;
 import org.qualog.util.Stack;
 
 public class LogWriter {
+    public static final Integer DEFAULT_DEPTH = 5;
+    
     private final StackWriter stackWriter;
     
     private StackTraceElement previous;
@@ -20,19 +22,31 @@ public class LogWriter {
         this.stackWriter = new StackWriter(generator, lineWriter, fields);
     }    
 
-    public boolean stack(String key, Object value) {
-        return stack(new Statement(new Stack(), "", key, value));
+    public boolean stack(Integer depth, String key, Object value) {
+        return stack(depth, new Statement(new Stack(), "", key, value));
     }
 
-    public boolean stack(Statement stmt) {
-        return stack(stmt, 5);
+    public boolean stack(Integer depth, String msg) {
+        return stack(depth, new Statement(new Stack(), "", msg));
     }
 
-    public boolean stack(Statement stmt, int numFrames) {
-        stackWriter.write(stmt, numFrames, previous);
+    public boolean stack(Integer depth, Statement stmt) {
+        stackWriter.write(stmt, depth, previous);
         previous = stmt.getWhenceFrame().value();
         
         return true;
+    }
+
+    public boolean stack(String key, Object value) {
+        return stack(DEFAULT_DEPTH, key, value);
+    }
+
+    public boolean stack(String msg) {
+        return stack(DEFAULT_DEPTH, msg);
+    }
+
+    public boolean stack(Statement stmt) {
+        return stack(DEFAULT_DEPTH, stmt);
     }
 
     public boolean log(String key, Object value) {
@@ -41,7 +55,13 @@ public class LogWriter {
         return log(stmt);
     }
 
+    public boolean log(String msg) {
+        Stack stack = new Stack();
+        Statement stmt = new Statement(stack, "", msg);
+        return log(stmt);
+    }
+
     public boolean log(Statement stmt) {
-        return stack(stmt, 0);
+        return stack(0, stmt);
     }
 }

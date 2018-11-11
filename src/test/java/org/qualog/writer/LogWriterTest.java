@@ -10,13 +10,12 @@ import org.qualog.output.StdOut;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
-import static org.incava.attest.Assertions.message;
 
 public class LogWriterTest {
     private LogWriter create() {
         Formats formats = new Formats();
         PrintWriter printWriter = new StdOut();
-        LineFormatter lineFmt = new LineFormatter(null, Formats.LOCATION);
+        LineFormatter lineFmt = new LineFormatter(null, formats.location());
         LineWriter lineWriter = new LineWriter("", lineFmt, printWriter);
         return new LogWriter(lineWriter, formats);
     }

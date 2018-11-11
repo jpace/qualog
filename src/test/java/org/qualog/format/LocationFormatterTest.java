@@ -36,20 +36,4 @@ public class LocationFormatterTest extends Parameterized {
                           params("FAbc       #    7:   ClsDef.methGhi",  new Location("FAbc.java",  7,  "ClsDef",  "methGhi"), "%-10.10s #%5d: %8s.%s"),
                           params("      FAbc;    7,     ClsDef#   methGhi",  new Location("FAbc.java",  7,  "ClsDef",  "methGhi"), "%10.10s; %4d, %10s#%10s"));
     }
-
-    @Test @Parameters @TestCaseName("{method}(...) #{index} [{params}]")
-    public void getShortClassName(String expected, String clsName) {
-        LocationFormatter lf = new LocationFormatter();
-        String result = lf.getShortClassName(clsName);
-        assertThat(result, equalTo(expected));
-    }
-    
-    private java.util.List<Object[]> parametersForGetShortClassName() {
-        // (String fileName, Integer lineNumber, String className, String methodName)
-        return paramsList(params("Abc",     "Abc"),     
-                          params("o.Abc",   "org.Abc"), 
-                          params("o.x.Abc", "org.xyz.Abc"));
-    }
-
-    
 }
