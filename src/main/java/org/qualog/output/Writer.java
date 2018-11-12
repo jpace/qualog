@@ -106,7 +106,7 @@ public class Writer {
         
         this.prevStackElement = null;
         this.prevThread = null;
-        this.level = Log.LEVEL9;
+        this.level = new Level(9);
         this.filters = new FilterList();
     }
 

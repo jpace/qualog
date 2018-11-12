@@ -5,7 +5,7 @@ import java.util.List;
 import org.incava.ijdk.collect.Iterate;
 import org.incava.ijdk.lang.Objects;
 import org.incava.ijdk.tuple.Pair;
-import org.qualog.Logger;
+import org.qualog.LegacyLogger;
 
 public class Timer {
     private final List<TimedPeriod> periods;
@@ -79,7 +79,7 @@ public class Timer {
             long        elapsed = endTime - qtp.getStartTime();
             String      str     = getMessage(ste, msg, elapsed);
 
-            Logger.log(str);
+            LegacyLogger.log(str);
         }
         else {
             System.err.println("ERROR no matching start!");
@@ -122,7 +122,7 @@ public class Timer {
 
     protected StackTraceElement getFrame() {
         StackTraceElement[] stack = (new Exception("")).getStackTrace();
-        int stIdx = Logger.findStackStart(stack);
+        int stIdx = LegacyLogger.findStackStart(stack);
         return stack[stIdx];
     }
 

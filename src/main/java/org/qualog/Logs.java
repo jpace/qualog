@@ -1,14 +1,13 @@
 package org.qualog;
 
 import java.io.PrintWriter;
-import org.incava.ijdk.collect.Array;
 import org.incava.ijdk.collect.Hash;
-import org.incava.ijdk.collect.StringArray;
 import org.qualog.format.Formats;
 import org.qualog.format.LineFormatter;
+import org.qualog.format.MessageFormatter;
+import org.qualog.output.StdOut;
 import org.qualog.writer.LineWriter;
 import org.qualog.writer.LogWriter;
-import org.qualog.output.StdOut;
 
 public class Logs {
     private static Logs instance = null;
@@ -20,38 +19,55 @@ public class Logs {
         return instance;
     }
 
-    private final Hash<String, LogWriter> writers;
+    private final Hash<String, Logger> loggers;
     
     public Logs() {
-        this.writers = Hash.empty();
+        this.loggers = Hash.empty();
     }
 
-    public LogWriter getWriter(String name) {
-        LogWriter writer = writers.get(name);
-        return writer == null ? addWriter(name) : writer;
+    public Logger getLogger(String name) {
+        Logger logger = loggers.get(name);
+        return logger == null ? addLogger(name) : logger;
     }
 
-    public boolean hasWriter(String name) {
-        LogWriter writer = writers.get(name);
-        return writer != null;
+    public boolean hasLogger(String name) {
+        Logger logger = loggers.get(name);
+        return logger != null;
     }
 
     /**
-     * Adds a writer, using the default formats, standard output, and no context ID.
+     * Adds or replaces a logger, using the default formats, standard output, and no context ID.
      */
-    public LogWriter addWriter(String name) {
+    public Logger addLogger(String name) {
         Formats formats = new Formats(null, Formats.LOCATION, Formats.LINE, Formats.MESSAGE);
-        return addWriter(name, formats, new StdOut(), "");
+        return addLogger(name, formats, new StdOut(), "");
     }
 
     /**
-     * Adds a writer, using the default formats and standard output.
+     * Adds or replaces a logger, using the given key/value format (and otherwise default formats),
+     * standard output, and no context ID.
      */
-    public LogWriter addWriter(String name, Formats formats, PrintWriter printWriter, String contextId) {
+    public Logger addLogger(String name, String keyValueFormat) {
+        Formats formats = new Formats(null, Formats.LOCATION, Formats.LINE, new MessageFormatter(keyValueFormat, "%s"));
+        return addLogger(name, formats, new StdOut(), "");
+    }    
+
+    /**
+     * Adds or replaces a logger, using the default formats and standard output.
+     */
+    public Logger addLogger(String name, Formats formats, PrintWriter printWriter, String contextId) {
         LineFormatter lineFmt = new LineFormatter(formats.contextId(), formats.location());
         LineWriter lineWriter = new LineWriter(contextId, lineFmt, printWriter);
-        LogWriter writer = new LogWriter(lineWriter, formats);
-        writers.put(name, writer);
-        return writer;
+        Logger logger = createLogger(lineWriter, formats);
+        loggers.put(name, logger);
+        return logger;
+    }
+
+    /**
+     * Creates a logger, and does not add it to the set. This is to allow overriding of the default
+     * logger class.
+     */
+    public Logger createLogger(LineWriter lineWriter, Formats formats) {
+        return new Logger(lineWriter, formats);
     }
 }
