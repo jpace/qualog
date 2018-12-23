@@ -46,7 +46,8 @@ public class Statement {
     public KeyValue<Integer, StackTraceElement> getWhenceFrame() {
         for (KeyValue<Integer, StackTraceElement> it : Iterate.eachWithIndex(stack.getElements())) {
             String clsName = it.value().getClassName();
-            if (!clsName.startsWith("org.qualog") || clsName.endsWith("Test")) {
+            // we have org.qualog...AbcTest, so don't skip those frames
+            if (!clsName.startsWith("tr.Ace") && (!clsName.startsWith("org.qualog") || clsName.endsWith("Test")) ) {
                 return it;
             }
         }        

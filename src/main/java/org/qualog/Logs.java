@@ -37,6 +37,9 @@ public class Logs {
 
     /**
      * Adds or replaces a logger, using the default formats, standard output, and no context ID.
+     *
+     * @param name the logger name
+     * @return the new logger
      */
     public Logger addLogger(String name) {
         Formats formats = new Formats(null, Formats.LOCATION, Formats.LINE, Formats.MESSAGE);
@@ -46,6 +49,10 @@ public class Logs {
     /**
      * Adds or replaces a logger, using the given key/value format (and otherwise default formats),
      * standard output, and no context ID.
+     *
+     * @param name the logger name
+     * @param keyValueFormat the format for key/value combinations in messages
+     * @return the new logger
      */
     public Logger addLogger(String name, String keyValueFormat) {
         Formats formats = new Formats(null, Formats.LOCATION, Formats.LINE, new MessageFormatter(keyValueFormat, "%s"));
@@ -54,6 +61,12 @@ public class Logs {
 
     /**
      * Adds or replaces a logger, using the default formats and standard output.
+     *
+     * @param name the logger name
+     * @param formats the formats for output
+     * @param printWriter for destination output
+     * @param contextId the context ID of the new logger
+     * @return the new logger
      */
     public Logger addLogger(String name, Formats formats, PrintWriter printWriter, String contextId) {
         LineFormatter lineFmt = new LineFormatter(formats.contextId(), formats.location());
@@ -66,6 +79,10 @@ public class Logs {
     /**
      * Creates a logger, and does not add it to the set. This is to allow overriding of the default
      * logger class.
+     *
+     * @param lineWriter the writer of logging lines
+     * @param formats the formats
+     * @return the new logger
      */
     public Logger createLogger(LineWriter lineWriter, Formats formats) {
         return new Logger(lineWriter, formats);

@@ -1,7 +1,11 @@
 package tr;
 
-import org.qualog.Logs;
+import java.util.EnumSet;
+import org.qualog.LegacyLogger;
+import org.qualog.Level;
 import org.qualog.Logger;
+import org.qualog.Logs;
+import org.qualog.output.ANSIColor;
 import org.qualog.writer.Statement;
 
 /**
@@ -9,11 +13,63 @@ import org.qualog.writer.Statement;
  *
  * Allows name of tr.Ace.XXX("...").
  */
-public class Ace {
+public class Ace extends LegacyLogger {
+    class Delegate implements LegacyLogger.LegacyDelegate {
+        public boolean stack(Level level, EnumSet<ANSIColor> msgColors, String name, Object obj, int numFrames) {
+            String nameStr = colorize(msgColors, name);
+            return Ace.stack(numFrames, nameStr, obj);
+        }
+                
+        public boolean log(Level level, EnumSet<ANSIColor> msgColors, String name, Object obj) {
+            String nameStr = colorize(msgColors, name);
+            return Ace.log(nameStr, obj);
+        }
+
+        public String colorize(EnumSet<ANSIColor> msgColors, String str) {
+            if (msgColors == null) {
+                return str;
+            }
+            else {
+                String cstr = str;
+                for (ANSIColor it : msgColors) {
+                    cstr = it.toString(cstr);
+                }
+                return cstr;
+            }
+        }
+    }
+    
     private static Logger logger = null;
 
     static {
         logger = Logs.getInstance().getLogger("app");
+
+        LegacyLogger.LegacyDelegate delegate = new LegacyLogger.LegacyDelegate() {
+                public boolean stack(Level level, EnumSet<ANSIColor> msgColors, String name, Object obj, int numFrames) {
+                    String nameStr = colorize(msgColors, name);
+                    return Ace.stack(numFrames, nameStr, obj);
+                }
+                
+                public boolean log(Level level, EnumSet<ANSIColor> msgColors, String name, Object obj) {
+                    String nameStr = colorize(msgColors, name);
+                    return Ace.log(nameStr, obj);
+                }
+
+                public String colorize(EnumSet<ANSIColor> msgColors, String str) {
+                    if (msgColors == null) {
+                        return str;
+                    }
+                    else {
+                        String cstr = str;
+                        for (ANSIColor it : msgColors) {
+                            cstr = it.toString(cstr);
+                        }
+                        return cstr;
+                    }
+                }
+            };
+
+        LegacyLogger.setDelegate(delegate);
     }
 
     public static Logger getLogger() {

@@ -4,7 +4,7 @@ public class Fields {
     public static final String DEFAULT_REPEAT_FILE_NAME = "\"\"";
     public static final String DEFAULT_REPEAT_CLASS_NAME = "\"\"";
     public static final String DEFAULT_REPEAT_METHOD_NAME = "\"\"";
-    public static final String DEFAULT_STACK_MESSAGE = "<>";
+    public static final String DEFAULT_STACK_MESSAGE = "^";
 
     private final String repeatFileName;
     private final String repeatClassName;
