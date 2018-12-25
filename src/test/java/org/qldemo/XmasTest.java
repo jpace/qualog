@@ -2,6 +2,7 @@ package org.qldemo;
 
 import java.util.List;
 import org.incava.ijdk.util.Lists;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.qualog.config.Configuration;
 import org.qualog.config.WidthConfig;
@@ -14,7 +15,7 @@ public class XmasTest {
     public void wtf() {
     }
     
-    @Test
+    @Ignore @Test
     public void testDisplay() {
         // uncomment the below section for ASCII gaudiness (run on XTerm for supported blink)
         
@@ -122,9 +123,5 @@ public class XmasTest {
             }            
             tr.Ace.log(sb.toString());
         }
-
-        tr.Ace.log("... hey now!");
-        tr.Ace.onRed("HEY", "NOW!");
-        tr.Ace.cyan("abc", "123");
     }
 }
