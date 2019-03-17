@@ -14,7 +14,7 @@ import org.qualog.writer.Statement;
  * Allows name of tr.Ace.XXX("...").
  */
 public class Ace extends LegacyLogger {
-    class Delegate implements LegacyLogger.LegacyDelegate {
+    static class Delegate implements LegacyLogger.LegacyDelegate {
         public boolean stack(Level level, EnumSet<ANSIColor> msgColors, String name, Object obj, int numFrames) {
             String nameStr = colorize(msgColors, name);
             return Ace.stack(numFrames, nameStr, obj);
@@ -44,31 +44,7 @@ public class Ace extends LegacyLogger {
     static {
         logger = Logs.getInstance().getLogger("app");
 
-        LegacyLogger.LegacyDelegate delegate = new LegacyLogger.LegacyDelegate() {
-                public boolean stack(Level level, EnumSet<ANSIColor> msgColors, String name, Object obj, int numFrames) {
-                    String nameStr = colorize(msgColors, name);
-                    return Ace.stack(numFrames, nameStr, obj);
-                }
-                
-                public boolean log(Level level, EnumSet<ANSIColor> msgColors, String name, Object obj) {
-                    String nameStr = colorize(msgColors, name);
-                    return Ace.log(nameStr, obj);
-                }
-
-                public String colorize(EnumSet<ANSIColor> msgColors, String str) {
-                    if (msgColors == null) {
-                        return str;
-                    }
-                    else {
-                        String cstr = str;
-                        for (ANSIColor it : msgColors) {
-                            cstr = it.toString(cstr);
-                        }
-                        return cstr;
-                    }
-                }
-            };
-
+        LegacyLogger.LegacyDelegate delegate = new Delegate();
         LegacyLogger.setDelegate(delegate);
     }
 

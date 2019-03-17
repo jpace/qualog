@@ -12,10 +12,6 @@ import static org.incava.ijdk.util.IUtil.list;
 
 public class XmasTest {
     @Test
-    public void wtf() {
-    }
-    
-    @Ignore @Test
     public void testDisplay() {
         // uncomment the below section for ASCII gaudiness (run on XTerm for supported blink)
         
@@ -120,7 +116,7 @@ public class XmasTest {
                     sb.append(ch);
                     sb.append(ANSIColor.RESET);
                 }
-            }            
+            }
             tr.Ace.log(sb.toString());
         }
     }
