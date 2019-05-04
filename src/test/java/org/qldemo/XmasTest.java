@@ -11,6 +11,7 @@ import org.qualog.output.ANSIColor;
 import static org.incava.ijdk.util.IUtil.list;
 
 public class XmasTest {
+    @Ignore
     @Test
     public void testDisplay() {
         // uncomment the below section for ASCII gaudiness (run on XTerm for supported blink)

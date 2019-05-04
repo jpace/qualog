@@ -13,7 +13,7 @@ plugins {
 apply plugin: 'java'
 
 group = 'org.qualog'
-version ='3.0.0'
+version ='3.0.1'
 
 ext {
     pkgName = 'qualog'

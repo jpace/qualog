@@ -18,10 +18,17 @@ public class ObjectTypes {
                                     Boolean.class,
                                     StackTraceElement.class);
     }
+
+    public void addUndecoratedType(Class<?> type) {
+        undecoratedTypes.add(type);
+    }
     
     /**
-     * Returns whether the class of the object is assignable from any of the
-     * undecorated classes.
+     * Returns whether the class of the object is assignable from any of the undecorated classes.
+     * Decorated classes have more extensive output.
+     *
+     * @param obj the object
+     * @return whether the object is not decorated
      */
     public boolean isUndecorated(Object obj) {
         Class<?> objCls = obj.getClass();
@@ -41,7 +48,7 @@ public class ObjectTypes {
             return obj.toString();
         }
         else {
-            return toString(obj, obj.toString());
+            return new ObjectDecorator().toString(obj);
         }
     }    
 
@@ -53,12 +60,7 @@ public class ObjectTypes {
             return obj.toString();
         }
         else {
-            String clsName = obj.getClass().getName();
-            String hashStr = Integer.toHexString(obj.hashCode());
-            StringBuilder sb = new StringBuilder(msg);
-            sb.append(" (").append(clsName).append(')').append(" #").append(hashStr);
-        
-            return sb.toString();
+            return new ObjectDecorator().toString(obj, msg);
         }
-    }    
+    }
 }
