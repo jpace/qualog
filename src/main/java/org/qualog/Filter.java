@@ -4,18 +4,17 @@ import java.util.regex.Pattern;
 import org.incava.ijdk.lang.Range;
 
 /**
- * Represents a filter for selective enabling or disabling of logging
- * statements.
+ * Represents a filter for selective enabling or disabling of logging statements.
  */
 public class Filter {
     public static final Pattern NO_PATTERN = null;
     public static final Range NO_RANGE = null;
     
     private final Level level;
-    private final Pattern fileNamePat;
-    private final Range lineNumberRng;    
-    private final Pattern classNamePat;
-    private final Pattern methodNamePat;
+    private final Pattern fileNamePattern;
+    private final Range lineNumberRange;    
+    private final Pattern classNamePattern;
+    private final Pattern methodNamePattern;
 
     public Filter(Level level) {
         this(level, (Pattern)null, null, null, null);
@@ -24,10 +23,10 @@ public class Filter {
     public Filter(Level level, Pattern fnamePat, Range lnum, Pattern clsName, Pattern methName) {
         this.level = level;
 
-        fileNamePat = fnamePat;
-        lineNumberRng = lnum;
-        classNamePat = clsName;
-        methodNamePat = methName;
+        fileNamePattern = fnamePat;
+        lineNumberRange = lnum;
+        classNamePattern = clsName;
+        methodNamePattern = methName;
     }
 
     public Filter(Level level, String fname, Range lnum, String clsName, String methName) {
@@ -40,6 +39,8 @@ public class Filter {
 
     /**
      * Returns the level.
+     *
+     * @return the level of this filter
      */
     public Level getLevel() {
         return level;
@@ -47,12 +48,18 @@ public class Filter {
 
     /**
      * Returns whether the given parameters match this filter.
+     *
+     * @param fileName the name of the file
+     * @param lineNumber the line number
+     * @param className the name of the class
+     * @param methodName the name of the method
+     * @return whether all fields match
      */
     public boolean isMatch(String fileName, int lineNumber, String className, String methodName) {
-        return (isMatch(fileNamePat,   fileName)   &&
-                isMatch(lineNumberRng, lineNumber) &&
-                isMatch(classNamePat,  className)  && 
-                isMatch(methodNamePat, methodName));
+        return (isMatch(fileNamePattern,   fileName)   &&
+                isMatch(lineNumberRange,   lineNumber) &&
+                isMatch(classNamePattern,  className)  && 
+                isMatch(methodNamePattern, methodName));
     }
 
     private boolean isMatch(Pattern pattern, String name) {
