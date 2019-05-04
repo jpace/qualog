@@ -38,11 +38,13 @@ public class Ace extends LegacyLogger {
             }
         }
     }
-    
-    private static Logger logger = null;
+
+    private static final Logs logs;
+    private static Logger logger;
 
     static {
-        logger = Logs.getInstance().getLogger("app");
+        logs = new Logs();
+        logger = logs.getLogger("app");
 
         LegacyLogger.LegacyDelegate delegate = new Delegate();
         LegacyLogger.setDelegate(delegate);
@@ -58,7 +60,7 @@ public class Ace extends LegacyLogger {
 
     public static void setFormat(String format) {
         // this is only the message format
-        logger = Logs.getInstance().addLogger("app", format);
+        logger = logs.addLogger("app", format);
     }
 
     public static boolean stack(Integer depth, String key, Object value) {
