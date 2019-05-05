@@ -3,9 +3,13 @@ package org.qualog.output;
 import org.incava.ijdk.lang.Objects;
 import org.incava.ijdk.lang.Str;
 
-public class MethodName extends Item {    
+public class MethodName extends Item {
+    private final StackElements stackElements;
+    
     public MethodName(ANSIColor color, StackElements stackElements, Integer methodWidth) {
         super(color, stackElements, methodWidth);
+
+        this.stackElements = stackElements;
     }
 
     protected Object getValue(StackTraceElement stackElement) {
@@ -18,13 +22,13 @@ public class MethodName extends Item {
         }
     }
 
-    public boolean isRepeated(StackElements stackElements) {
-        StackTraceElement previous = stackElements.getPrevious();
+    public boolean isRepeated() {
+        StackTraceElement previous = this.stackElements.getPrevious();
         if (previous == null) {
             return false;
         }
 
-        StackTraceElement current = stackElements.getCurrent();
+        StackTraceElement current = this.stackElements.getCurrent();
         return (Objects.equal(previous.getMethodName(), current.getMethodName()) &&
                 Objects.equal(previous.getClassName(),  current.getClassName()));
     }

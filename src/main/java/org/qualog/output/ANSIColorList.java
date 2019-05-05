@@ -22,6 +22,9 @@ public class ANSIColorList extends ArrayList<ANSIColor> {
 
     /**
      * Wraps the given string in these colors, ending it with NONE (reset).
+     * 
+     * @param str the string to wrap
+     * @return the wrapped string
      */
     public String toString(String str) {
         if (isEmpty()) {

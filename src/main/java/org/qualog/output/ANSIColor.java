@@ -32,18 +32,30 @@ public enum ANSIColor {
     private final String str;
 
     ANSIColor(int n) {
-        // this behavior changed in Java 1.4.2-01, so this is a char, not a byte.
-
         //$$$ todo: make this OS and environment dependent
-        this.str = "" + (char)27 + "[" + n + "m";
+        StringBuilder sb = new StringBuilder();
+        sb.append((char)27);
+        sb.append('[');
+        sb.append(n);
+        sb.append('m');
+        
+        this.str = sb.toString();
     }
 
+    /**
+     * Returns the color as the escape string.
+     *
+     * @return the escape string
+     */
     public String toString() {
         return this.str;
     }
 
     /**
      * Wraps the given string in this color, appending NONE (reset).
+     * 
+     * @param str the string to wrap
+     * @return the wrapped string
      */
     public String toString(String str) {
         StringBuffer sb = new StringBuffer(this.str);

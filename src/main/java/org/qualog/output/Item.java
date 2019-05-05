@@ -21,7 +21,10 @@ public abstract class Item {
     }
 
     /**
-     * Returns the value, as this item represents in the logging line.
+     * Returns the value, as this item is represented in the logging line.
+     *
+     * @param stackElement the element from which to extract the value
+     * @return the value for the stack element
      */
     protected abstract Object getValue(StackTraceElement stackElement);
 
@@ -32,17 +35,20 @@ public abstract class Item {
     /**
      * Returns the value from the current stack element, as this item represents in the logging
      * line.
+     *
+     * @return the value for the stack element
      */
     public Object getValue() {
         return getValue(stackElements.getCurrent());
     }
 
-    public boolean isRepeated(StackElements stackElements) {
-        return stackElements.getPrevious() != null && Objects.equal(getStackField(stackElements.getPrevious()), getStackField(stackElements.getCurrent()));
-    }
-
+    /**
+     * Returns whether the element is repeated from the previous one.
+     *
+     * @return whether the item is repeated
+     */
     public boolean isRepeated() {
-        return isRepeated(stackElements);
+        return stackElements.getPrevious() != null && Objects.equal(getStackField(stackElements.getPrevious()), getStackField(stackElements.getCurrent()));
     }
 
     public String getSnipped(String str) {
@@ -63,6 +69,9 @@ public abstract class Item {
 
     /**
      * Returns the element in the stack that this item represents.
+     *
+     * @param stackElement the element to check
+     * @return the field in the stack element
      */
     public abstract String getStackField(StackTraceElement stackElement);
 
