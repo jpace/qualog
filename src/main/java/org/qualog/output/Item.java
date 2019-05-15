@@ -28,7 +28,7 @@ public abstract class Item {
      */
     protected abstract Object getValue(StackTraceElement stackElement);
 
-    private ANSIColorList getColors() {
+    protected ANSIColorList getColors() {
         return colors;
     }
 

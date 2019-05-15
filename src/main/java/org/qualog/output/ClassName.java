@@ -2,14 +2,18 @@ package org.qualog.output;
 
 import org.incava.ijdk.lang.Str;
 
-public class ClassName extends Item {    
-    public ClassName(ANSIColor color, StackElements stackElements, Integer classWidth) {
-        super(color, stackElements, classWidth);
+public class ClassName extends Item {
+    private final Integer width;
+    
+    public ClassName(ANSIColor color, StackElements stackElements, Integer width) {
+        super(color, stackElements, width);
+
+        this.width = width;
     }
 
     public Object getValue(StackTraceElement stackElement) {
         if (isRepeated()) {
-            return new Str(" ", width).str();
+            return new Str(' ', this.width).str();
         }
 
         String className = stackElement.getClassName();        
@@ -22,7 +26,6 @@ public class ClassName extends Item {
     }
 
     protected String asConcise(String className) {
-        // this used to be "(com|org)\\.\\w+\\.", "...", replacing only the top domain.
         return className.replaceAll("(\\w)\\w+\\.", "$1.");
     }
 }

@@ -5,16 +5,18 @@ import org.incava.ijdk.lang.Str;
 
 public class MethodName extends Item {
     private final StackElements stackElements;
+    private final Integer width;
     
-    public MethodName(ANSIColor color, StackElements stackElements, Integer methodWidth) {
-        super(color, stackElements, methodWidth);
+    public MethodName(ANSIColor color, StackElements stackElements, Integer width) {
+        super(color, stackElements, width);
 
         this.stackElements = stackElements;
+        this.width = width;
     }
 
     protected Object getValue(StackTraceElement stackElement) {
         if (isRepeated()) {
-            return new Str(" ", width).str();
+            return new Str(' ', width).str();
         }
         else {
             String methodName = stackElement.getMethodName();

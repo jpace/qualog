@@ -9,6 +9,7 @@ import org.junit.Test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.nullValue;
 import static org.incava.attest.Assertions.message;
 import static org.incava.attest.ContextMatcher.withContext;
 
@@ -17,8 +18,9 @@ public class ClassNameTest extends Parameterized {
     public void init() {
         ANSIColor color = null;
         StackElements stackElements = null;
-        int classWidth = 1;
-        ClassName cn = new ClassName(color, stackElements, classWidth);
+        int width = 1;
+        ClassName cn = new ClassName(color, stackElements, width);
+        assertThat(cn.getColors(), nullValue());
     }
 
     @Test @Parameters @TestCaseName("{method} {index} {params}")
@@ -29,8 +31,8 @@ public class ClassNameTest extends Parameterized {
     }
     
     private Object[] parametersForAsConcise() {
-        return params(params("a.d.g.Jkl", "abc.def.ghi.Jkl"),
-                      params("a.d.Jkl", "abc.def.Jkl"),
-                      params("a.Jkl", "abc.Jkl"));
+        return params(params("a.d.g.Jkl", "abc.def.ghi.Jkl"), 
+                      params("a.d.Jkl",   "abc.def.Jkl"),     
+                      params("a.Jkl",     "abc.Jkl"));
     }
 }

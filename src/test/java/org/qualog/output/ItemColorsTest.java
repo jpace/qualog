@@ -1,17 +1,11 @@
 package org.qualog.output;
 
-import java.util.List;
-import junitparams.Parameters;
-import junitparams.naming.TestCaseName;
-import org.incava.attest.Parameterized;
-import org.incava.ijdk.collect.Array;
 import org.junit.Test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.equalTo;
-import static org.incava.attest.Assertions.message;
+import static org.hamcrest.Matchers.sameInstance;
 
-public class ItemColorsTest extends Parameterized {
+public class ItemColorsTest {
     @Test
     public void init() {
         ANSIColorList msgColors = null;
@@ -19,5 +13,9 @@ public class ItemColorsTest extends Parameterized {
         ANSIColor classColor = null;
         ANSIColor methodColor = null;
         ItemColors ic = new ItemColors(msgColors, fileColor, classColor, methodColor);
+        assertThat(ic.getMessageColors(), sameInstance(msgColors));
+        assertThat(ic.getFileColor(), sameInstance(fileColor));
+        assertThat(ic.getClassColor(), sameInstance(classColor));
+        assertThat(ic.getMethodColor(), sameInstance(methodColor));
     }
 }

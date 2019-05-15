@@ -23,4 +23,16 @@ public class StringGeneratorTest extends GeneratorTestCase {
                           params(StringArray.of("def: 456"), "def", "456"));
     }
 
+    @Test @Parameters @TestCaseName("{method}(...) #{index} [{params}]")
+    public void fromMessage(StringArray expected, String msg) {
+        StringArray result = StringArray.empty();
+        StringGenerator sg = createGenerator(result);
+        sg.generate(msg);
+        assertThat(result, equalTo(expected));
+    }
+    
+    private List<Object[]> parametersForFromMessage() {
+        return paramsList(params(StringArray.of("abc"), "abc"),
+                          params(StringArray.of("def"), "def"));
+    }
 }
