@@ -8,14 +8,15 @@ import static org.hamcrest.Matchers.sameInstance;
 public class ItemColorsTest {
     @Test
     public void init() {
-        ANSIColorList msgColors = null;
-        ANSIColor fileColor = null;
-        ANSIColor classColor = null;
-        ANSIColor methodColor = null;
-        ItemColors ic = new ItemColors(msgColors, fileColor, classColor, methodColor);
+        ANSIColorList msgColors = new ANSIColorList();
+        ANSIColor fileColor     = ANSIColor.RED;
+        ANSIColor classColor    = ANSIColor.GREEN;
+        ANSIColor methodColor   = ANSIColor.BLUE;
+        ItemColors ic           = new ItemColors(msgColors, fileColor, classColor, methodColor);
+        
         assertThat(ic.getMessageColors(), sameInstance(msgColors));
-        assertThat(ic.getFileColor(), sameInstance(fileColor));
-        assertThat(ic.getClassColor(), sameInstance(classColor));
-        assertThat(ic.getMethodColor(), sameInstance(methodColor));
+        assertThat(ic.getFileColor(),     sameInstance(fileColor));
+        assertThat(ic.getClassColor(),    sameInstance(classColor));
+        assertThat(ic.getMethodColor(),   sameInstance(methodColor));
     }
 }

@@ -4,7 +4,6 @@ import org.incava.ijdk.lang.Strings;
 import org.incava.ijdk.util.IUtil;
 
 public class FileName extends Item {
-    
     public FileName(ANSIColor color, StackElements stackElements, Integer fileWidth) {
         super(color, stackElements, fileWidth);
     }

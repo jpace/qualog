@@ -13,7 +13,7 @@ public class MethodNameTest extends TestCase {
     }
 
     private StackElements stes(StackTraceElement current, StackTraceElement previous) {
-        return  new StackElements(current, previous);
+        return new StackElements(current, previous);
     }
 
     private MethodName methodName(StackElements stackElements) {
