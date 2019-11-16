@@ -14,6 +14,8 @@ apply plugin: 'java'
 
 group = 'org.qualog'
 version ='3.0.1'
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
 
 ext {
     pkgName = 'qualog'
